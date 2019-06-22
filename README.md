@@ -10,7 +10,3 @@ We will be sharing several user stories. As a user, I want to be able to pick th
 
 Emphasizing on code quality and professionalism of the app, we believe the amount of features will have a large enough scope for a 5 person project. The core idea of our web app is simple, yet highly scalable, which allows for continuous integration of new features and refinement. 
 
-
-
-
-

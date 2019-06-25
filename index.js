@@ -20,6 +20,7 @@ express()
   .get('/', (req, res) => res.render('pages/index'))
   .get('/restaurants', (req, res) => res.render('pages/restaurants'))
   .get('/admin', (req, res) => res.render('pages/admin'))
+  .get('/admin/add', (req, res) => res.render('pages/add'))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
   // var pool = new Pool({

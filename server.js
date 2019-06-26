@@ -23,6 +23,11 @@ const queries = require("./lib/queries.js")(db);
 // import routes 
 const Routes = require("./routes/routes.js")(queries);
 
+// Set up twitter's api
+const Twitter = require("./twitter/twitter.js");
+Twitter();
+
+
 app.use('/', Routes);
 
 app.get('/', (req, res) => res.render('pages/index'))

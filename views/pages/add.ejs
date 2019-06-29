@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Add Restaurant</title>
+        <link rel="stylesheet" href="/stylesheets/add.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+        <div class="container mt-5">
+            <div class="jumbotron">
+                <form id="add-form">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <!-- Restaurant name -->
+                                <label for="restaurantName">Restaurant Name</label>
+                                <input type="text" class="form-control" id="restaurantName" placeholder="Restaurant Name Here" name="name">
+                            </div>
+                            <div class="col">
+                                <!-- Restaurant description -->
+                                <label for="restaurantAddress">Restaurant Address</label>
+                                <input type="text" class="form-control" id="restaurantAddress" placeholder="Restaurant Address Here" name="address">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Restaurant description -->
+                    <div class="form-group">
+                        <label for="restaurantDesc">Restaurant Description</label>
+                        <textarea class="form-control" id="restaurantDesc" placeholder="Restaurant Description Here" name="desc"></textarea>
+                    </div>
+
+                    <!-- Price rating options -->
+                    <div class="form-group">
+                        Price Rating <br>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="priceRadio" id="radio1" value="$">
+                            <label class="form-check-label" for="radio1">$</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="priceRadio" id="radio2" value="$$">
+                            <label class="form-check-label" for="radio2">$$</label>
+                        </div>
+                        <div class="form-check disabled">
+                            <input class="form-check-input" type="radio" name="priceRadio" id="radio3" value="$$$">
+                            <label class="form-check-label" for="radio3">$$$</label>
+                        </div>
+                    </div>
+
+                    <!-- For restaurant hours -->
+                    <div class="form-group">
+                        Hours (Disregard checkmarks for now)<br>
+                        <!-- Sunday hours -->
+                        <div class="row mt-2" id="hour-row">
+                            <div class="col">
+                                <input class="form-check-input" type="checkbox" value="" id="sundayCheck" checked>
+                                <label class="form-check-label" for="sundayCheck">Sunday</label>
+                            </div>
+                            <div class="col">
+                                <label for="timeFrom">From:</label>
+                                <input type="time" id="timeFrom0">
+                            </div>
+                            <div class="col">
+                                <label for="timeTo">To:</label>
+                                <input type="time" id="timeTo0">
+                            </div>
+                        </div>
+
+                        <!-- Monday hours -->
+                        <div class="row" id="hour-row">
+                            <div class="col">
+                                <input class="form-check-input" type="checkbox" value="" id="mondayCheck" checked>
+                                <label class="form-check-label" for="sundayCheck">Monday</label>
+                            </div>
+                            <div class="col">
+                                <label for="timeFrom">From:</label>
+                                <input type="time" id="timeFrom1">
+                            </div>
+                            <div class="col">
+                                <label for="timeTo">To:</label>
+                                <input type="time" id="timeTo1">
+                            </div>
+                        </div>
+
+                        <!-- Tuesday hours -->
+                        <div class="row" id="hour-row">
+                            <div class="col">
+                                <input class="form-check-input" type="checkbox" value="" id="tuesdayCheck" checked>
+                                <label class="form-check-label" for="sundayCheck">Tuesday</label>
+                            </div>
+                            <div class="col">
+                                <label for="timeFrom">From:</label>
+                                <input type="time" id="timeFrom2">
+                            </div>
+                            <div class="col">
+                                <label for="timeTo">To:</label>
+                                <input type="time" id="timeTo2">
+                            </div>
+                        </div>
+
+                        <!-- Wednesday hours -->
+                        <div class="row" id="hour-row">
+                            <div class="col">
+                                <input class="form-check-input" type="checkbox" value="" id="wednesdayCheck" checked>
+                                <label class="form-check-label" for="sundayCheck">Wednesday</label>
+                            </div>
+                            <div class="col">
+                                <label for="timeFrom">From:</label>
+                                <input type="time" id="timeFrom3">
+                            </div>
+                            <div class="col">
+                                <label for="timeTo">To:</label>
+                                <input type="time" id="timeTo3">
+                            </div>
+                        </div>
+
+                        <!-- Thursday hours -->
+                        <div class="row" id="hour-row">
+                            <div class="col">
+                                <input class="form-check-input" type="checkbox" value="" id="thursdayCheck" checked>
+                                <label class="form-check-label" for="sundayCheck">Thursday</label>
+                            </div>
+                            <div class="col">
+                                <label for="timeFrom">From:</label>
+                                <input type="time" id="timeFrom4">
+                            </div>
+                            <div class="col">
+                                <label for="timeTo">To:</label>
+                                <input type="time" id="timeTo4">
+                            </div>
+                        </div>
+
+                        <!-- Friday hours -->
+                        <div class="row" id="hour-row">
+                            <div class="col">
+                                <input class="form-check-input" type="checkbox" value="" id="fridayCheck" checked>
+                                <label class="form-check-label" for="sundayCheck">Friday</label>
+                            </div>
+                            <div class="col">
+                                <label for="timeFrom">From:</label>
+                                <input type="time" id="timeFrom5">
+                            </div>
+                            <div class="col">
+                                <label for="timeTo">To:</label>
+                                <input type="time" id="timeTo5">
+                            </div>
+                        </div>
+
+                        <!-- Saturday hours -->
+                        <div class="row" id="hour-row">
+                            <div class="col">
+                                <input class="form-check-input" type="checkbox" value="" id="saturdayCheck" checked>
+                                <label class="form-check-label" for="sundayCheck">Saturday</label>
+                            </div>
+                            <div class="col">
+                                <label for="timeFrom">From:</label>
+                                <input type="time" id="timeFrom6">
+                            </div>
+                            <div class="col">
+                                <label for="timeTo">To:</label>
+                                <input type="time" id="timeTo6">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- For picture of restaurant -->
+                    <div class="form-group">
+                        <label for="fileInput">Picture of Restaurant (.PNG or .JPG) (Also disregard for now)</label>
+                        <input type="file" class="form-control-file" id="fileInput">
+                    </div>
+
+                    <!-- Food type -->
+                    <label for="foodTypes">Restaurant Food Type</label>
+                    <select class="custom-select" name="foodType" id="foodTypes">
+                        <option selected>Food Types</option>
+                        <option value="x">Type 1</option>
+                        <option value="y">Type 2</option>
+                        <option value="z">Type 3</option>
+                    </select>
+                    <br>
+
+                    <button type="submit" class="btn btn-lg btn-primary mt-3">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="/scripts/add.js"></script>
+</body>
+</html>

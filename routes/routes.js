@@ -38,40 +38,35 @@ module.exports = function (queries) {
     })
   })
 
+
+  // rendering the restaurant page
+  router.get('/restaurants', (req, res) => {
+
+		queries.getRestaurants((value) => {
+			if (value.length == 0){
+				return res.redirect(401, '/restaurants')
+			} else {
+				res.render('pages/restaurants', {value:value})
+			}
+		})
+	})
+
+
+	// rendering the admin page
+	router.get('/admin', (req, res) => {
+
+		queries.getRestaurants((value) => {
+			if (value.length == 0){
+				return res.redirect(401, '/admin')
+			} else {
+				res.render('pages/admin', {value:value})
+			}
+		})
+	})
+
   router.get('/', (req, res) => res.render('pages/index'))
-  router.get('/restaurants', (req, res) => res.render('pages/restaurants'))
   router.get('/admin', (req, res) => res.render('pages/admin'))
   router.get('/admin/add', (req, res) => res.render('pages/add'))
 
-	// redirect to admin add page on add
-	router.post('/admin/add', (req, res) => {
-		res.redirect('/admin/add')
-	})
-	// redirect to admin page on delete
-	router.post('/admin/delete', (req, res) => {
-		res.redirect('/admin')
-	})
-	// redirect to admin page on edit
-	router.post('/admin/edit', (req, res) => {
-		res.redirect('/admin')
-	})
-
-	// render admin page
-	router.get('/admin', (req, res) => {
-		res.render('pages/admin')
-	})
-	// render admin add page
-	router.get('/admin/add', (req, res) => {
-		res.render('pages/admin/add')
-	})
-	// render admin edit page
-	router.get('/admin/edit', (req, res) => {
-		res.render('pages/admin/edit')
-	})
-	// render restaurants page
-	router.get('/restaurants', (req, res) => {
-		res.render('pages/restaurants')	
-	})
-	
   return router;
 }

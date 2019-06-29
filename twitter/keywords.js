@@ -2,7 +2,9 @@ module.exports = [
   'Togo Sushi',
   '@Togo Sushi',
   '#Togo Sushi',
-  'awrestaurants',
-  '@awrestaurants',
-  '#awrestaurants'
+  'AWCanada',
+  '@AWCanada',
+  '#AWCanada',
+  'Bun & Me',
+  '#Bun & Me'
 ];

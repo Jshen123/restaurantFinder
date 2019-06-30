@@ -38,8 +38,33 @@ module.exports = function (queries) {
     })
   })
 
+
+  // rendering the restaurant page
+  router.get('/restaurants', (req, res) => {
+
+		queries.getRestaurants((value) => {
+			if (value.length == 0){
+				return res.redirect(401, '/restaurants')
+			} else {
+				res.render('pages/restaurants', {value:value})
+			}
+		})
+	})
+
+
+	// rendering the admin page
+	router.get('/admin', (req, res) => {
+
+		queries.getRestaurants((value) => {
+			if (value.length == 0){
+				return res.redirect(401, '/admin')
+			} else {
+				res.render('pages/admin', {value:value})
+			}
+		})
+	})
+
   router.get('/', (req, res) => res.render('pages/index'))
-  router.get('/restaurants', (req, res) => res.render('pages/restaurants'))
   router.get('/admin', (req, res) => res.render('pages/admin'))
   router.get('/admin/add', (req, res) => res.render('pages/add'))
 

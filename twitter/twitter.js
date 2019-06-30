@@ -24,15 +24,22 @@ function searchQueryString(arr) {
   return str;
 }
 
-
+// Function to add tweets
 function add_tweet (event) {
-  console.log("https://twitter.com/statuses/"+event.id_str);
-  console.log(event.text);
-  
-  client.post('collections/entries/add', {id: collection_ID, tweet_id: event.id_str}, 
-    function(error, tweet, response) {
-      if(error) throw error;
-  });
+  //var retweet = (event.retweeted_status) ? true : false;
+  var user_id = event.user.id_str;
+  var tweet_id = (event.retweeted_status) ? event.retweeted_status.id_str : event.id_str;
+
+  //console.log(user_id);
+  //console.log("https://twitter.com/statuses/"+tweet_id);
+  //console.log(event.text);
+
+  if (following.includes(user_id)) {
+    client.post('collections/entries/add', {id: collection_ID, tweet_id: tweet_id}, 
+      function(error, tweet, response) {
+        if(error) throw error;
+    });
+  }
 }
 
 module.exports = function() {

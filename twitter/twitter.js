@@ -26,13 +26,8 @@ function searchQueryString(arr) {
 
 // Function to add tweets
 function add_tweet (event) {
-  //var retweet = (event.retweeted_status) ? true : false;
   var user_id = event.user.id_str;
   var tweet_id = (event.retweeted_status) ? event.retweeted_status.id_str : event.id_str;
-
-  //console.log(user_id);
-  //console.log("https://twitter.com/statuses/"+tweet_id);
-  //console.log(event.text);
 
   if (following.includes(user_id)) {
     client.post('collections/entries/add', {id: collection_ID, tweet_id: tweet_id}, 

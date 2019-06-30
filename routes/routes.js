@@ -38,5 +38,10 @@ module.exports = function (queries) {
     })
   })
 
+  router.get('/', (req, res) => res.render('pages/index'))
+  router.get('/restaurants', (req, res) => res.render('pages/restaurants'))
+  router.get('/admin', (req, res) => res.render('pages/admin'))
+  router.get('/admin/add', (req, res) => res.render('pages/add'))
+
   return router;
 }

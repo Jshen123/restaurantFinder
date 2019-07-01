@@ -37,12 +37,10 @@ module.exports = function (queries) {
     const username = req.body.username;
     const password = req.body.password;
     const hash = bcrypt.hashSync(password, saltRounds);
-    let success = false;
 
     queries.register(username, hash, (value) => {
       if (value.length != 0) {
         req.session.user_id = value[0].user_id
-        success = true;
         return res.redirect('/')
       } else {
         return res.redirect('/login')
@@ -61,17 +59,14 @@ module.exports = function (queries) {
 
       if (value.length != 0) {
         const hash = value[0].password;
-        console.log(bcrypt.compareSync(password, hash))
         if(bcrypt.compareSync(password, hash)){
-          console.log("success")
           req.session.user_id = value[0].user_id
           return res.redirect('/')
-        }
-      } else {
+        } else {
         return res.redirect('/login')
+        }
       }
     })
-
   })
 
   router.post('/logout', function(req, res){
@@ -119,8 +114,6 @@ module.exports = function (queries) {
     })
 
 	})
-
-  router.get('/', (req, res) => res.render('pages/index'))
 
   
   router.get('/admin/add', (req, res) => {

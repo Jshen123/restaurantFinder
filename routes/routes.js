@@ -1,6 +1,9 @@
 const express = require('express')
 const router = express.Router();
 const cookieSession = require('cookie-session');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 
 // set-up cookie session
 router.use(cookieSession({
@@ -21,7 +24,7 @@ module.exports = function (queries) {
     if (req.session.user_id != null){
       return res.redirect('/');
     } else {
-      let payload = {user_id: req.session.user_id}
+      const payload = {user_id: req.session.user_id}
       res.render('pages/login', payload)
     }
   })
@@ -31,33 +34,44 @@ module.exports = function (queries) {
   })
 
   router.post('/register', function (req, res) {
-    let username = req.body.username;
-    let password = req.body.password;
+    const username = req.body.username;
+    const password = req.body.password;
+    const hash = bcrypt.hashSync(password, saltRounds);
+    let success = false;
 
-    queries.register(username, password, (value) => {
+    queries.register(username, hash, (value) => {
       if (value.length != 0) {
         req.session.user_id = value[0].user_id
+        success = true;
         return res.redirect('/')
+      } else {
+        return res.redirect('/login')
       }
-      res.redirect('/login')
-    })
-    
-    res.redirect('/')
+    })   
+
   })
 
   // authenticate user after submitting login form
   router.post('/login', function (req, res) {
 
-    let username = req.body.username;
-    let password = req.body.password;
+    const username = req.body.username;
+    const password = req.body.password;
 
-    queries.Authenticate(username, password, (value) => {
+    queries.Authenticate(username, (value) => {
+
       if (value.length != 0) {
-        req.session.user_id = value[0].user_id
-        return res.redirect('/')
+        const hash = value[0].password;
+        console.log(bcrypt.compareSync(password, hash))
+        if(bcrypt.compareSync(password, hash)){
+          console.log("success")
+          req.session.user_id = value[0].user_id
+          return res.redirect('/')
+        }
+      } else {
+        return res.redirect('/login')
       }
-      res.redirect('/login')
     })
+
   })
 
   router.post('/logout', function(req, res){
@@ -73,7 +87,7 @@ module.exports = function (queries) {
 			if (value.length == 0){
 				return res.redirect('/restaurants')
 			} else {
-        let payload = {user_id: req.session.user_id, value:value};
+        const payload = {user_id: req.session.user_id, value:value};
 				res.render('pages/restaurants', payload)
 			}
     })
@@ -89,7 +103,7 @@ module.exports = function (queries) {
     }
 
     queries.verifyAdmin(req.session.user_id, (value) => {
-      let admin = value[0].admin;
+      const admin = value[0].admin;
 
       if (admin == false){
         return res.redirect('/');
@@ -116,7 +130,7 @@ module.exports = function (queries) {
     }
 
     queries.verifyAdmin(req.session.user_id, (value) => {
-      let admin = value[0].admin;
+      const admin = value[0].admin;
       // console.log(admin)
       if (admin == false){
         return res.redirect('/');

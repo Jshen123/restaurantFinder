@@ -16,6 +16,7 @@ app.use("/styles", express.static('css'));
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
+
 // database configuration for knex
 const db = require("./lib/db.js");
 // import all database queries functions

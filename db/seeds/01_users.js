@@ -7,15 +7,18 @@ exports.seed = function(knex, Promise) {
       return knex('users').insert([
         {
           username: 'admin',
-          password: 'test'
+          password: 'test',
+          admin: true
         },
         {
           username: 'user1',
-          password: 'test'
+          password: 'test',
+          admin: false
         },
         {
           username: 'user2',
-          password: 'test'
+          password: 'test',
+          admin:false
         }
       ]);
     });

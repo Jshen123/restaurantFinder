@@ -15,12 +15,12 @@
     <!-- BootStrap Script -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link rel="stylesheet" href="/stylesheets/login.css">
+    <link rel="stylesheet" href="/stylesheets/register.css">
   </head>
   <body>
-    <div class ="login-container">
-      <form class="login-form" action="/login" method="POST">
-        <h3> Login to Restaurant Finder</h3>
+    <div class ="register-container">
+      <form class="register-form" action="/register" method="POST">
+        <h3> Register for Restaurant Finder</h3>
         <div class="form-group" >
           <input type="username" class="form-control" aria-describedby="emailHelp" placeholder="User Name" name="username">
         </div>
@@ -28,12 +28,11 @@
           <input type="password" class="form-control" placeholder="Password" name = "password">
         </div>
         <!-- <button type="submit" class="btn btn-primary">Login</button> -->
-        <button type="submit" class="btn btn-danger btn-block"> Log in</button>
+        <button type="submit" class="btn btn-danger btn-block"> Register</button>
         <div class="user-redirect">
-          <span> Don't have an account? </span>
-          <a class="text-dark" href="/register">Register here</a>
+          <span> Already registered? </span>
+          <a class="text-dark" href="/login">Log in</a>
         </div>
-
       </form>
     </div>
   </body>

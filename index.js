@@ -2,7 +2,6 @@ const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
 const app = express()
-// const environment = process.env.NODE_ENV || 'production';
 
 //middle-ware
 const cookieSess = require('cookie-session');

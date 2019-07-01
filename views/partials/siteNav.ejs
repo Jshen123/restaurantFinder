@@ -11,9 +11,25 @@
         <li class="nav-item ml-5 mr-5">
           <a class="text-dark" href="/admin"><strong>Edit</strong></a>
         </li>
-        <li class="nav-item ml-5 mr-5">
-          <a class="text-dark" href="#"><strong>Login</strong></a>
-        </li>
+        <% if (user_id == null) { %>
+          <li class="nav-item ml-5 mr-5">
+            <!-- <a href="/login" class="btn btn-primary"><strong>Login</strong></a> -->
+            <form action="/login" method="GET">
+              <button type="submit" class="btn btn-primary"><strong>Login</strong></button>
+            </form>
+          </li>
+          <li class="nav-item ml-5 mr-5"></li>
+            <form action="/register" method="GET">
+              <button type="submit" class="btn btn-primary"><strong>Register</strong></button>
+            </form>
+          </li>
+        <% } else { %>
+          <li class="nav-item ml-5 mr-5">
+            <form action="/logout" method="POST">
+              <button type="submit" class="btn btn-primary"><strong>Logout</strong></button>
+            </form>
+          </li>
+        <% } %>
       </ul>
     </div>
   </div>

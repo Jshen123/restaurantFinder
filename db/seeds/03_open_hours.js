@@ -5,7 +5,7 @@ exports.seed = function(knex, Promise) {
       // Inserts seed entries
       return knex('open_hours').insert([
         {
-          open_hours_id: 1,
+          restaurant_id: 1,
           sunday: '9:00am-10:00pm',
           monday: '7:30am-11:00pm',
           tuesday: '7:30am-11:00pm',
@@ -15,7 +15,7 @@ exports.seed = function(knex, Promise) {
           saturday: '8:00am-11:00pm'
         },
         {
-          open_hours_id: 2,
+          restaurant_id: 2,
           sunday: 'CLOSED',
           monday: '11:00am-8:00pm',
           tuesday: '11:00am-8:00pm',
@@ -25,7 +25,7 @@ exports.seed = function(knex, Promise) {
           saturday: 'CLOSED'
         },
         {
-          open_hours_id: 3,
+          restaurant_id: 3,
           sunday: 'CLOSED',
           monday: '11:00am-8:00pm',
           tuesday: '11:00am-8:00pm',

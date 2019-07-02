@@ -1,6 +1,7 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable("open_hours", (table) => {
     table.increments('open_hours_id');
+    table.integer('restaurant_id');
     table.string('sunday');
     table.string('monday');
     table.string('tuesday');
@@ -8,7 +9,7 @@ exports.up = function(knex, Promise) {
     table.string('thursday');
     table.string('friday');
     table.string('saturday');
-    table.foreign('open_hours_id').references('restaurants.restaurant_id').onDelete('cascade');
+    table.foreign('restaurant_id').references('restaurants.restaurant_id').onDelete('cascade');
   })
 };
 

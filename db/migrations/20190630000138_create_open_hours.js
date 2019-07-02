@@ -1,7 +1,7 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable("open_hours", (table) => {
     table.increments('open_hours_id');
-    table.integer('restaurant_id');
+    table.integer('restaurant_id').notNullable();
     table.string('sunday');
     table.string('monday');
     table.string('tuesday');

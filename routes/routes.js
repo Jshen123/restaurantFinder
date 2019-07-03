@@ -21,6 +21,7 @@ module.exports = function (queries) {
 
   // rendering the login page
   router.get('/login', function (req, res) {
+
     if (req.session.user_id != null){
       return res.redirect('/');
     } else {
@@ -33,19 +34,22 @@ module.exports = function (queries) {
     res.render('pages/register')
   })
 
+
   router.post('/register', function (req, res) {
     const username = req.body.username;
     const password = req.body.password;
     const hash = bcrypt.hashSync(password, saltRounds);
 
+
     queries.register(username, hash, (value) => {
       if (value.length != 0) {
-        req.session.user_id = value[0].user_id
+        console.log(value[0])
+        req.session.user_id = value[0]
         return res.redirect('/')
       } else {
-        return res.redirect('/login')
+        return res.redirect('/register')
       }
-    })   
+    })
 
   })
 
@@ -55,18 +59,23 @@ module.exports = function (queries) {
     const username = req.body.username;
     const password = req.body.password;
 
-    queries.Authenticate(username, (value) => {
-
-      if (value.length != 0) {
-        const hash = value[0].password;
-        if(bcrypt.compareSync(password, hash)){
-          req.session.user_id = value[0].user_id
-          return res.redirect('/')
-        } else {
-        return res.redirect('/login')
+    try{
+      queries.Authenticate(username, (value) => {
+        if (value.length != 0) {
+          const hash = value[0].password;
+          if(bcrypt.compareSync(password, hash)){
+            req.session.user_id = value[0].user_id
+            return res.redirect('/')
+          } else {
+          return res.redirect('/login')
+          }
         }
-      }
-    })
+      })
+    } catch(e) {
+      res.redirect('/login')
+    }
+
+
   })
 
   router.post('/logout', function(req, res){

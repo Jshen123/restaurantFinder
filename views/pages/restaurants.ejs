@@ -15,119 +15,53 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mt-4 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <a class="card-title" href="/restaurants/details">Restaurant #1</a>
-              <img class="card-img mt-2" src="/Pictures/placeholder.jpg">
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle mt-3" type="button" id="hourMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Restaurant Hours
-                </button>
-                <div class="dropdown-menu" aria-labelledby="hourMenu">
-                  <p class="dropdown-item">Sunday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Monday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Tuesday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Thursday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Friday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Saturday - XX:XX to XX:XX</p>
-                </div>
-                <ul class="list-group list-group-flush mt-3">
-                  <li class="list-group-item">Address</li>
-                  <li class="list-group-item">Price Range</li>
-                  <li class="list-group-item">Food Type(s)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mt-4 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <a class="card-title" href="/restaurants/details">Restaurant #2</a>
-              <img class="card-img mt-2" src="/Pictures/placeholder.jpg">
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle mt-3" type="button" id="hourMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Restaurant Hours
-                </button>
-                <div class="dropdown-menu" aria-labelledby="hourMenu">
-                  <p class="dropdown-item">Sunday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Monday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Tuesday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Thursday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Friday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Saturday - XX:XX to XX:XX</p>
-                </div>
-                <ul class="list-group list-group-flush mt-3">
-                  <li class="list-group-item">Address</li>
-                  <li class="list-group-item">Price Range</li>
-                  <li class="list-group-item">Food Type(s)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mt-4 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <a class="card-title" href="/restaurants/details">Restaurant #3</a>
-              <img class="card-img mt-2" src="/Pictures/placeholder.jpg">
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle mt-3" type="button" id="hourMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Restaurant Hours
-                </button>
-                <div class="dropdown-menu" aria-labelledby="hourMenu">
-                  <p class="dropdown-item">Sunday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Monday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Tuesday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Thursday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Friday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Saturday - XX:XX to XX:XX</p>
-                </div>
-                <ul class="list-group list-group-flush mt-3">
-                  <li class="list-group-item">Address</li>
-                  <li class="list-group-item">Price Range</li>
-                  <li class="list-group-item">Food Type(s)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+        <% value.forEach(function(val) { %>
+          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mt-4 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <% restId = val.restaurant_id; %>
+                <a class="card-title link" href="#" data-id="<%= restId %>"><%= val.name %></a>
 
-        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mt-4 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <a class="card-title" href="/restaurants/details">Restaurant #4</a>
-              <img class="card-img mt-2" src="/Pictures/placeholder.jpg">
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle mt-3" type="button" id="hourMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Restaurant Hours
-                </button>
-                <div class="dropdown-menu" aria-labelledby="hourMenu">
-                  <p class="dropdown-item">Sunday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Monday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Tuesday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Thursday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Friday - XX:XX to XX:XX</p>
-                  <p class="dropdown-item">Saturday - XX:XX to XX:XX</p>
+                <% imgPath = "/Pictures/restaurant_" + restId + ".jpg" %>
+
+                <img class="card-img mt-2" src="<%= imgPath %>" width="100" height="225">
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle mt-3" type="button" id="hourMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Restaurant Hours
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="hourMenu">
+                    <p class="dropdown-item">Sunday - <%= val.sunday %></p>
+                    <p class="dropdown-item">Monday - <%= val.monday %></p>
+                    <p class="dropdown-item">Tuesday - <%= val.tuesday %></p>
+                    <p class="dropdown-item">Wednesday - <%= val.wednesday %></p>
+                    <p class="dropdown-item">Thursday - <%= val.thursday %></p>
+                    <p class="dropdown-item">Friday - <%= val.friday %></p>
+                    <p class="dropdown-item">Saturday - <%= val.saturday %></p>
+                  </div>
+                  <ul class="list-group list-group-flush mt-3">
+                    <li class="list-group-item"><%= val.address %></li>
+                    <%= dollars = "";%>
+                    <% if (val.price == 1) {dollars = "$";} else if (val.price == 2) {dollars = "$$";} else {dollars = "$$$"} %>
+                    <li class="list-group-item"><%= dollars %></li>
+                    <li class="list-group-item">Food Type(s)</li>
+                  </ul>
                 </div>
-                <ul class="list-group list-group-flush mt-3">
-                  <li class="list-group-item">Address</li>
-                  <li class="list-group-item">Price Range</li>
-                  <li class="list-group-item">Food Type(s)</li>
-                </ul>
               </div>
             </div>
           </div>
-        </div>
+        <% }) %>
 
       </div>
+
+      
+      <br><br><br><br><br>
     </div>
 
     <% include ../partials/siteFooter.ejs %>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="/scripts/restaurants.js"></script>
   </body>
 
 </html>

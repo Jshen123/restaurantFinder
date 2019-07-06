@@ -20,7 +20,7 @@
             <div class="card">
               <div class="card-body">
                 <% restId = val.restaurant_id; %>
-                <a class="card-title link" href="#" data-id="<%= restId %>"><%= val.name %></a>
+                <a class="card-title link" href="/restaurants/<%= restId %>" data-id="<%= restId %>"><%= val.name %></a>
 
                 <% imgPath = "/Pictures/restaurant_" + restId + ".jpg" %>
 

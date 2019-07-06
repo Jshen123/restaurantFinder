@@ -143,5 +143,18 @@ module.exports = function (queries) {
     
   })
 
+  router.get('/restaurants/:id', (req, res) => {
+
+    const restaurant_id = req.params.id
+    queries.getRestaurantDetail(restaurant_id, (value, error) => {
+
+      const payload = {value:value, user_id:req.session.user_id};
+      res.render('pages/details', payload)
+    })
+
+
+
+  })
+
   return router;
 }

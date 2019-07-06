@@ -116,15 +116,14 @@ module.exports = function (queries) {
           if (value.length == 0){
             return res.redirect('/admin')
           } else {
-            res.render('pages/admin', {value:value})
+            res.render('pages/admin', {value:value, user_id: req.session.user_id})
           }
         })
       }
     })
+  })
 
-	})
 
-  
   router.get('/admin/add', (req, res) => {
 
     if (req.session.user_id == null){
@@ -137,7 +136,7 @@ module.exports = function (queries) {
       if (admin == false){
         return res.redirect('/');
       } else {
-        res.render('pages/add');
+        res.render('pages/add', {user_id: req.session.user_id});
       }
     })    
 

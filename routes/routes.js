@@ -3,6 +3,8 @@ const router = express.Router();
 const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const moment = require('moment');
+
 
 
 // set-up cookie session
@@ -86,12 +88,40 @@ module.exports = function (queries) {
 
   // rendering the restaurant page
   router.get('/restaurants', (req, res) => {
+    const today = new Date()
+    const weekdays = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday']
+    // determine which day of the week
+    const day = weekdays[today.getDay()]
 
 		queries.getRestaurants((value) => {
+
 			if (value.length == 0){
 				return res.redirect('/restaurants')
 			} else {
-        const payload = {user_id: req.session.user_id, value:value};
+
+        const payload = {
+                          user_id: req.session.user_id, 
+                          open:[],
+                          closed:[]
+                        };
+        
+        value.forEach(function(val){
+
+
+          if (val[day] == 'CLOSED'){
+            payload.closed.push(val)
+          } else {
+            const businessHours = val[day].split("-")
+            const startHour = moment(businessHours[0], "LT").toDate() 
+            const endHour = moment(businessHours[1], "LT").toDate()
+
+            if (today >= startHour && today <= endHour){
+              payload.open.push(val)
+            } else {
+              payload.closed.push(val)
+            }
+          }
+        })
 				res.render('pages/restaurants', payload)
 			}
     })

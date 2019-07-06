@@ -28,11 +28,13 @@ function searchQueryString(arr) {
 function add_tweet (event) {
   var user_id = event.user.id_str;
   var tweet_id = (event.retweeted_status) ? event.retweeted_status.id_str : event.id_str;
+  var not_a_reply = (event.in_reply_to_status_id) ? false : true;
 
-  if (following.includes(user_id)) {
-    client.post('collections/entries/add', {id: collection_ID, tweet_id: tweet_id}, 
-      function(error, tweet, response) {
-        if(error) throw error;
+  var params = {id: collection_ID, tweet_id: tweet_id};
+
+  if (following.includes(user_id) && not_a_reply) {
+    client.post('collections/entries/add', params, function(error, tweet, response) {
+      if(error) throw error;
     });
   }
 }

@@ -31,8 +31,8 @@ const queries = require("./lib/queries.js")(db);
 const Routes = require("./routes/routes.js")(queries);
 
 // Twitter API
-const Twitter = require("./twitter/twitter.js");
-Twitter();
+// const Twitter = require("./twitter/twitter.js");
+// Twitter();
 
 app.use('/', Routes);
 

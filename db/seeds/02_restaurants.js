@@ -9,18 +9,21 @@ exports.seed = function(knex, Promise) {
           name: 'A&W Canada',
           price: 1,
           address: '9055 University High St, Burnaby, BC V5A 4X6',
+          type: 'Fast food restaurant',
           description: 'Test Restaurant'
         },
         {
           name: 'Bun & Me',
           price: 2,
           address: '8915 Cornerstone Mews, Burnaby, BC V5A 4Y7',
+          type: 'Vietnamese restaurant',
           description: 'Test Restaurant'
         },
         {
           name: 'Togo Sushi',
           price: 2,
           address: '9055 University High St, Burnaby, BC V5A 0A7',
+          type: 'Japanese restaurant',
           description: 'Test Restaurant'
         }
       ]);

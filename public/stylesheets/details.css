@@ -1,0 +1,17 @@
+.checked {
+    color: orange;
+}
+
+.stars {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.fa::before{
+    cursor: pointer;
+}
+
+.fa:hover::before{
+    /* the :hover should come first */
+    color: #bada55;
+}

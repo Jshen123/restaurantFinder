@@ -14,7 +14,27 @@ router.use(cookieSession({
 }));
 
 
-module.exports = function (queries) {
+module.exports = function (queries, io) {
+
+  const restaurants_io = io.of('/restaurants');
+  restaurants_io.on('connection', function(socket) {
+    console.log("We have a new client: " + socket.id);
+
+    socket.on('joinRoom', function(room_id) {
+      // Join a room for a specific restaurant
+      socket.join(room_id);
+      console.log(`Client ${socket.id} has joined room ${room_id}`);
+    });
+
+    socket.on('new_comment', function(comment) {
+      // Send it to all clients in the same room
+      restaurants_io.to(comment.id).emit('new_comment', socket.id);
+    });
+    
+    socket.on('disconnect', function() {
+      console.log("Client has disconnected");
+    });
+  });
 
   //redirect '/' to '/restaurants'
   router.get('/', function(req, res){
@@ -188,7 +208,6 @@ module.exports = function (queries) {
                           user_id: req.session.user_id
                         }
         res.render('pages/details', payload)
-
       })
     })
   })

@@ -7,11 +7,15 @@
     margin-bottom: 10px;
 }
 
-.fa::before{
+.rate-star::before{
     cursor: pointer;
 }
 
-.fa:hover::before{
+.rate-star:hover::before{
     /* the :hover should come first */
     color: #bada55;
+}
+
+.commentDate {
+    font-size: 12px;
 }

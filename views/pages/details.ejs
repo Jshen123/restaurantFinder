@@ -73,20 +73,27 @@
 
         <p align="center" class="h5 m-auto"><u>Comments and Reviews</u></p>
         <br>
-        <div class="row">
-            <div class="col-3"><strong>User #1</strong></div>
-            <div class="col-9">
-                <p>Etiam urna erat, blandit vel vulputate eu, pellentesque at nulla. Nullam hendrerit eros lorem, at eleifend quam pellentesque non. Cras eu commodo dolor.</p>
+        <% comments.forEach(function(comment) { %>
+
+            <div class="card bg-light p-3">
+                <div class="userText">
+                    <strong><%= comment.username %></strong> <span class="commentDate">at <%= comment.create_date %></span>
+                </div>
+                <div class="userRating">
+                    <% for (i = 0; i < 5; i++) { %>
+                        <% rating = parseInt(comment.rating)%>
+                        <% if (i < rating) { %>
+                            <span class="fa fa-star checked"></span>
+                        <% } else { %>
+                            <span class="fa fa-star"></span>
+                        <% } %>
+                    <% } %>
+                </div>
+                <p><%= comment.comment %></p>         
             </div>
-            <div class="col-3"><strong>User #2</strong></div>
-            <div class="col-9">
-                <p>Ut suscipit nisl eget consequat interdum. Quisque venenatis vestibulum ligula, nec consectetur mi tempor at. Mauris volutpat condimentum malesuada.</p>
-            </div>
-            <div class="col-3"><strong>User #3</strong></div>
-            <div class="col-9">
-                <p>Sed magna lorem, venenatis vitae auctor tempus, tincidunt mattis velit. Donec aliquet, lectus nec sollicitudin interdum, nisl tellus rutrum justo, in luctus augue purus ac nulla.</p>
-            </div>
-        </div>
+            <br>
+            
+        <% }) %>
 
         <form id="comment-form">
             <div class="container bg-light">

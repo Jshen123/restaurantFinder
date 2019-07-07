@@ -26,3 +26,30 @@ function setRating(rating) {
 
 addClicks();
 setRating(rating.getAttribute("data-rating"));
+
+$('#comment-form').submit(function() {
+    var numStars = rating.getAttribute("data-rating");
+    var comment = $('#comment').val();
+    var id = $("#getId").attr("data-id");
+
+    var commentData = {
+        rating: numStars,
+        comment: comment,
+        username: "",
+        restaurant_id: id
+    }
+
+    urlString = "/restaurants/" + id;
+
+    $.ajax({
+        type: "POST",
+        url: urlString,
+        data: commentData,
+        success: function() {
+            console.log("success");
+        },
+        error: function() {
+            console.log("failed");
+        }
+    })
+})

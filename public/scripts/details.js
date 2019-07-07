@@ -58,5 +58,8 @@
         console.log("failed");
       }
     })
+
+    //Clear comment
+    $('#comment').val('');
   })
 }());

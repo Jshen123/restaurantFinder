@@ -1,6 +1,7 @@
 (function () {
   const socket = io('/restaurants');
 
+  // Join a room on connection
   socket.emit('joinRoom', room_id);
 
   socket.on('new_comment', function(comment) {
@@ -19,9 +20,6 @@
       </div>
       <br>
     `);
-
-    /*var comments_section = document.getElementById('comments-section');
-    comments_section.innerHTML = '';*/
   });
 
   function generateStars(rating) {

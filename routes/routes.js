@@ -25,11 +25,6 @@ module.exports = function (queries, io) {
       socket.join(room_id);
       console.log(`Client ${socket.id} has joined room ${room_id}`);
     });
-
-    socket.on('new_comment', function(comment) {
-      // Send it to all clients in the same room
-      restaurants_io.to(comment.id).emit('new_comment', socket.id);
-    });
     
     socket.on('disconnect', function() {
       console.log("Client has disconnected");
@@ -194,7 +189,6 @@ module.exports = function (queries, io) {
   })
 
   router.get('/restaurants/:id', (req, res) => {
-
     const restaurant_id = req.params.id
     queries.getRestaurantDetail(restaurant_id, (value, error) => {
       
@@ -212,6 +206,12 @@ module.exports = function (queries, io) {
     })
   })
 
+  router.post('/restaurants/:id', (req, res) => {
+    const restaurant_id = req.params.id;
+
+    // send new comments to all clients in the same page
+    restaurants_io.to(restaurant_id).emit('new_comment', req.body);
+  })
 
   return router;
 }

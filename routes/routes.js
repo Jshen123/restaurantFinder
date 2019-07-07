@@ -177,14 +177,22 @@ module.exports = function (queries) {
 
     const restaurant_id = req.params.id
     queries.getRestaurantDetail(restaurant_id, (value, error) => {
-      console.log(value);
-      const payload = {value:value, user_id:req.session.user_id};
-      res.render('pages/details', payload)
+      
+      const restaurants = value
+
+      queries.getComments(restaurant_id, (value, error) => {
+        const comments = value
+        const payload = {
+                          value: restaurants,
+                          comments: comments,
+                          user_id: req.session.user_id
+                        }
+        res.render('pages/details', payload)
+
+      })
     })
-
-
-
   })
+
 
   return router;
 }

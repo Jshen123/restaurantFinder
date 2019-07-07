@@ -1,0 +1,21 @@
+.checked {
+    color: orange;
+}
+
+.stars {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.rate-star::before{
+    cursor: pointer;
+}
+
+.rate-star:hover::before{
+    /* the :hover should come first */
+    color: #bada55;
+}
+
+.commentDate {
+    font-size: 12px;
+}

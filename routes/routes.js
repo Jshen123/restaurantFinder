@@ -60,7 +60,6 @@ module.exports = function (queries, io) {
 
     queries.register(username, hash, (value) => {
       if (value.length != 0) {
-        console.log(value[0])
         req.session.user_id = value[0]
         return res.redirect('/')
       } else {
@@ -82,6 +81,7 @@ module.exports = function (queries, io) {
           const hash = value[0].password;
           if(bcrypt.compareSync(password, hash)){
             req.session.user_id = value[0].user_id
+            req.session.username = value[0].username
             return res.redirect('/')
           } else {
           return res.redirect('/login')
@@ -199,7 +199,8 @@ module.exports = function (queries, io) {
         const payload = {
                           value: restaurants,
                           comments: comments,
-                          user_id: req.session.user_id
+                          user_id: req.session.user_id,
+                          username: req.session.username
                         }
         res.render('pages/details', payload)
       })
@@ -208,9 +209,15 @@ module.exports = function (queries, io) {
 
   router.post('/restaurants/:id', (req, res) => {
     const restaurant_id = req.params.id;
-
-    // send new comments to all clients in the same page
-    restaurants_io.to(restaurant_id).emit('new_comment', req.body);
+    const user_id = req.session.user_id
+    const comment = req.body.comment
+    const rating = req.body.rating
+    const username = req.session.username
+    
+    queries.postComment(user_id, restaurant_id, rating, comment, (value, error) => {
+      // send new comments to all clients in the same page
+      restaurants_io.to(restaurant_id).emit('new_comment', req.body);
+    })
 
     res.send('success');
   })

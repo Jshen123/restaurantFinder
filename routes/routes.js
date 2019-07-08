@@ -211,6 +211,8 @@ module.exports = function (queries, io) {
 
     // send new comments to all clients in the same page
     restaurants_io.to(restaurant_id).emit('new_comment', req.body);
+
+    res.send('success');
   })
 
   return router;

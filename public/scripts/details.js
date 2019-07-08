@@ -1,4 +1,4 @@
-(function() {
+$(document).ready(function() {
   var rateStars = document.getElementsByClassName("rate-star");
   var rating = document.querySelector(".stars");
 
@@ -45,21 +45,31 @@
       restaurant_id: id
     }
 
-    urlString = "/restaurants/" + id;
+    var urlString = "/restaurants/" + id;
 
     $.ajax({
       type: "POST",
       url: urlString,
       data: commentData,
-      success: function() {
-        console.log("success");
-      },
+      success: postSuccessHandler,
       error: function() {
-        console.log("failed");
+        console.log('something went wrong');
       }
     })
 
-    //Clear comment
-    $('#comment').val('');
-  })
-}());
+  });
+
+  function postSuccessHandler(success) {
+    if (success) {
+      alert(`You've succesfully posted a review!`);
+
+      //Clear comment
+      $('#comment').val('');
+      
+    } else {
+      alert(`Failed to post a review!`);
+    }
+  };
+
+  
+});

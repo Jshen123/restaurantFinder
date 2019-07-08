@@ -1,4 +1,4 @@
-(function () {
+$(document).ready(function() {
   const socket = io('/restaurants');
 
   // Join a room on connection
@@ -33,4 +33,4 @@
     return ratingHTML;
   }
 
-} ());
+});

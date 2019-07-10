@@ -125,6 +125,8 @@ module.exports = function (queries, io) {
 
           if (val[day] == 'CLOSED'){
             payload.closed.push(val)
+          } else if (val[day] == 'OPEN') {
+            payload.open.push(val)
           } else {
             const businessHours = val[day].split("-")
             const startHour = moment(businessHours[0], "LT").toDate() 

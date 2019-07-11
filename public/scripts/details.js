@@ -26,9 +26,17 @@ $(document).ready(function() {
     }
   }
 
+  // Run these when page loaded
   addClicks();
   setRating(rating.getAttribute("data-rating"));
+  
+  // function to get current date
+  function getDate() {
+    var months = ['January', "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+  }
 
+  // Comment submithandler
   $('#comment-form').submit(function(e) {
     //prevent form submission
     e.preventDefault();
@@ -60,11 +68,12 @@ $(document).ready(function() {
 
   });
 
+  // Post request success handler
   function postSuccessHandler(res) {
     const {err, msg} = res;
-    
+
     if (err) {
-      alert(msg);
+      alert(msg);   // Alert error message
 
     } else {
       alert(`You've succesfully posted a review!`);
@@ -73,11 +82,5 @@ $(document).ready(function() {
       $('#comment').val('');
     }
   };
-
-  // function to get current date
-  function getDate() {
-    var months = ['January', "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
-  }
 
 });

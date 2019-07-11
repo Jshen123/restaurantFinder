@@ -220,7 +220,7 @@ module.exports = function (queries, io) {
       // Empty review
       res.send({err: true, msg: 'Please filled in something to comment!'});
 
-    } else if (!username.replace(/\s/g, '').length){
+    } else if (username){
       // No username
       res.send({err: true, msg: 'No username'});
     } else {
@@ -231,9 +231,11 @@ module.exports = function (queries, io) {
         } else {
           // send new comments to all clients in the same page
           restaurants_io.to(restaurant_id).emit('new_comment', req.body);
-          res.send('success');
+          res.send({err: false, msg: 'success'});
         }
       })*/
+      restaurants_io.to(restaurant_id).emit('new_comment', req.body);
+      res.send({err: false, msg: 'success'});
     }
 
   })

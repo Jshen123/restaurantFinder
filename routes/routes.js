@@ -18,16 +18,16 @@ module.exports = function (queries, io) {
 
   const restaurants_io = io.of('/restaurants');
   restaurants_io.on('connection', function(socket) {
-    console.log("We have a new client: " + socket.id);
+    //console.log("We have a new client: " + socket.id);
 
     socket.on('joinRoom', function(room_id) {
       // Join a room for a specific restaurant
       socket.join(room_id);
-      console.log(`Client ${socket.id} has joined room ${room_id}`);
+      //console.log(`Client ${socket.id} has joined room ${room_id}`);
     });
     
     socket.on('disconnect', function() {
-      console.log("Client has disconnected");
+      //console.log("Client has disconnected");
     });
   });
 
@@ -215,13 +215,27 @@ module.exports = function (queries, io) {
     const comment = req.body.comment
     const rating = req.body.rating
     const username = req.session.username
-    
-    queries.postComment(user_id, restaurant_id, rating, comment, (value, error) => {
-      // send new comments to all clients in the same page
-      restaurants_io.to(restaurant_id).emit('new_comment', req.body);
-    })
 
-    res.send('success');
+    if (!comment.replace(/\s/g, '').length) {
+      // Empty review
+      res.send({err: true, msg: 'Please filled in something to comment!'});
+
+    } else if (!username.replace(/\s/g, '').length){
+      // No username
+      res.send({err: true, msg: 'No username'});
+    } else {
+      /*
+      queries.postComment(user_id, restaurant_id, rating, comment, (value, error) => {
+        if (error) {
+          res.send({err: true, msg: 'Failed to post the comment.'});
+        } else {
+          // send new comments to all clients in the same page
+          restaurants_io.to(restaurant_id).emit('new_comment', req.body);
+          res.send('success');
+        }
+      })*/
+    }
+
   })
 
   return router;

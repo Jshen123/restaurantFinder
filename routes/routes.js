@@ -196,17 +196,18 @@ module.exports = function (queries, io) {
     const restaurant_id = req.params.id
     queries.getRestaurantDetail(restaurant_id, (value, error) => {
       
-      const restaurants = value
+      const restaurants = value;
+      const sortOrder = {clause: 'create_date', order: 'desc'};
 
-      queries.getComments(restaurant_id, (value, error) => {
-        const comments = value
+      queries.getComments(restaurant_id, sortOrder, (value, error) => {
+        const comments = value;
         const payload = {
                           value: restaurants,
                           comments: comments,
                           user_id: req.session.user_id,
                           username: req.session.username
                         }
-        res.render('pages/details', payload)
+        res.render('pages/details', payload);
       })
     })
   })

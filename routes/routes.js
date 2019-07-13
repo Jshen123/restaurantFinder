@@ -131,13 +131,7 @@ module.exports = function (queries, io) {
           } else {
             const businessHours = val[day].split("-")
             const startHour = moment(businessHours[0], "LT").tz("America/Vancouver")
-            const endHour = moment(businessHours[1], "LT").tz("America/Vancouver")
-            console.log(val.name)
-            console.log(val[day])
-            console.log(businessHours)
-            console.log(endHour)
-            // console.log(today.isBetween(startHour, endHour))
-            
+            const endHour = moment(businessHours[1], "LT").tz("America/Vancouver")            
 
             if (today.isBetween(startHour, endHour) || today.isSame(startHour) || today.isSame(endHour)){
               payload.open.push(val)

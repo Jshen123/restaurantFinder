@@ -61,6 +61,7 @@ module.exports = function (queries, io) {
     queries.register(username, hash, (value) => {
       if (value.length != 0) {
         req.session.user_id = value[0]
+        req.session.username = value[1]
         return res.redirect('/')
       } else {
         return res.redirect('/register')

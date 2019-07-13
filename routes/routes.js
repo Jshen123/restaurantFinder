@@ -211,21 +211,22 @@ module.exports = function (queries, io) {
 
   router.post('/restaurants/:id', (req, res) => {
     const restaurant_id = req.params.id;
-    const user_id = req.session.user_id
-    const comment = req.body.comment
-    const rating = req.body.rating
-    const username = req.session.username
+    const user_id = req.session.user_id;
+    const comment = req.body.comment;
+    const rating = req.body.rating;
+    const username = req.session.username;
+
 
     if (!comment.replace(/\s/g, '').length) {
       // Empty review
       res.send({err: true, msg: 'Please filled in something to comment!'});
 
-    } else if (username){
+    } else if (!username){
       // No username
       res.send({err: true, msg: 'No username'});
     } else {
       /*
-      queries.postComment(user_id, restaurant_id, rating, comment, (value, error) => {
+      queries.postComment(restaurant_id, user_id, rating, comment, (value, error) => {
         if (error) {
           res.send({err: true, msg: 'Failed to post the comment.'});
         } else {
@@ -234,6 +235,12 @@ module.exports = function (queries, io) {
           res.send({err: false, msg: 'success'});
         }
       })*/
+      console.log({
+        restaurant_id: restaurant_id, 
+        user_id: user_id, 
+        rating: rating, 
+        comment: comment
+      })
       restaurants_io.to(restaurant_id).emit('new_comment', req.body);
       res.send({err: false, msg: 'success'});
     }

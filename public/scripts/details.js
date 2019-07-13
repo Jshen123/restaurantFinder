@@ -49,9 +49,7 @@ $(document).ready(function() {
     var commentData = {
       rating: numStars,
       comment: comment,
-      username: "",
-      create_date: getDate(),
-      restaurant_id: id
+      create_date: getDate()
     }
 
     var urlString = "/restaurants/" + id;

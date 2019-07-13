@@ -198,6 +198,7 @@ module.exports = function (queries, io) {
       const restaurants = value
 
       queries.getComments(restaurant_id, (value, error) => {
+        console.log(value);
         const comments = value
         const payload = {
                           value: restaurants,
@@ -213,40 +214,57 @@ module.exports = function (queries, io) {
   router.post('/restaurants/:id', (req, res) => {
     const restaurant_id = req.params.id;
     const user_id = req.session.user_id;
-    const comment = req.body.comment;
-    const rating = req.body.rating;
     const username = req.session.username;
+    const rating = req.body.rating;
+    const create_date = req.body.create_date;
+    const comment = req.body.comment;
 
 
     if (!comment.replace(/\s/g, '').length) {
-      // Empty review
+      // empty review
       res.send({err: true, msg: 'Please filled in something to comment!'});
 
-    } else if (!username){
-      // No username
-      res.send({err: true, msg: 'No username'});
+    //} //else if (!username){
+      // no username
+      //res.send({err: true, msg: 'Please login to post a comment.'});
+
     } else {
-      /*
-      queries.postComment(restaurant_id, user_id, rating, comment, (value, error) => {
+      // add comment into database
+      /*queries.postComment(restaurant_id, user_id, rating, comment, (value, error) => {
         if (error) {
+          // failed to add comment
           res.send({err: true, msg: 'Failed to post the comment.'});
+
         } else {
           // send new comments to all clients in the same page
-          restaurants_io.to(restaurant_id).emit('new_comment', req.body);
+          restaurants_io.to(restaurant_id).emit('new_comment', {
+            username: username, 
+            rating: rating, 
+            create_date: create_date, 
+            comment: comment
+          });
+
           res.send({err: false, msg: 'success'});
         }
       })*/
       console.log({
-        restaurant_id: restaurant_id, 
-        user_id: user_id, 
+        user_id: user_id,
+        username: username, 
         rating: rating, 
+        create_date: create_date, 
         comment: comment
-      })
-      restaurants_io.to(restaurant_id).emit('new_comment', req.body);
+      });
+      restaurants_io.to(restaurant_id).emit('new_comment', {
+        username: username, 
+        rating: rating, 
+        create_date: create_date, 
+        comment: comment
+      });
+
       res.send({err: false, msg: 'success'});
     }
 
-  })
+  });
 
   return router;
 }

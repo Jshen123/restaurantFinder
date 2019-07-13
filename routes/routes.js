@@ -201,6 +201,16 @@ module.exports = function (queries, io) {
 
       queries.getComments(restaurant_id, sortOrder, (value, error) => {
         const comments = value;
+
+        // parse create_date
+        var months = ['January', "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        for (var i=0; i<comments.length; i++) {
+          let date = comments[i].create_date.getDate(),
+              month = comments[i].create_date.getMonth(),
+              year = comments[i].create_date.getFullYear();
+          comments[i].create_date = `${months[month]} ${date}, ${year}`;
+        }
+
         const payload = {
                           value: restaurants,
                           comments: comments,
@@ -225,7 +235,11 @@ module.exports = function (queries, io) {
       // empty review
       res.send({err: true, msg: 'Please filled in something to comment!'});
 
-    } else if (!username){
+    } else if (!rating){
+      // no rating
+      res.send({err: true, msg: 'Please enter in a rating.'});
+
+    } else if (!username || !user_id){
       // no username
       res.send({err: true, msg: 'Please login to post a comment.'});
 

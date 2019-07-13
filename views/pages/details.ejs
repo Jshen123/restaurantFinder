@@ -104,22 +104,24 @@
 
         <form id="comment-form">
             <div class="container bg-light">
-                <br>
-                <p align="center"><u><strong>Write a Review</strong></u></p>
-                <div class="stars" data-rating="3">
-                    <span class="fa fa-star rate-star"></span>
-                    <span class="fa fa-star rate-star"></span>
-                    <span class="fa fa-star rate-star"></span>
-                    <span class="fa fa-star rate-star"></span>
-                    <span class="fa fa-star rate-star"></span>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-control" id="comment" placeholder="Thoughts?  Comments?  Put them here!" name="comment"></textarea>
-                </div>
-                <div class="container" style="width: 25%">
-                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                </div>
-                <br>
+                <% if (user_id != null) {%>
+                  <br>
+                  <p align="center"><u><strong>Write a Review</strong></u></p>
+                  <div class="stars" data-rating="3">
+                      <span class="fa fa-star rate-star"></span>
+                      <span class="fa fa-star rate-star"></span>
+                      <span class="fa fa-star rate-star"></span>
+                      <span class="fa fa-star rate-star"></span>
+                      <span class="fa fa-star rate-star"></span>
+                  </div>
+                  <div class="form-group">
+                      <textarea class="form-control" id="comment" placeholder="Thoughts?  Comments?  Put them here!" name="comment"></textarea>
+                  </div>
+                  <div class="container" style="width: 25%">
+                      <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                  </div>
+                  <br>
+                <% } %>
             </div>
         </form>
 

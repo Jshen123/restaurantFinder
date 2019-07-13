@@ -217,12 +217,17 @@ module.exports = function (queries, io) {
     const rating = req.body.rating
     const username = req.session.username
     
-    queries.postComment(user_id, restaurant_id, rating, comment, (value, error) => {
-      // send new comments to all clients in the same page
-      restaurants_io.to(restaurant_id).emit('new_comment', req.body);
-    })
+    if (user_id != null){
+      queries.postComment(restaurant_id, user_id,  rating, comment, (value, error) => {
+        // send new comments to all clients in the same page
+        restaurants_io.to(restaurant_id).emit('new_comment', req.body);
+      })
+  
+      res.send('success');
+    } else {
+      res.send('failure');
+    }
 
-    res.send('success');
   })
 
   return router;

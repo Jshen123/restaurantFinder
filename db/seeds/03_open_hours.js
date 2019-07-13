@@ -46,13 +46,13 @@ exports.seed = function(knex, Promise) {
         },
         {
           restaurant_id: 5,
-          sunday: '11:00am–11:00pm',
+          sunday: '11:00am-11:00pm',
           monday: '10:00am-11:00pm',
           tuesday: '10:00am-11:00pm',
           wednesday: '10:00am-11:00pm',
           thursday: '10:00am-11:00pm',
           friday: '10:00am-12:00am',
-          saturday: '11:00am–11:00pm'
+          saturday: '11:00am-11:00pm'
         },
         {
           restaurant_id: 6,

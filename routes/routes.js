@@ -3,7 +3,7 @@ const router = express.Router();
 const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 
 
@@ -103,10 +103,11 @@ module.exports = function (queries, io) {
 
   // rendering the restaurant page
   router.get('/restaurants', (req, res) => {
-    const today = new Date()
+    const today = moment().tz("America/Vancouver")
     const weekdays = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday']
     // determine which day of the week
-    const day = weekdays[today.getDay()]
+    const day = weekdays[today.day()]
+    // console.log(today)
 
 		queries.getRestaurants((value) => {
 
@@ -129,10 +130,16 @@ module.exports = function (queries, io) {
             payload.open.push(val)
           } else {
             const businessHours = val[day].split("-")
-            const startHour = moment(businessHours[0], "LT").toDate() 
-            const endHour = moment(businessHours[1], "LT").toDate()
+            const startHour = moment(businessHours[0], "LT").tz("America/Vancouver")
+            const endHour = moment(businessHours[1], "LT").tz("America/Vancouver")
+            console.log(val.name)
+            console.log(val[day])
+            console.log(businessHours)
+            console.log(endHour)
+            // console.log(today.isBetween(startHour, endHour))
+            
 
-            if (today >= startHour && today <= endHour){
+            if (today.isBetween(startHour, endHour) || today.isSame(startHour) || today.isSame(endHour)){
               payload.open.push(val)
             } else {
               payload.closed.push(val)

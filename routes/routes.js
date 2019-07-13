@@ -60,8 +60,9 @@ module.exports = function (queries, io) {
 
     queries.register(username, hash, (value) => {
       if (value.length != 0) {
-        req.session.user_id = value[0]
-        req.session.username = value[1]
+        req.session.user_id = value[0].user_id;
+        req.session.username = value[0].username;
+
         return res.redirect('/')
       } else {
         return res.redirect('/register')
@@ -198,7 +199,6 @@ module.exports = function (queries, io) {
       const restaurants = value
 
       queries.getComments(restaurant_id, (value, error) => {
-        console.log(value);
         const comments = value
         const payload = {
                           value: restaurants,
@@ -224,13 +224,13 @@ module.exports = function (queries, io) {
       // empty review
       res.send({err: true, msg: 'Please filled in something to comment!'});
 
-    //} //else if (!username){
+    } else if (!username){
       // no username
-      //res.send({err: true, msg: 'Please login to post a comment.'});
+      res.send({err: true, msg: 'Please login to post a comment.'});
 
     } else {
       // add comment into database
-      /*queries.postComment(restaurant_id, user_id, rating, comment, (value, error) => {
+      queries.postComment(restaurant_id, user_id, rating, comment, (value, error) => {
         if (error) {
           // failed to add comment
           res.send({err: true, msg: 'Failed to post the comment.'});
@@ -246,22 +246,7 @@ module.exports = function (queries, io) {
 
           res.send({err: false, msg: 'success'});
         }
-      })*/
-      console.log({
-        user_id: user_id,
-        username: username, 
-        rating: rating, 
-        create_date: create_date, 
-        comment: comment
       });
-      restaurants_io.to(restaurant_id).emit('new_comment', {
-        username: username, 
-        rating: rating, 
-        create_date: create_date, 
-        comment: comment
-      });
-
-      res.send({err: false, msg: 'success'});
     }
 
   });

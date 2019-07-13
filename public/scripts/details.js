@@ -1,5 +1,4 @@
 $(document).ready(function() {
-  const d = new Date();
   var rateStars = document.getElementsByClassName("rate-star");
   var rating = document.querySelector(".stars");
 
@@ -26,30 +25,24 @@ $(document).ready(function() {
     }
   }
 
-  // Run these when page loaded
   addClicks();
   setRating(rating.getAttribute("data-rating"));
-  
-  // function to get current date
-  function getDate() {
-    var months = ['January', "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
-  }
 
-  // Comment submithandler
   $('#comment-form').submit(function(e) {
     //prevent form submission
     e.preventDefault();
     e.stopPropagation();
 
-    var numStars = rating.getAttribute("data-rating");  //rating
-    var comment = $('#comment').val();                  //comment
-    var id = $("#getId").attr("data-id");               //restaurant_id
+    var numStars = rating.getAttribute("data-rating");
+    var comment = $('#comment').val();
+    var id = $("#getId").attr("data-id");
 
     var commentData = {
       rating: numStars,
       comment: comment,
-      create_date: getDate()
+      username: "",
+      create_date: "",
+      restaurant_id: id
     }
 
     var urlString = "/restaurants/" + id;
@@ -66,19 +59,17 @@ $(document).ready(function() {
 
   });
 
-  // Post request success handler
-  function postSuccessHandler(res) {
-    const {err, msg} = res;
-
-    if (err) {
-      alert(msg);   // Alert error message
-
-    } else {
+  function postSuccessHandler(success) {
+    if (success) {
       alert(`You've succesfully posted a review!`);
 
       //Clear comment
       $('#comment').val('');
+      
+    } else {
+      alert(`Failed to post a review!`);
     }
   };
 
+  
 });

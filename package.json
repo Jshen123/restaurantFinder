@@ -25,6 +25,7 @@
     "twitter": "^1.7.1"
   },
   "devDependencies": {
+    "mocha": "^6.1.4",
     "request": "^2.81.0",
     "tape": "^4.7.0"
   },

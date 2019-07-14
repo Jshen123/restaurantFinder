@@ -20,14 +20,14 @@ app.use(express.urlencoded({extended:false}));
 
 // database configuration for knex
 // if something else isn't setting ENV, use development
-const environment = process.env.NODE_ENV || 'development';  
-// require environment's settings from knexfile  
-const configuration = require('./knexfile')[environment];    
+const environment = process.env.NODE_ENV || 'development';
+// require environment's settings from knexfile
+const configuration = require('./knexfile')[environment];
 // connect to DB via knex using env's settings
 const db = require('knex')(configuration);              
 // import all database queries functions
 const queries = require("./lib/queries.js")(db);
-// import routes 
+// import routes
 const Routes = require("./routes/routes.js")(queries);
 
 // Twitter API

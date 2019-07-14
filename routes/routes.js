@@ -100,11 +100,11 @@ module.exports = function (queries) {
 			} else {
 
         const payload = {
-                          user_id: req.session.user_id, 
+                          user_id: req.session.user_id,
                           open:[],
                           closed:[]
                         };
-        
+
         value.forEach(function(val){
 
 
@@ -112,7 +112,7 @@ module.exports = function (queries) {
             payload.closed.push(val)
           } else {
             const businessHours = val[day].split("-")
-            const startHour = moment(businessHours[0], "LT").toDate() 
+            const startHour = moment(businessHours[0], "LT").toDate()
             const endHour = moment(businessHours[1], "LT").toDate()
 
             if (today >= startHour && today <= endHour){
@@ -125,7 +125,7 @@ module.exports = function (queries) {
 				res.render('pages/restaurants', payload)
 			}
     })
-    
+
 	})
 
 
@@ -168,16 +168,16 @@ module.exports = function (queries) {
       } else {
         res.render('pages/add', {user_id: req.session.user_id});
       }
-    })    
+    })
 
-    
+
   })
 
   router.get('/restaurants/:id', (req, res) => {
 
     const restaurant_id = req.params.id
     queries.getRestaurantDetail(restaurant_id, (value, error) => {
-      
+
       const restaurants = value
 
       queries.getComments(restaurant_id, (value, error) => {

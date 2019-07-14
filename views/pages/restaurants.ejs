@@ -68,7 +68,39 @@
                           <p class="dropdown-item">Saturday - <%= val.saturday %></p>
                         </div>
                         <ul class="list-group list-group-flush mt-3">
-                          <li class="list-group-item"><%= val.address %></li>
+                          <li class="list-group-item">
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal<%= restId %>">
+                              Open in Map
+                            </button>
+
+                            <div class="modal fade" id="modal<%= restId %>" tabindex="-1" role="dialog" aria-labelledby="forModal<%= restId %>" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="modal<%= restId %>Title">Map</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="mapouter">
+                                      <div class="gmap_canvas">
+                                          <% mapPath = "https://maps.google.com/maps?q=" + val.address + "&t=&z=15&ie=UTF8&iwloc=&output=embed" %>
+                                          <iframe width="465" height="500" id="gmap_canvas" src="<%= mapPath %>" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                                          </iframe>
+                                          <a href="https://www.yellowrocketagency.com/%22%3E"></a>
+                                      </div>
+                                      <style>.mapouter{position:relative;text-align:left;height:500px;width:550px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:550px;}</style>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                          </li>
                           <%= dollars = "";%>
                           <% if (val.price == 1) {dollars = "$";} else if (val.price == 2) {dollars = "$$";} else {dollars = "$$$"} %>
                           <li class="list-group-item"><%= dollars %></li>
@@ -111,7 +143,39 @@
                             <p class="dropdown-item">Saturday - <%= val.saturday %></p>
                           </div>
                           <ul class="list-group list-group-flush mt-3">
-                            <li class="list-group-item"><%= val.address %></li>
+                            <li class="list-group-item">
+                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal<%= restId %>">
+                                Open in Map
+                              </button>
+  
+                              <div class="modal fade" id="modal<%= restId %>" tabindex="-1" role="dialog" aria-labelledby="forModal<%= restId %>" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="modal<%= restId %>Title">Map</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <div class="mapouter">
+                                        <div class="gmap_canvas">
+                                            <% mapPath = "https://maps.google.com/maps?q=" + val.address + "&t=&z=15&ie=UTF8&iwloc=&output=embed" %>
+                                            <iframe width="465" height="500" id="gmap_canvas" src="<%= mapPath %>" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                                            </iframe>
+                                            <a href="https://www.yellowrocketagency.com/%22%3E"></a>
+                                        </div>
+                                        <style>.mapouter{position:relative;text-align:left;height:500px;width:550px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:550px;}</style>
+                                      </div>
+                                    </div>
+                                    <div class="modal-footer">
+  
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                            </li>
                             <%= dollars = "";%>
                             <% if (val.price == 1) {dollars = "$";} else if (val.price == 2) {dollars = "$$";} else {dollars = "$$$"} %>
                             <li class="list-group-item"><%= dollars %></li>

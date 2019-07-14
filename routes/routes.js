@@ -190,7 +190,18 @@ module.exports = function (queries, io) {
       }
     })    
 
-    
+  })
+
+  router.post('/admin/add', (req, res) => {
+    console.log(req.body.name);
+  })
+
+  router.delete('/admin/delete/:id', (req, res) => {
+    const restaurant_id = req.params.id;
+
+    queries.deleteRestaurant(restaurant_id, (value, error) => {
+      res.redirect(303, '/admin');
+    })
   })
 
   router.get('/restaurants/:id', (req, res) => {

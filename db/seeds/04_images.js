@@ -79,6 +79,66 @@ exports.seed = function(knex, Promise) {
         {
           restaurant_id: 19,
           image_path: "/Pictures/restaurant_19.jpg"
+        },
+        {
+          restaurant_id: 20,
+          image_path: "/Pictures/restaurant_20.jpg"
+        },
+        {
+          restaurant_id: 21,
+          image_path: "/Pictures/restaurant_21.jpg"
+        },
+        {
+          restaurant_id: 22,
+          image_path: "/Pictures/restaurant_22.jpg"
+        },
+        {
+          restaurant_id: 23,
+          image_path: "/Pictures/restaurant_23.jpg"
+        },
+        {
+          restaurant_id: 24,
+          image_path: "/Pictures/restaurant_24.jpg"
+        },
+        {
+          restaurant_id: 25,
+          image_path: "/Pictures/restaurant_25.jpg"
+        },
+        {
+          restaurant_id: 26,
+          image_path: "/Pictures/restaurant_26.jpg"
+        },
+        {
+          restaurant_id: 27,
+          image_path: "/Pictures/restaurant_27.jpg"
+        },
+        {
+          restaurant_id: 28,
+          image_path: "/Pictures/restaurant_28.jpg"
+        },
+        {
+          restaurant_id: 29,
+          image_path: "/Pictures/restaurant_29.jpg"
+        },
+        {
+          restaurant_id: 30,
+          image_path: "/Pictures/restaurant_30.jpg"
+        },
+        {
+          restaurant_id: 31,
+          image_path: "/Pictures/restaurant_31.jpg"
+        },
+        {
+          restaurant_id: 32,
+          image_path: "/Pictures/restaurant_32.jpg"
+        },
+        {
+          restaurant_id: 33,
+          image_path: "/Pictures/restaurant_33.jpg"
+        },
+        {
+          restaurant_id: 34,
+          image_path: "/Pictures/restaurant_34.jpg"
         }
       ]);
     });

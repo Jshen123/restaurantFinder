@@ -193,7 +193,7 @@ module.exports = function (queries, io) {
   })
 
   router.post('/admin/add', (req, res) => {
-    console.log(req.body.name);
+    console.log(req.body);
   })
 
   router.delete('/admin/delete/:id', (req, res) => {

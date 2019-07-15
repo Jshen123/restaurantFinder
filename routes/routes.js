@@ -193,6 +193,14 @@ module.exports = function (queries, io) {
     
   })
 
+  router.delete('/admin/delete/:id', (req, res) => {
+    const restaurant_id = req.params.id;
+
+    queries.deleteRestaurant(restaurant_id, (value, error) => {
+      return res.redirect('/admin');
+    })
+  })
+
   router.get('/restaurants/:id', (req, res) => {
     const restaurant_id = req.params.id
     queries.getRestaurantDetail(restaurant_id, (value, error) => {

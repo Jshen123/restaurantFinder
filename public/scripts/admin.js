@@ -7,6 +7,7 @@ $(document).ready(function() {
             type: "DELETE",
             success: function() {
                 console.log("success");
+                window.location.reload(true);
             },
             error: function() {
                 console.log("failed");

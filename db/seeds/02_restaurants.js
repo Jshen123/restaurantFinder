@@ -137,6 +137,111 @@ exports.seed = function(knex, Promise) {
           address: '8910 University High St, Burnaby, BC V5A 4X6',
           type: 'Japanese restaurant',
           description: 'Test restaurant'
+        },
+        {
+          name: 'Mackenzie Café',
+          price: 1,
+          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          type: 'Cafeteria',
+          description: 'Test restaurant'
+        },
+        {
+          name: 'Renaissance Coffee AQ',
+          price: 2,
+          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          type: 'Coffee shop',
+          description: 'Test restaurant'
+        },
+        {
+          name: 'Junction 65',
+          price: 2,
+          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          type: 'Hamburger Restaurant',
+          description: 'Test restaurant'
+        },
+        {
+          name: 'Higher Grounds Coffee Shop',
+          price: 2,
+          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          type: 'Coffee shop',
+          description: 'Test restaurant'
+        },
+        {
+          name: 'Guadalupe Handmade Burritos',
+          price: 2,
+          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          type: 'Tex-Mex restaurant',
+          description: 'Test restaurant'
+        },
+        {
+          name: 'Noodle Waffle Cafe',
+          price: 2,
+          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          type: 'Hong Kong restaurant',
+          description: 'Test restaurant'
+        },
+        {
+          name: 'Gawon Korean Restaurant',
+          price: 2,
+          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          type: 'Korean restaurant',
+          description: 'Test restaurant'
+        },
+        {
+          name: 'Bubble World',
+          price: 1,
+          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          type: 'Bubble Tea Shop',
+          description: 'Test restaurant'
+        },
+        {
+          name: 'The Study Public House',
+          price: 2,
+          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          type: 'Pub',
+          description: 'Test restaurant'
+        },
+        {
+          name: 'Jugo Juice',
+          price: 2,
+          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          type: 'Juice shop',
+          description: 'Test restaurant'
+        },
+        {
+          name: 'Starbucks',
+          price: 2,
+          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          type: 'Coffee Shop',
+          description: 'Test restaurant'
+        },
+        {
+          name: 'Tim Hortons',
+          price: 1,
+          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          type: 'Cafe',
+          description: 'Test restaurant'
+        },
+        {
+          name: 'Residence Dining Hall',
+          price: 2,
+          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          type: 'Cafeteria',
+          description: 'Test restaurant'
+        },
+        {
+          name: 'Renaissance Coffee ASB',
+          price: 2,
+          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          type: 'Coffee shop',
+          description: 'Test restaurant'
+        },
+        {
+          name: 'Menchie\'s Frozen Yogurt',
+          price: 2,
+          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          type: 'Frozen yogurt shop',
+          description: 'Test restaurant'
         }
       ]);
     });

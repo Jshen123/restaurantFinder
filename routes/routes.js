@@ -113,15 +113,11 @@ module.exports = function (queries, io) {
 
 		queries.getRestaurants((value) => {
 
-			if (value.length == 0){
-				return res.redirect('/restaurants')
-			} else {
-
-        const payload = {
-                          user_id: req.session.user_id, 
-                          open:[],
-                          closed:[]
-                        };
+      const payload = {
+                        user_id: req.session.user_id, 
+                        open:[],
+                        closed:[]
+                      };
         
         value.forEach(function(val){
 
@@ -143,7 +139,6 @@ module.exports = function (queries, io) {
           }
         })
 				res.render('pages/restaurants', payload)
-			}
     })
     
 	})
@@ -163,11 +158,7 @@ module.exports = function (queries, io) {
         return res.redirect('/');
       } else {
         queries.getRestaurants((value) => {
-          if (value.length == 0){
-            return res.redirect('/admin')
-          } else {
             res.render('pages/admin', {value:value, user_id: req.session.user_id})
-          }
         })
       }
     })

@@ -323,7 +323,7 @@ module.exports = function (queries, io) {
   })
 
   router.post('/admin/edit/:id', (req, res) => {
-    console.log(JSON.stringify(req.body));
+    console.log(req.params.id);
   })
 
   return router;

@@ -34,7 +34,7 @@ function getPrice(priceString) {
 }
 
 $(document).ready(function() {
-    $('#add-form').submit(function() {
+    $('#edit-form').submit(function() {
         var rName = $('#restaurantName').val();
         var rAddress = $('#restaurantAddress').val();
         var rDescription = $('#restaurantDesc').val();
@@ -68,7 +68,7 @@ $(document).ready(function() {
             hours[i] = restaurantHours;
         }
 
-        var restData = {
+        var editData = {
             name: rName,
             address: rAddress,
             description: rDescription,
@@ -82,10 +82,14 @@ $(document).ready(function() {
             saturday: hours[6]
         }
 
+        var id = $("#getId").attr("data-id"); 
+
+        //console.log(JSON.stringify(editData));
+
         $.ajax({
-            type: "post",
-            url: "/admin/add",
-            data: restData,
+            type: "POST",
+            url: "/admin/edit/" + id,
+            data: editData,
             success: function() {
                 console.log("success");
             },

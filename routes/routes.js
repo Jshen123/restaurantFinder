@@ -193,7 +193,35 @@ module.exports = function (queries, io) {
   })
 
   router.post('/admin/add', (req, res) => {
-    console.log(req.body);
+    const name = req.body.name;
+    const address = req.body.address;
+    const description = req.body.description;
+    const price = req.body.price;
+    const sunday = req.body.sunday;
+    const monday = req.body.monday;
+    const tuesday = req.body.tuesday;
+    const wednesday = req.body.wednesday;
+    const thursday = req.body.thursday;
+    const friday = req.body.friday;
+    const saturday = req.body.saturday;
+
+    queries.addRestaurant(name, address, description, price, (value, error) => {
+
+      queries.getLatestRestaurantId((value, error) => {
+        
+        const restaurant_id = value[0].restaurant_id;
+
+        queries.addOpenHours(restaurant_id, sunday, monday, tuesday, wednesday, thursday, friday, saturday, (value, error) => {
+          
+          const image_path = "/Pictures/restaurant_" + restaurant_id.toString() + ".jpg";
+
+          queries.addImage(restaurant_id, image_path, (value, error) => {
+
+            return res.redirect('/admin/add');
+          })
+        })
+      })
+    })
   })
 
   router.get('/restaurants/:id', (req, res) => {

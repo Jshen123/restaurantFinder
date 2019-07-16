@@ -82,7 +82,7 @@ $(document).ready(function() {
             saturday: hours[6]
         }
 
-        var id = $("#getId").attr("data-id"); 
+        var id = $("#edit-form").attr("data-id"); 
 
         //console.log(JSON.stringify(editData));
 

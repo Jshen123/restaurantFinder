@@ -48,9 +48,9 @@ exports.seed = function(knex, Promise) {
           description: 'Test Restaurant'
         },
         {
-          name: 'Tim Hortons',
+          name: 'Tim Hortons Cornerstone',
           price: 1,
-          address: 'Tim%20Hortons%20SFU%20Cornerstone',
+          address: 'Tim%20Hortons%20University%20High',
           type: 'Coffee shop',
           description: 'Test Restaurant'
         },
@@ -99,14 +99,14 @@ exports.seed = function(knex, Promise) {
         {
           name: 'Subway',
           price: 1,
-          address: 'Subway%20SFU%20Mackenzie%20S',
+          address: 'Subway%20SFU',
           type: 'Sandwich shop',
           description: 'Test restaurant'
         },
         {
-          name: 'Starbucks',
+          name: 'Starbucks Cornerstone',
           price: 2,
-          address: 'Starbucks%20-%20University%20High%20St%20Compass',
+          address: 'Starbucks%20-%20Universtiy%20High%20St.%20V5A%204Y6',
           type: 'Coffee shop',
           description: 'Test restaurant'
         },
@@ -141,105 +141,105 @@ exports.seed = function(knex, Promise) {
         {
           name: 'Mackenzie Café',
           price: 1,
-          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          address: 'Mackenzie%20Cafe%20SFU',
           type: 'Cafeteria',
           description: 'Test restaurant'
         },
         {
           name: 'Renaissance Coffee AQ',
           price: 2,
-          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          address: 'Renaissance%20Coffee%20SFU',
           type: 'Coffee shop',
           description: 'Test restaurant'
         },
         {
-          name: 'Junction 65',
+          name: 'Smoke\'s Poutinerie',
           price: 2,
-          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          address: 'Smoke\'s%20Poutinerie%20SFU',
           type: 'Hamburger Restaurant',
           description: 'Test restaurant'
         },
         {
           name: 'Higher Grounds Coffee Shop',
           price: 2,
-          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          address: 'Higher%20Grounds%20Coffee%20Shop%20SFU',
           type: 'Coffee shop',
           description: 'Test restaurant'
         },
         {
           name: 'Guadalupe Handmade Burritos',
           price: 2,
-          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          address: 'Guadalupe%20SFU',
           type: 'Tex-Mex restaurant',
           description: 'Test restaurant'
         },
         {
           name: 'Noodle Waffle Cafe',
           price: 2,
-          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          address: 'Noodle%20Waffle%20Cafe',
           type: 'Hong Kong restaurant',
           description: 'Test restaurant'
         },
         {
           name: 'Gawon Korean Restaurant',
           price: 2,
-          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          address: 'Gawon%20Korean%20Restaurant',
           type: 'Korean restaurant',
           description: 'Test restaurant'
         },
         {
           name: 'Bubble World',
           price: 1,
-          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          address: 'Bubble%20World%20SFU',
           type: 'Bubble Tea Shop',
           description: 'Test restaurant'
         },
         {
           name: 'The Study Public House',
           price: 2,
-          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          address: 'The%20Study%20Public%20House',
           type: 'Pub',
           description: 'Test restaurant'
         },
         {
           name: 'Jugo Juice',
           price: 2,
-          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          address: '49.279388, -122.915710',
           type: 'Juice shop',
           description: 'Test restaurant'
         },
         {
-          name: 'Starbucks',
+          name: 'Starbucks West Mall',
           price: 2,
-          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          address: 'Starbucks%20SFU%20West%20Mall',
           type: 'Coffee Shop',
           description: 'Test restaurant'
         },
         {
-          name: 'Tim Hortons',
+          name: 'Tim Hortons West Mall',
           price: 1,
-          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          address: 'Tim%20Hortons%20SFU%20West%20Mall',
           type: 'Cafe',
           description: 'Test restaurant'
         },
         {
           name: 'Residence Dining Hall',
           price: 2,
-          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          address: 'Residence%20Dining%20Hall',
           type: 'Cafeteria',
           description: 'Test restaurant'
         },
         {
           name: 'Renaissance Coffee ASB',
           price: 2,
-          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          address: '49.277879, -122.914629',
           type: 'Coffee shop',
           description: 'Test restaurant'
         },
         {
           name: 'Menchie\'s Frozen Yogurt',
           price: 2,
-          address: '8888 University Dr, Burnaby, BC V5A 1S6',
+          address: 'Menchie\'s%20SFU',
           type: 'Frozen yogurt shop',
           description: 'Test restaurant'
         }

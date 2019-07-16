@@ -193,6 +193,14 @@ module.exports = function (queries, io) {
 
   })
 
+  router.delete('/admin/delete/:id', (req, res) => {
+    const restaurant_id = req.params.id;
+
+    queries.deleteRestaurant(restaurant_id, (value, error) => {
+      return res.redirect('/admin');
+    })
+  })
+
   router.get('/restaurants/:id', (req, res) => {
     const restaurant_id = req.params.id
     queries.getRestaurantDetail(restaurant_id, (value, error) => {
@@ -266,6 +274,26 @@ module.exports = function (queries, io) {
     }
 
   });
+
+  router.get('/admin/edit/:id', (req, res) => {
+    const restaurant_id = req.params.id
+    queries.getRestaurantDetail(restaurant_id, (value, error) => {
+      
+      const restaurants = value;
+
+      const payload = {
+                        value: restaurants,
+                        user_id: req.session.user_id,
+                        username: req.session.username
+                      }
+
+      res.render('pages/edit', payload);
+    })
+  })
+
+  router.post('/admin/edit/:id', (req, res) => {
+    console.log(JSON.stringify(req.body));
+  })
 
   return router;
 }

@@ -225,7 +225,6 @@ module.exports = function (queries, io) {
   })
 
   router.post('/admin/edit/:id', (req, res) => {
-    // console.log(req.params.id)
     const restaurant_id = req.params.id;
     const name = req.body.name;
     const address = req.body.address;
@@ -241,7 +240,7 @@ module.exports = function (queries, io) {
 
     queries.updateRestaurant(restaurant_id, name, price, address, description, (value, error) => {
 
-      queries.updateOpenHours(restaurand_id, sunday, monday, tuesday, wednesday, thursday, friday, saturday, (value, error) => {
+      queries.updateOpenHours(restaurant_id, sunday, monday, tuesday, wednesday, thursday, friday, saturday, (value, error) => {
 
         return res.redirect('/admin');
       })

@@ -224,6 +224,30 @@ module.exports = function (queries, io) {
     })
   })
 
+  router.post('/admin/edit/:id', (req, res) => {
+    // console.log(req.params.id)
+    const restaurant_id = req.params.id;
+    const name = req.body.name;
+    const address = req.body.address;
+    const description = req.body.description;
+    const price = req.body.price;
+    const sunday = req.body.sunday;
+    const monday = req.body.monday;
+    const tuesday = req.body.tuesday;
+    const wednesday = req.body.wednesday;
+    const thursday = req.body.thursday;
+    const friday = req.body.friday;
+    const saturday = req.body.saturday;
+
+    queries.updateRestaurant(restaurant_id, name, price, address, description, (value, error) => {
+
+      queries.updateOpenHours(restaurand_id, sunday, monday, tuesday, wednesday, thursday, friday, saturday, (value, error) => {
+
+        return res.redirect('/admin');
+      })
+    })
+  })
+
   router.delete('/admin/delete/:id', (req, res) => {
     const restaurant_id = req.params.id;
 
@@ -320,10 +344,6 @@ module.exports = function (queries, io) {
 
       res.render('pages/edit', payload);
     })
-  })
-
-  router.post('/admin/edit/:id', (req, res) => {
-    console.log(JSON.stringify(req.body));
   })
 
   return router;

@@ -6,11 +6,12 @@ var server = require('../index.js');
 const environment = process.env.NODE_ENV || 'test';
 const configuration = require('../knexfile')[environment];
 const db = require('knex')(configuration);
+const queries = require("../lib/queries.js")(db);
 
 chai.use(chaiHttp);
 describe('Populate database', () =>{
 
-  beforeEach(function(done) {
+  before(function(done) {
     db.migrate.rollback()
     .then(function() {
       db.migrate.latest()
@@ -23,7 +24,7 @@ describe('Populate database', () =>{
     });
   });
 
-  afterEach(function(done) {
+  after(function(done) {
     db.migrate.rollback()
     .then(function() {
       done();
@@ -31,16 +32,25 @@ describe('Populate database', () =>{
   });
 
   describe('Users', () => {
-    // it('should display all restaurants on the homepage',(done) => {
-    //   chai.request(server).get('/restaurants').end((err, res)=>{
-    //     res.should.have.status(200);
-    //     res.body.should.be.a('array');
-    //     done();
-    //   });
-    // });
+
+    it('should display all restaurants on the homepage',(done) => {
+
+      chai.request(server).get('/restaurants').end((err, res) => {
+
+        res.should.have.status(200);
+
+        queries.countRestaurants((value, error) => {
+
+          chai.expect(value[0].count, 34);
+          done();
+        });
+      });
+    });
 
     it('should be redirected to /login on "login" button press', (done) => {
-      chai.request(server).get('/login').redirects(0).end((err, res)=>{
+
+      chai.request(server).get('/login').redirects(0).end((err, res) => {
+
         res.should.have.status(200);
         chai.expect('Location', '/login');
         done();
@@ -48,7 +58,9 @@ describe('Populate database', () =>{
     });
 
     it('should be redirected to /restaurants on successful login', (done) => {
+
       chai.request(server).post('/login').send({username: 'user1', password: 'test'}).end((err, res)=>{
+
         res.should.have.status(200);
         chai.expect('Location', '/restaurants');
         chai.expect((db.select('username').from('users').where({username: 'user1'} && {admin: false})));
@@ -66,7 +78,9 @@ describe('Populate database', () =>{
     // });
 
     it('should be redirected to /restaurants on successful logout', (done) => {
+
       chai.request(server).post('/logout').end((err, res)=>{
+
         const logoutSessionId = res.session_user_id;
         chai.expect(logoutSessionId).to.be.undefined;
         res.should.have.status(200);
@@ -76,7 +90,9 @@ describe('Populate database', () =>{
     });
 
     it('should be redirected to /restaurants on successful registration', (done) => {
+
       chai.request(server).post('/register').send({username: 'user3', password: 'test'}).end((err, res)=>{
+
         res.should.have.status(200);
         chai.expect('Location', '/restaurants');
         chai.expect((db.select('username').from('users').where({username: 'user3'} && {admin: false})));
@@ -85,30 +101,52 @@ describe('Populate database', () =>{
       });
     });
 
-    // it('should be able to leave a comment on a restaurant page', (done) => {
-    //   let addedComment = {
-    //     comment:'testing comment.',
-    //     rating: 4,
-    //   }
-    //   chai.request(server).post('/login').send({username: 'user1', password: 'test'}).end((err, res)=>{
-    //     chai.request(server).post('/restaurants/1').send(addedComment).end((err, res)=> {
-    //       res.should.have.status(200);
-    //       chai.expect('Location', 'restaurants/1');
-    //       done();
-    //     });
-    //   });
-    // });
+    it('should leave a comment on /restaurants/1 POST (logged in)', (done) => {
 
-    it('should not be able to leave a comment when not logged in', (done) => {
-      let addedComment = {
-        comment:'testing comment.',
-        rating: 4,
-      }
-        chai.request(server).post('/restaurants/2').send(addedComment).end((err, res)=> {
-          res.should.have.status(200);
-          chai.expect('Location', 'restaurants/1');
-          done();
+      var restaurant_id = 1;
+      var agent = chai.request.agent(server)
+
+      queries.countComments(restaurant_id, (value, error) => {
+
+        var beforeCount = value[0].count;
+        var testComment = {comment:'Test comment', rating:5};
+
+        agent.post('/login').send({username:'user1', password:'test'}).then((err, res) => {
+
+          return agent.post('/restaurants/' + restaurant_id.toString()).send(testComment).then((err, res) => {
+
+            queries.countComments(restaurant_id, (value, error) => {
+
+              var afterCount = value[0].count;
+              (afterCount - beforeCount).should.equal(1);
+              done();
+            });
+          });
         });
+      });
+    });
+
+    it('should not leave a comment on /restaurants/1 POST (logged out)', (done) => {
+
+      var restaurant_id = 1;
+
+      queries.countComments(restaurant_id, (value, error) => {
+
+        beforeCount = value[0].count;
+        var testComment = {comment:'Test comment.', rating: 5}; 
+
+        chai.request(server).post('/restaurants/1').send(testComment).end((err, res) => {
+
+          res.should.have.status(200);
+
+          queries.countComments(restaurant_id, (value, error) => {
+
+            var afterCount = value[0].count;
+            (afterCount - beforeCount).should.equal(0);
+            done();
+          });
+        });
+      });
     });
 
     // it('should return validation errors if registration request is invalid', (done) => {
@@ -120,6 +158,7 @@ describe('Populate database', () =>{
   });
 
   describe('Admins', () => {
+
     it('should be redirected to /restaurants on successful login', (done) => {
       chai.request(server).post('/login').send({username: 'admin', password: 'test'}).end((err, res)=>{
         res.should.have.status(200);
@@ -130,20 +169,57 @@ describe('Populate database', () =>{
       });
     });
 
-    // it('should add a single restaurant on add restaurant', (done) => {
-    //  chai.request(server).get('/restaurants').end(function(err, res) {
-    //    var num_user = res.body.length;
-    //    let addedRestaurant = {
-    //     name: 'Tim Hortons', price: 2, address: '8888 University Dr E, Burnaby, BC V5A 1S6',
-    //     type: 'Fast food restaurant', description: 'Test Restaurant'
-    //   }
-    //    chai.request(server).post('/admin/add').send(addedRestaurant).end((err, res)=>{
-    //        var num_user2 = res.body.length; // assuming response contains restaurant array
-    //        (num_user2 - num_user).should.equal(1);
-    //        done();
-    //      });
-    //    });
-    //  });
+    it('should add a single restaurant on /admin/add POST', (done) => {
+
+      queries.countRestaurants((value, error) => {
+
+        var beforeCount = value[0].count;
+
+        var testRestaurant = {
+          name:'Test name', price:2, address:'Test address', description:'Test Restaurant',
+          sunday:'10:00am-10:00pm', monday:'10:00am-10:00pm', tuesday: '10:00am-10:00pm',
+          wednesday: '10:00am-10:00pm', thursday: '10:00am-10:00pm', friday: '10:00am-10:00pm',
+          saturday: '10:00am-10:00pm' 
+        };
+
+        chai.request(server).post('/admin/add').send(testRestaurant).end((err, res) => {
+
+          res.should.have.status(200);
+
+          queries.countRestaurants((value, error) => {
+            
+            var afterCount = value[0].count;
+            (afterCount - beforeCount).should.equal(1);
+            done();
+          });
+        });
+      });
+    });
+
+    it('should delete a single restaurant on /admin/delete/:id POST', (done) => {
+
+      queries.countRestaurants((value, error) => {
+
+        var beforeCount = value[0].count;
+
+        queries.getLatestRestaurantId((value, error) => {
+
+          var restaurant_id = value[0].restaurant_id
+
+          chai.request(server).delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
+
+            res.should.have.status(200);
+
+            queries.countRestaurants((value, error) => {
+
+              var afterCount = value[0].count;
+              (beforeCount - afterCount).should.equal(1);
+              done();
+            });
+          });
+        });
+      });
+    });
 
     // no rejection for invalid post yet
     // it('should successfully reject a POST request using invalid params', (done) => {
@@ -160,6 +236,5 @@ describe('Populate database', () =>{
     //     });
     //   });
     // });
-
    });
 });

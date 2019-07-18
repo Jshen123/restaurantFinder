@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
     table.string('address');
     table.string('type');
     table.string('description')
+    table.specificType('tag', 'text ARRAY')
   })
 };
 

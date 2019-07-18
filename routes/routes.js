@@ -195,8 +195,9 @@ module.exports = function (queries, io) {
     const thursday = req.body.thursday;
     const friday = req.body.friday;
     const saturday = req.body.saturday;
+    const tags = ['good', 'food', 'cheap']
 
-    queries.addRestaurant(name, price, address, description, (value, error) => {
+    queries.addRestaurant(name, price, address, description, tags, (value, error) => {
 
       queries.getLatestRestaurantId((value, error) => {
         

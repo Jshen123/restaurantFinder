@@ -4,8 +4,8 @@ exports.up = function(knex, Promise) {
     table.string('name');
   	table.integer('price');
     table.string('address');
-    table.string('type');
     table.string('description')
+    table.specificType('tag', 'text ARRAY')
   })
 };
 

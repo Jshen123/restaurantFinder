@@ -80,18 +80,25 @@ module.exports = function (queries, io) {
     try{
       queries.Authenticate(username, (value) => {
         if (value.length != 0) {
+          // Username exist
           const hash = value[0].password;
           if(bcrypt.compareSync(password, hash)){
-            req.session.user_id = value[0].user_id
-            req.session.username = value[0].username
-            return res.redirect('/')
+            // Correct password
+            req.session.user_id = value[0].user_id;
+            req.session.username = value[0].username;
+            res.send({err: false, msg: 'Login success.'});
           } else {
-          return res.redirect('/login')
+            // Incorrect password
+            res.send({err: true, msg: 'Incorrect username or password.'});
           }
+        } else {
+          // No such username
+          res.send({err: true, msg: 'Incorrect username or password.'});
         }
       })
     } catch(e) {
-      res.redirect('/login')
+      // Error
+      res.send({err: true, msg: 'Error'});
     }
 
 
@@ -111,7 +118,7 @@ module.exports = function (queries, io) {
     const day = weekdays[today.day()]
     // console.log(today)
 
-		queries.getRestaurants((value) => {
+    queries.getRestaurants((value) => {
 
       const payload = {
                         user_id: req.session.user_id, 
@@ -138,14 +145,14 @@ module.exports = function (queries, io) {
             }
           }
         })
-				res.render('pages/restaurants', payload)
+        res.render('pages/restaurants', payload)
     })
     
-	})
+  })
 
 
-	// rendering the admin page
-	router.get('/admin', (req, res) => {
+  // rendering the admin page
+  router.get('/admin', (req, res) => {
 
     if (req.session.user_id == null){
       return res.redirect('/')

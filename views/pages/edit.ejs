@@ -20,7 +20,7 @@
 
     <div class="container mt-5">
         <div class="jumbotron">
-            <form id="edit-form" data-id="<%= value[0].restaurant_id %>">
+            <form id="edit-form" enctype="multipart/form-data" action="/admin/edit/<%= value[0].restaurant_id %>" method="POST" data-id="<%= value[0].restaurant_id %>">
                 <div class="form-group">
                     <div class="row">
                         <div class="col">
@@ -46,7 +46,7 @@
                 <div class="form-group">
                     Price Rating <br>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="priceRadio" id="radio1" value="$">
+                        <input class="form-check-input" type="radio" name="priceRadio" id="radio1" value="$" checked>
                         <label class="form-check-label" for="radio1">$</label>
                     </div>
                     <div class="form-check">
@@ -70,11 +70,11 @@
                         </div>
                         <div class="col">
                             <label for="timeFrom">From:</label>
-                            <input type="time" id="timeFrom0" value="<%= fromTime24(value[0].sunday) %>">
+                            <input type="time" id="timeFrom0" name="timeFrom0" value="<%= fromTime24(value[0].sunday) %>">
                         </div>
                         <div class="col">
                             <label for="timeTo">To:</label>
-                            <input type="time" id="timeTo0" value="<%= toTime24(value[0].sunday) %>">
+                            <input type="time" id="timeTo0" name="timeTo0" value="<%= toTime24(value[0].sunday) %>">
                         </div>
                     </div>
 
@@ -86,11 +86,11 @@
                         </div>
                         <div class="col">
                             <label for="timeFrom">From:</label>
-                            <input type="time" id="timeFrom1" value="<%= fromTime24(value[0].monday) %>">
+                            <input type="time" id="timeFrom1" name="timeFrom1" value="<%= fromTime24(value[0].monday) %>">
                         </div>
                         <div class="col">
                             <label for="timeTo">To:</label>
-                            <input type="time" id="timeTo1" value="<%= toTime24(value[0].monday) %>">
+                            <input type="time" id="timeTo1" name="timeTo1" value="<%= toTime24(value[0].monday) %>">
                         </div>
                     </div>
 
@@ -102,11 +102,11 @@
                         </div>
                         <div class="col">
                             <label for="timeFrom">From:</label>
-                            <input type="time" id="timeFrom2" value="<%= fromTime24(value[0].tuesday) %>">
+                            <input type="time" id="timeFrom2" name="timeFrom2" value="<%= fromTime24(value[0].tuesday) %>">
                         </div>
                         <div class="col">
                             <label for="timeTo">To:</label>
-                            <input type="time" id="timeTo2" value="<%= toTime24(value[0].tuesday) %>">
+                            <input type="time" id="timeTo2" name="timeTo2" value="<%= toTime24(value[0].tuesday) %>">
                         </div>
                     </div>
 
@@ -118,11 +118,11 @@
                         </div>
                         <div class="col">
                             <label for="timeFrom">From:</label>
-                            <input type="time" id="timeFrom3" value="<%= fromTime24(value[0].wednesday) %>">
+                            <input type="time" id="timeFrom3" name="timeFrom3" value="<%= fromTime24(value[0].wednesday) %>">
                         </div>
                         <div class="col">
                             <label for="timeTo">To:</label>
-                            <input type="time" id="timeTo3" value="<%= toTime24(value[0].wednesday) %>">
+                            <input type="time" id="timeTo3" name="timeTo3" value="<%= toTime24(value[0].wednesday) %>">
                         </div>
                     </div>
 
@@ -134,11 +134,11 @@
                         </div>
                         <div class="col">
                             <label for="timeFrom">From:</label>
-                            <input type="time" id="timeFrom4" value="<%= fromTime24(value[0].thursday) %>">
+                            <input type="time" id="timeFrom4" name="timeFrom4" value="<%= fromTime24(value[0].thursday) %>">
                         </div>
                         <div class="col">
                             <label for="timeTo">To:</label>
-                            <input type="time" id="timeTo4" value="<%= toTime24(value[0].thursday) %>">
+                            <input type="time" id="timeTo4" name="timeTo4" value="<%= toTime24(value[0].thursday) %>">
                         </div>
                     </div>
 
@@ -150,11 +150,11 @@
                         </div>
                         <div class="col">
                             <label for="timeFrom">From:</label>
-                            <input type="time" id="timeFrom5" value="<%= fromTime24(value[0].friday) %>">
+                            <input type="time" id="timeFrom5" name="timeFrom5" value="<%= fromTime24(value[0].friday) %>">
                         </div>
                         <div class="col">
                             <label for="timeTo">To:</label>
-                            <input type="time" id="timeTo5" value="<%= toTime24(value[0].friday) %>">
+                            <input type="time" id="timeTo5" name="timeTo5" value="<%= toTime24(value[0].friday) %>">
                         </div>
                     </div>
 
@@ -166,19 +166,19 @@
                         </div>
                         <div class="col">
                             <label for="timeFrom">From:</label>
-                            <input type="time" id="timeFrom6" value="<%= fromTime24(value[0].saturday) %>">
+                            <input type="time" id="timeFrom6" name="timeFrom6" value="<%= fromTime24(value[0].saturday) %>">
                         </div>
                         <div class="col">
                             <label for="timeTo">To:</label>
-                            <input type="time" id="timeTo6" value="<%= toTime24(value[0].saturday) %>">
+                            <input type="time" id="timeTo6" name="timeTo6" value="<%= toTime24(value[0].saturday) %>">
                         </div>
                     </div>
                 </div>
 
                 <!-- For picture of restaurant -->
                 <div class="form-group">
-                    <label for="fileInput">Picture of Restaurant (.PNG or .JPG) (Also disregard for now)</label>
-                    <input type="file" class="form-control-file" id="fileInput">
+                    <label for="fileInput">Picture of Restaurant (.PNG, .jpg, or .jpeg only!)</label>
+                    <input name="restaurantPic" type="file" class="form-control-file" id="fileInput">
                 </div>
 
                 <!-- Food type -->

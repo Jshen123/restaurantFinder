@@ -32,7 +32,7 @@
             <div class="col-4">
                 <% restId = value[0].restaurant_id; %>
                 <% imgPath = "/Pictures/restaurant_" + restId + ".jpg" %>
-                <img src="<%= imgPath %>" class="img-thumbnail" width="100%">
+                <img src="<%= value[0].image_path %>" class="img-thumbnail" width="100%">
             </div>
             <div class="col-8">
                 <p><%= value[0].description %></p>

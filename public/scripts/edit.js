@@ -86,16 +86,16 @@ $(document).ready(function() {
 
         //console.log(JSON.stringify(editData));
 
-        $.ajax({
-            type: "POST",
-            url: "/admin/edit/" + id,
-            data: editData,
-            success: function() {
-                console.log("success");
-            },
-            error: function() {
-                console.log("failed");
-            }
-        })
+        // $.ajax({
+        //     type: "POST",
+        //     url: "/admin/edit/" + id,
+        //     data: editData,
+        //     success: function() {
+        //         console.log("success");
+        //     },
+        //     error: function() {
+        //         console.log("failed");
+        //     }
+        // })
     })
 })

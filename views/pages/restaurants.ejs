@@ -103,7 +103,7 @@
                           <%= dollars = "";%>
                           <% if (val.price == 1) {dollars = "$";} else if (val.price == 2) {dollars = "$$";} else {dollars = "$$$"} %>
                           <li class="list-group-item"><%= dollars %></li>
-                          <li class="list-group-item"><%= val.type %></li>
+                          <li class="list-group-item"><%= val.tag[0] %></li>
                         </ul>
                       </div>
                     </div>
@@ -178,7 +178,7 @@
                             <%= dollars = "";%>
                             <% if (val.price == 1) {dollars = "$";} else if (val.price == 2) {dollars = "$$";} else {dollars = "$$$"} %>
                             <li class="list-group-item"><%= dollars %></li>
-                            <li class="list-group-item"><%= val.type %></li>
+                            <li class="list-group-item"><%=val.tag[0] %></li>
                           </ul>
                         </div>
                       </div>

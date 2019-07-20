@@ -150,36 +150,72 @@ module.exports = function (queries, io) {
 
   // rendering the login page
   router.get('/login', function (req, res) {
+    const username = req.session.username;
+    const err_msg = req.session.msg;
+
+    // resets session variables
+    req.session.username = null;
+    req.session.msg = null;
 
     if (req.session.user_id != null){
-      return res.redirect('/');
+      res.redirect('/');
     } else {
-      const payload = {user_id: req.session.user_id}
-      res.render('pages/login', payload)
+      const payload = {username: username, err_msg: err_msg};
+      res.render('pages/login', payload);
     }
   })
 
   router.get('/register', function (req, res) {
-    res.render('pages/register')
+    const err_msg = req.session.msg;
+    req.session.msg = null;     // resets session variable
+
+    res.render('pages/register', {err_msg: err_msg});
   })
 
 
   router.post('/register', function (req, res) {
     const username = req.body.username;
     const password = req.body.password;
+    const confirmPassword = req.body.confirmPassword;
     const hash = bcrypt.hashSync(password, saltRounds);
 
+    if (!username.length) {
+      req.session.msg = 'Please enter in a username.';
+      res.redirect('/register');
+    } else if (username.length > 25) {
+      req.session.msg = 'The username you entered is too long.';
+      res.redirect('/register');
+    } else if (!password.length) {
+      req.session.msg = 'Please enter in a password.';
+      res.redirect('/register');
+    } else if (password != confirmPassword) {
+      req.session.msg = 'The password you entered does not match your confirm password.';
+      res.redirect('/register');
 
-    queries.register(username, hash, (value) => {
-      if (value.length != 0) {
-        req.session.user_id = value[0].user_id;
-        req.session.username = value[0].username;
-
-        return res.redirect('/')
-      } else {
-        return res.redirect('/register')
-      }
-    })
+    } else {
+      queries.verifyUsername(username, (value) => {
+        if (value.length == 0) {
+          // username is unique
+          queries.register(username, hash, (value) => {
+            if (value.length != 0) {
+              // Registration success
+              req.session.user_id = value[0].user_id;
+              req.session.username = value[0].username;
+              req.session.msg = null;
+              res.redirect('/');
+            } else {
+              // Registration failed
+              req.session.msg = 'Registration failed';
+              res.redirect('/register');
+            }
+          })
+        } else {
+          // username has already been taken
+          req.session.msg = `The username '${username}' has already been taken.`;
+          res.redirect('/register');
+        }
+      });
+    }
 
   })
 
@@ -188,22 +224,46 @@ module.exports = function (queries, io) {
 
     const username = req.body.username;
     const password = req.body.password;
+    req.session.username = username;
 
     try{
-      queries.Authenticate(username, (value) => {
-        if (value.length != 0) {
-          const hash = value[0].password;
-          if(bcrypt.compareSync(password, hash)){
-            req.session.user_id = value[0].user_id
-            req.session.username = value[0].username
-            return res.redirect('/')
+      if (!username.length) {
+        req.session.msg = 'Please enter in a username.';
+        res.redirect('/login');
+      } else if (username.length > 25) {
+        req.session.msg = 'The username you entered is too long.';
+        res.redirect('/login');
+      } else if (!password.length) {
+        req.session.msg = 'Please enter in a password.';
+        res.redirect('/login');
+
+      } else {
+        queries.Authenticate(username, (value) => {
+          if (value.length != 0) {
+            // Username exist
+            const hash = value[0].password;
+            if(bcrypt.compareSync(password, hash)){
+              // Correct password
+              req.session.user_id = value[0].user_id;
+              req.session.username = value[0].username;
+              req.session.msg = null;
+              res.redirect('/');
+            } else {
+              // Incorrect password
+              req.session.msg = 'Incorrect username or password.';
+              res.redirect('/login');
+            }
           } else {
-          return res.redirect('/login')
+            // No such username
+            req.session.msg = 'Incorrect username or password.';
+            res.redirect('/login');
           }
-        }
-      })
+        })
+      }
     } catch(e) {
-      res.redirect('/login')
+      // Error
+      req.session.msg = 'Error';
+      res.redirect('/login');
     }
 
 
@@ -223,7 +283,7 @@ module.exports = function (queries, io) {
     const day = weekdays[today.day()]
     // console.log(today)
 
-		queries.getRestaurants((value) => {
+    queries.getRestaurants((value) => {
 
       const payload = {
                         user_id: req.session.user_id, 
@@ -250,14 +310,14 @@ module.exports = function (queries, io) {
             }
           }
         })
-				res.render('pages/restaurants', payload)
+        res.render('pages/restaurants', payload)
     })
     
-	})
+  })
 
 
-	// rendering the admin page
-	router.get('/admin', (req, res) => {
+  // rendering the admin page
+  router.get('/admin', (req, res) => {
 
     if (req.session.user_id == null){
       return res.redirect('/')
@@ -320,8 +380,9 @@ module.exports = function (queries, io) {
         const thursday = restData.thursday;
         const friday = restData.friday;
         const saturday = restData.saturday;
+        const tags = ['good', 'food', 'cheap'];
 
-        queries.addRestaurant(name, price, address, description, (value, error) => {
+        queries.addRestaurant(name, price, address, description, tags, (value, error) => {
 
           queries.getLatestRestaurantId((value, error) => {
             

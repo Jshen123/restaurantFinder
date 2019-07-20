@@ -8,11 +8,13 @@ $(document).ready(function() {
   });
 
   // Check if fields are empty on keyup
+  // Also check if client enter the same password twice
   $('input').keyup(function() {
     let username = $('input[type=username]').val();
-    let password = $('input[type=password]').val();
+    let password = $('input[name=password]').val();
+    let confirmPassword = $('input[name=confirmPassword]').val();
 
-    if($.trim(username).length && password.length) {
+    if($.trim(username).length && password.length && password == confirmPassword) {
       $(':input[type="submit"]').prop('disabled', false);
     } else {
       $(':input[type="submit"]').prop('disabled', true);

@@ -145,7 +145,7 @@ module.exports = function (queries, io) {
 
   //redirect '/' to '/restaurants'
   router.get('/', function(req, res){
-    res.redirect('/restaurants');
+    return res.redirect('/restaurants');
   })
 
   // rendering the login page
@@ -158,18 +158,18 @@ module.exports = function (queries, io) {
     req.session.msg = null;
 
     if (req.session.user_id != null){
-      res.redirect('/');
+      return res.redirect('/');
     } else {
       const payload = {username: username, err_msg: err_msg};
-      res.render('pages/login', payload);
+      return res.render('pages/login', payload);
     }
   })
 
   router.get('/register', function (req, res) {
     const err_msg = req.session.msg;
-    req.session.msg = null;     // resets session variable
+    req.session.msg = null;   // resets session variables
 
-    res.render('pages/register', {err_msg: err_msg});
+    return res.render('pages/register', {err_msg: err_msg});
   })
 
 
@@ -181,16 +181,16 @@ module.exports = function (queries, io) {
 
     if (!username.length) {
       req.session.msg = 'Please enter in a username.';
-      res.redirect('/register');
+      return res.redirect('/register');
     } else if (username.length > 25) {
       req.session.msg = 'The username you entered is too long.';
-      res.redirect('/register');
+      return res.redirect('/register');
     } else if (!password.length) {
       req.session.msg = 'Please enter in a password.';
-      res.redirect('/register');
+      return res.redirect('/register');
     } else if (password != confirmPassword) {
       req.session.msg = 'The password you entered does not match your confirm password.';
-      res.redirect('/register');
+      return res.redirect('/register');
 
     } else {
       queries.verifyUsername(username, (value) => {
@@ -202,17 +202,17 @@ module.exports = function (queries, io) {
               req.session.user_id = value[0].user_id;
               req.session.username = value[0].username;
               req.session.msg = null;
-              res.redirect('/');
+              return res.redirect('/');
             } else {
               // Registration failed
               req.session.msg = 'Registration failed';
-              res.redirect('/register');
+              return res.redirect('/register');
             }
           })
         } else {
           // username has already been taken
           req.session.msg = `The username '${username}' has already been taken.`;
-          res.redirect('/register');
+          return res.redirect('/register');
         }
       });
     }
@@ -229,13 +229,13 @@ module.exports = function (queries, io) {
     try{
       if (!username.length) {
         req.session.msg = 'Please enter in a username.';
-        res.redirect('/login');
+        return res.redirect('/login');
       } else if (username.length > 25) {
         req.session.msg = 'The username you entered is too long.';
-        res.redirect('/login');
+        return res.redirect('/login');
       } else if (!password.length) {
         req.session.msg = 'Please enter in a password.';
-        res.redirect('/login');
+        return res.redirect('/login');
 
       } else {
         queries.Authenticate(username, (value) => {
@@ -247,23 +247,23 @@ module.exports = function (queries, io) {
               req.session.user_id = value[0].user_id;
               req.session.username = value[0].username;
               req.session.msg = null;
-              res.redirect('/');
+              return res.redirect('/');
             } else {
               // Incorrect password
               req.session.msg = 'Incorrect username or password.';
-              res.redirect('/login');
+              return res.redirect('/login');
             }
           } else {
             // No such username
             req.session.msg = 'Incorrect username or password.';
-            res.redirect('/login');
+            return res.redirect('/login');
           }
         })
       }
     } catch(e) {
       // Error
       req.session.msg = 'Error';
-      res.redirect('/login');
+      return res.redirect('/login');
     }
 
 
@@ -271,7 +271,7 @@ module.exports = function (queries, io) {
 
   router.post('/logout', function(req, res){
     req.session.user_id = null ;
-    res.redirect('/')
+    return res.redirect('/')
   })
 
 

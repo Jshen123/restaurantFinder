@@ -40,8 +40,6 @@ $(document).ready(function() {
       password: password
     };
 
-    console.log(loginCredentials);
-
     $.ajax({
       type: "POST",
       url: "/login",

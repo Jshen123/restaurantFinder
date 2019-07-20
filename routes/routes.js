@@ -270,7 +270,8 @@ module.exports = function (queries, io) {
   })
 
   router.post('/logout', function(req, res){
-    req.session.user_id = null ;
+    req.session.user_id = null;
+    req.session.username = null;
     return res.redirect('/')
   })
 
@@ -584,7 +585,7 @@ module.exports = function (queries, io) {
                 year = comments[i].create_date.getFullYear();
             comments[i].create_date = `${months[month]} ${date}, ${year}`;
           }
-          
+
           // return sorted comments
           return res.send(comments);
         }

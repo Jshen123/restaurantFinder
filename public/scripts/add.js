@@ -68,30 +68,45 @@ $(document).ready(function() {
             hours[i] = restaurantHours;
         }
 
-        var restData = {
-            name: rName,
-            address: rAddress,
-            description: rDescription,
-            price: numRating,
-            sunday: hours[0],
-            monday: hours[1],
-            tuesday: hours[2],
-            wednesday: hours[3],
-            thursday: hours[4],
-            friday: hours[5],
-            saturday: hours[6]
-        }
+        // var restData = new FormData();
+        // restData.append('name', rName);
+        // restData.append('address', rAddress);
+        // restData.append('description', rDescription);
+        // restData.append('price', numRating);
+        // restData.append('sunday', hours[0]);
+        // restData.append('monday', hours[1]);
+        // restData.append('tuesday', hours[2]);
+        // restData.append('wednesday', hours[3]);
+        // restData.append('thursday', hours[4]);
+        // restData.append('friday', hours[5]);
+        // restData.append('saturday', hours[6]); 
 
-        $.ajax({
-            type: "post",
-            url: "/admin/add",
-            data: restData,
-            success: function() {
-                console.log("success");
-            },
-            error: function() {
-                console.log("failed");
-            }
-        })
+        // var restData = {
+        //     name: rName,
+        //     address: rAddress,
+        //     description: rDescription,
+        //     price: numRating,
+        //     sunday: hours[0],
+        //     monday: hours[1],
+        //     tuesday: hours[2],
+        //     wednesday: hours[3],
+        //     thursday: hours[4],
+        //     friday: hours[5],
+        //     saturday: hours[6]
+        // }
+
+        // $.ajax({
+        //     url: '/admin/add',
+        //     type: 'POST',
+        //     processData: false,
+        //     contentType: false,
+        //     data: restData,
+        //     success: function() {
+        //         console.log("success");
+        //     },
+        //     error: function() {
+        //         console.log("failed");
+        //     }
+        // })
     })
 })

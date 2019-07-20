@@ -78,24 +78,33 @@ module.exports = function (queries, io) {
     const password = req.body.password;
 
     try{
-      queries.Authenticate(username, (value) => {
-        if (value.length != 0) {
-          // Username exist
-          const hash = value[0].password;
-          if(bcrypt.compareSync(password, hash)){
-            // Correct password
-            req.session.user_id = value[0].user_id;
-            req.session.username = value[0].username;
-            res.send({err: false, msg: 'Login success.'});
+      if (!username.length) {
+        res.send({err: true, msg: 'Please enter in a username.'});
+      } else if (username.length > 25) {
+        res.send({err: true, msg: 'The username you entered is too long.'});
+      } else if (!password.length) {
+        res.send({err: true, msg: 'Please enter in a password.'});
+
+      } else {
+        queries.Authenticate(username, (value) => {
+          if (value.length != 0) {
+            // Username exist
+            const hash = value[0].password;
+            if(bcrypt.compareSync(password, hash)){
+              // Correct password
+              req.session.user_id = value[0].user_id;
+              req.session.username = value[0].username;
+              res.send({err: false, msg: 'Login success.'});
+            } else {
+              // Incorrect password
+              res.send({err: true, msg: 'Incorrect username or password.'});
+            }
           } else {
-            // Incorrect password
+            // No such username
             res.send({err: true, msg: 'Incorrect username or password.'});
           }
-        } else {
-          // No such username
-          res.send({err: true, msg: 'Incorrect username or password.'});
-        }
-      })
+        })
+      }
     } catch(e) {
       // Error
       res.send({err: true, msg: 'Error'});

@@ -14,7 +14,7 @@
 
         <div class="container mt-5">
             <div class="jumbotron">
-                <form id="add-form">
+                <form id="add-form" enctype="multipart/form-data" action="/admin/add" method="POST">
                     <div class="form-group">
                         <div class="row">
                             <div class="col">
@@ -40,7 +40,7 @@
                     <div class="form-group">
                         Price Rating <br>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="priceRadio" id="radio1" value="$">
+                            <input class="form-check-input" type="radio" name="priceRadio" id="radio1" value="$" checked>
                             <label class="form-check-label" for="radio1">$</label>
                         </div>
                         <div class="form-check">
@@ -64,11 +64,11 @@
                             </div>
                             <div class="col">
                                 <label for="timeFrom">From:</label>
-                                <input type="time" id="timeFrom0">
+                                <input type="time" id="timeFrom0" name="timeFrom0">
                             </div>
                             <div class="col">
                                 <label for="timeTo">To:</label>
-                                <input type="time" id="timeTo0">
+                                <input type="time" id="timeTo0" name="timeTo0">
                             </div>
                         </div>
 
@@ -80,11 +80,11 @@
                             </div>
                             <div class="col">
                                 <label for="timeFrom">From:</label>
-                                <input type="time" id="timeFrom1">
+                                <input type="time" id="timeFrom1" name="timeFrom1">
                             </div>
                             <div class="col">
                                 <label for="timeTo">To:</label>
-                                <input type="time" id="timeTo1">
+                                <input type="time" id="timeTo1" name="timeTo1">
                             </div>
                         </div>
 
@@ -96,11 +96,11 @@
                             </div>
                             <div class="col">
                                 <label for="timeFrom">From:</label>
-                                <input type="time" id="timeFrom2">
+                                <input type="time" id="timeFrom2" name="timeFrom2">
                             </div>
                             <div class="col">
                                 <label for="timeTo">To:</label>
-                                <input type="time" id="timeTo2">
+                                <input type="time" id="timeTo2" name="timeTo2">
                             </div>
                         </div>
 
@@ -112,11 +112,11 @@
                             </div>
                             <div class="col">
                                 <label for="timeFrom">From:</label>
-                                <input type="time" id="timeFrom3">
+                                <input type="time" id="timeFrom3" name="timeFrom3">
                             </div>
                             <div class="col">
                                 <label for="timeTo">To:</label>
-                                <input type="time" id="timeTo3">
+                                <input type="time" id="timeTo3" name="timeTo3">
                             </div>
                         </div>
 
@@ -128,11 +128,11 @@
                             </div>
                             <div class="col">
                                 <label for="timeFrom">From:</label>
-                                <input type="time" id="timeFrom4">
+                                <input type="time" id="timeFrom4" name="timeFrom4">
                             </div>
                             <div class="col">
                                 <label for="timeTo">To:</label>
-                                <input type="time" id="timeTo4">
+                                <input type="time" id="timeTo4" name="timeTo4">
                             </div>
                         </div>
 
@@ -144,11 +144,11 @@
                             </div>
                             <div class="col">
                                 <label for="timeFrom">From:</label>
-                                <input type="time" id="timeFrom5">
+                                <input type="time" id="timeFrom5" name="timeFrom5">
                             </div>
                             <div class="col">
                                 <label for="timeTo">To:</label>
-                                <input type="time" id="timeTo5">
+                                <input type="time" id="timeTo5" name="timeTo5">
                             </div>
                         </div>
 
@@ -160,11 +160,11 @@
                             </div>
                             <div class="col">
                                 <label for="timeFrom">From:</label>
-                                <input type="time" id="timeFrom6">
+                                <input type="time" id="timeFrom6" name="timeFrom6">
                             </div>
                             <div class="col">
                                 <label for="timeTo">To:</label>
-                                <input type="time" id="timeTo6">
+                                <input type="time" id="timeTo6" name="timeTo6">
                             </div>
                         </div>
                     </div>
@@ -172,7 +172,7 @@
                     <!-- For picture of restaurant -->
                     <div class="form-group">
                         <label for="fileInput">Picture of Restaurant (.PNG or .JPG) (Also disregard for now)</label>
-                        <input type="file" class="form-control-file" id="fileInput">
+                        <input name="restaurantPic" type="file" class="form-control-file" id="fileInput">
                     </div>
 
                     <!-- Food type -->
@@ -194,6 +194,8 @@
             
             <br>
         </div>
+
+        <button type="button" id="test">test</button>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

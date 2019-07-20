@@ -5,14 +5,124 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const moment = require('moment-timezone');
 
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 
+// storage engine
+const storage = multer.diskStorage({
+  destination: './public/Pictures/',
+  filename: function(req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+})
+
+// initialize upload
+const upload = multer({
+  storage: storage,
+  fileFilter: function(req, file, cb) {
+    checkFileType(file, cb);
+  }
+}).single('restaurantPic');
+
+function checkFileType(file, cb) {
+  // all allowed file extensions (jpg, jpeg, png)
+  const allTypes = /jpeg|jpg|png/;
+
+  // check file extension
+  const extName = allTypes.test(path.extname(file.originalname).toLowerCase());
+
+  // check file mimetype
+  const mimetype = allTypes.test(file.mimetype);
+
+  if (mimetype && extName) {
+    return cb(null, true);
+  } else {
+    cb('Error: JPG, JPEG, or PNG only!');
+  }
+}
+
+function getPrice(priceString) {
+  if (priceString == "$") {
+      return 1;
+  } else if (priceString == "$$") {
+      return 2;
+  } else {
+      return 3;
+  }
+}
+
+function convertTime(timeString) {
+  if (timeString == "") {
+      return "";
+  }
+
+  var hour = parseInt(timeString.substring(0, 2));
+  var minute = timeString.substring(3, 5);
+
+  if (hour <= 12) {
+      amPm = "am";
+      if (hour == 0) {
+          hour += 12;
+      }
+      convHour = hour.toString()
+  } 
+  
+  else {
+      amPm = "pm";
+      convHour = (hour - 12).toString()
+  }
+
+  return convHour + ":" + minute + amPm;
+}
+
+function convertForm(form) {
+  var numRating = getPrice(form.priceRadio);
+
+  var hours = new Array(7);
+  for (i = 0; i < hours.length; i++) {
+    var fromId = 'timeFrom' + i.toString();
+    var toId = 'timeTo' + i.toString();
+
+    initTimeFrom = form[fromId];
+    initTimeTo = form[toId];
+
+    fromTime = convertTime(initTimeFrom);
+    toTime = convertTime(initTimeTo);
+
+    if (fromTime != "" && toTime != "" && fromTime == toTime) {
+        restaurantHours = "OPEN";
+    } else if (fromTime != "" && toTime != "") {
+        restaurantHours = fromTime + "-" + toTime;
+    } else {
+        restaurantHours = "CLOSED";
+    }
+
+    hours[i] = restaurantHours;
+  }
+
+  var restData = {
+      name: form.name,
+      address: form.address,
+      description: form.desc,
+      price: numRating,
+      sunday: hours[0],
+      monday: hours[1],
+      tuesday: hours[2],
+      wednesday: hours[3],
+      thursday: hours[4],
+      friday: hours[5],
+      saturday: hours[6]
+  }
+
+  return restData;
+}
 
 // set-up cookie session
 router.use(cookieSession({
   name: 'session',
   keys: ['key1', 'key2']
 }));
-
 
 module.exports = function (queries, io) {
 
@@ -184,34 +294,43 @@ module.exports = function (queries, io) {
   })
 
   router.post('/admin/add', (req, res) => {
-    const name = req.body.name;
-    const address = req.body.address;
-    const description = req.body.description;
-    const price = req.body.price;
-    const sunday = req.body.sunday;
-    const monday = req.body.monday;
-    const tuesday = req.body.tuesday;
-    const wednesday = req.body.wednesday;
-    const thursday = req.body.thursday;
-    const friday = req.body.friday;
-    const saturday = req.body.saturday;
+    upload(req, res, (err) => {
+      if (err) {
+        res.send("something's wrong...");
+      } else {
+        imgName = req.file.filename;
+        var restData = convertForm(req.body);
 
-    queries.addRestaurant(name, price, address, description, (value, error) => {
+        const name = restData.name;
+        const address = restData.address;
+        const description = restData.description;
+        const price = restData.price;
+        const sunday = restData.sunday;
+        const monday = restData.monday;
+        const tuesday = restData.tuesday;
+        const wednesday = restData.wednesday;
+        const thursday = restData.thursday;
+        const friday = restData.friday;
+        const saturday = restData.saturday;
 
-      queries.getLatestRestaurantId((value, error) => {
-        
-        const restaurant_id = value[0].restaurant_id;
+        queries.addRestaurant(name, price, address, description, (value, error) => {
 
-        queries.addOpenHours(restaurant_id, sunday, monday, tuesday, wednesday, thursday, friday, saturday, (value, error) => {
-          
-          const image_path = "/Pictures/restaurant_" + restaurant_id.toString() + ".jpg";
-
-          queries.addImage(restaurant_id, image_path, (value, error) => {
-
-            return res.redirect('/admin/add');
-          })
-        })
-      })
+          queries.getLatestRestaurantId((value, error) => {
+            
+            const restaurant_id = value[0].restaurant_id;
+    
+            queries.addOpenHours(restaurant_id, sunday, monday, tuesday, wednesday, thursday, friday, saturday, (value, error) => {
+              
+              const image_path = "/Pictures/" + imgName;
+    
+              queries.addImage(restaurant_id, image_path, (value, error) => {
+    
+                return res.redirect('/admin/add');
+              })
+            }) // addImage
+          }) // getLatestRestaurantId
+        }) // addRestaurant
+      }
     })
   })
 
@@ -240,6 +359,20 @@ module.exports = function (queries, io) {
 
   router.delete('/admin/delete/:id', (req, res) => {
     const restaurant_id = req.params.id;
+
+    // get image_path so we know what file to delete
+    queries.getImagePath(restaurant_id, (value) => {
+      var imgPath = "./public" + value[0].image_path;
+
+      // delete image file from directory
+      fs.unlink(imgPath, function(e) {
+        if (e) {
+          console.log("image deletion failed");
+        } else {
+          console.log("image successfully deleted");
+        }
+      });
+    })
 
     queries.deleteRestaurant(restaurant_id, (value, error) => {
       return res.redirect('/admin');

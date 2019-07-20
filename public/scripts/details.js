@@ -26,6 +26,17 @@ $(document).ready(function() {
     }
   }
 
+  function generateStars(rating) {
+    var ratingHTML = '';
+    for (var i=0; i<rating; i++) {
+      ratingHTML += `<span class="fa fa-star checked"></span>`;
+    }
+    for (var i=rating; i<5; i++) {
+      ratingHTML += `<span class="fa fa-star"></span>`;
+    }
+    return ratingHTML;
+  }
+
   // Run these when page loaded
   addClicks();
   setRating(rating.getAttribute("data-rating"));
@@ -80,5 +91,75 @@ $(document).ready(function() {
       $('#comment').val('');
     }
   };
+
+
+  // get comments in a sorted order
+  $('#sort-form').change(function (e) {
+    //prevent form submission
+    e.preventDefault();
+    e.stopPropagation();
+
+    const id = $("#getId").attr("data-id");   //restaurant_id
+    const sort_val = $('#sort').val()
+
+    var sort_clause, sort_order;
+    switch (sort_val) {
+      case 'time_DESC':
+        sort_clause = 'create_date';
+        sort_order = 'desc';
+        break;
+      case 'time_ASC':
+        sort_clause = 'create_date';
+        sort_order = 'asc';
+        break;
+      case 'rating_DESC':
+        sort_clause = 'rating';
+        sort_order = 'desc';
+        break;
+      case 'rating_ASC':
+        sort_clause = 'rating';
+        sort_order = 'asc';
+        break;
+    }
+
+    const sortOrder = {clause: sort_clause, order: sort_order};
+    const urlString = "/comments/" + id;
+    
+    $.ajax({
+      type: "POST",
+      url: urlString,
+      data: sortOrder,
+      success: sortCommentSuccessHandler,
+      error: function() {
+        console.log('something went wrong');
+      }
+    });
+
+  });
+
+  function sortCommentSuccessHandler(comments) {
+    if (comments) {
+      // clear comment section
+      $("#comments-section").empty();
+
+      // fill in comments in comment section
+      comments.forEach(function (comment) {
+        var {username, rating, create_date, comment} = comment;
+
+        $("#comments-section").append(`
+          <div class="card bg-light p-3">
+            <div class="userText">
+              <strong>${username}</strong> <span class="commentDate">at ${create_date}</span>
+            </div>
+            <div class="userRating">
+              ${generateStars(rating)}
+            </div>
+            <p>${comment}</p>         
+          </div>
+          <br>
+        `);
+      });
+    }
+  }
 
 });

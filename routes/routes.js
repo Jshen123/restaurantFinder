@@ -270,7 +270,8 @@ module.exports = function (queries, io) {
   })
 
   router.post('/logout', function(req, res){
-    req.session.user_id = null ;
+    req.session.user_id = null;
+    req.session.username = null;
     return res.redirect('/')
   })
 
@@ -557,6 +558,42 @@ module.exports = function (queries, io) {
     }
 
   });
+
+  // get comments in a sorted order
+  router.post('/comments/:id', (req, res) => {
+    const restaurant_id = req.params.id;
+    const sortOrder = req.body;
+
+    if (!sortOrder.clause || !sortOrder.order) {
+      // null values
+      return res.send(null);
+
+    } else {
+      queries.getComments(restaurant_id, sortOrder, (value, error) => {
+        if (error) {
+          // error getting comments
+          return res.send(null);
+
+        } else {
+          const comments = value;
+
+          // parse create_date
+          var months = ['January', "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+          for (var i=0; i<comments.length; i++) {
+            let date = comments[i].create_date.getDate(),
+                month = comments[i].create_date.getMonth(),
+                year = comments[i].create_date.getFullYear();
+            comments[i].create_date = `${months[month]} ${date}, ${year}`;
+          }
+
+          // return sorted comments
+          return res.send(comments);
+        }
+      });
+    }
+
+  });
+
 
   router.get('/admin/edit/:id', (req, res) => {
     const restaurant_id = req.params.id

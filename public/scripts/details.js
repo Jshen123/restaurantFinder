@@ -81,4 +81,37 @@ $(document).ready(function() {
     }
   };
 
+
+  $('#sort-form').change(function (e) {
+    //prevent form submission
+    e.preventDefault();
+    e.stopPropagation();
+
+    const sort_val = $('#sort').val()
+
+    var sort_clause, sort_order;
+    switch (sort_val) {
+      case 'time_DESC':
+        sort_clause = 'create_date';
+        sort_order = 'desc';
+        break;
+      case 'time_ASC':
+        sort_clause = 'create_date';
+        sort_order = 'asc';
+        break;
+      case 'rating_DESC':
+        sort_clause = 'rating';
+        sort_order = 'desc';
+        break;
+      case 'rating_ASC':
+        sort_clause = 'rating';
+        sort_order = 'asc';
+        break;
+    }
+
+    const sortOrder = {clause: sort_clause, order: sort_order};
+    console.log(sortOrder);
+
+  });
+
 });

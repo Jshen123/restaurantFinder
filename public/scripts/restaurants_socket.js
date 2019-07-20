@@ -1,5 +1,6 @@
 $(document).ready(function() {
   const socket = io('/restaurants');
+  const room_id = $("#getId").attr("data-id"); 
 
   // Join a room on connection
   socket.emit('joinRoom', room_id);
@@ -11,7 +12,7 @@ $(document).ready(function() {
     $("#comments-section").prepend(`
       <div class="card bg-light p-3">
         <div class="userText">
-          <strong>${username}</strong> <span class="commentDate">at ${create_date}</span>
+          <strong>${username}</strong> <span class="commentDate">at ${create_date}</span> <strong>New comment</strong>
         </div>
         <div class="userRating">
           ${generateStars(rating)}

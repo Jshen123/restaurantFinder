@@ -15,9 +15,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-        const room_id = <%-JSON.stringify(value[0].restaurant_id)%>;
-    </script>
     <script src="/scripts/restaurants_socket.js"></script>
     <script src="/scripts/details.js"></script>
   </head>
@@ -77,50 +74,60 @@
         <hr>
 
         <p align="center" class="h5 m-auto"><u>Comments and Reviews</u></p>
+        <form id="sort-form">
+          <select id="sort" name="sort">
+            <option value="time_DESC">Latest comments</option>
+            <option value="time_ASC">Oldest comments</option>
+            <option value="rating_DESC">Highest ratings</option>
+            <option value="rating_ASC">Lowest ratings</option>
+          </select><br/>
+        </form>
+
         <br>
+
         <div id="comments-section">
         <% comments.forEach(function(comment) { %>
 
-            <div class="card bg-light p-3">
-                <div class="userText">
-                    <strong><%= comment.username %></strong> <span class="commentDate">at <%= comment.create_date %></span>
-                </div>
-                <div class="userRating">
-                    <% rating = parseInt(comment.rating)%>
-                    <% for (i = 0; i < 5; i++) { %>
-                        <% if (i < rating) { %>
-                            <span class="fa fa-star checked"></span>
-                        <% } else { %>
-                            <span class="fa fa-star"></span>
-                        <% } %>
-                    <% } %>
-                </div>
-                <p><%= comment.comment %></p>         
+          <div class="card bg-light p-3">
+            <div class="userText">
+              <strong><%= comment.username %></strong> <span class="commentDate">at <%= comment.create_date %></span>
             </div>
-            <br>
+            <div class="userRating">
+              <% rating = parseInt(comment.rating)%>
+              <% for (i = 0; i < 5; i++) { %>
+                <% if (i < rating) { %>
+                  <span class="fa fa-star checked"></span>
+                <% } else { %>
+                  <span class="fa fa-star"></span>
+                <% } %>
+              <% } %>
+            </div>
+            <p><%= comment.comment %></p>         
+          </div>
+          <br>
             
         <% }) %>
         </div>
 
         <form id="comment-form">
-            <div class="container bg-light">
-                <br>
-                <p align="center"><u><strong>Write a Review</strong></u></p>
-                <div class="stars" data-rating="3">
-                    <span class="fa fa-star rate-star"></span>
-                    <span class="fa fa-star rate-star"></span>
-                    <span class="fa fa-star rate-star"></span>
-                    <span class="fa fa-star rate-star"></span>
-                    <span class="fa fa-star rate-star"></span>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-control" id="comment" placeholder="Thoughts?  Comments?  Put them here!" name="comment"></textarea>
-                </div>
-                <div class="container" style="width: 25%">
-                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                </div>
-                <br>
+          <div class="container bg-light">
+            <br>
+            <p align="center"><u><strong>Write a Review</strong></u></p>
+            <div class="stars" data-rating="3">
+              <span class="fa fa-star rate-star"></span>
+              <span class="fa fa-star rate-star"></span>
+              <span class="fa fa-star rate-star"></span>
+              <span class="fa fa-star rate-star"></span>
+              <span class="fa fa-star rate-star"></span>
             </div>
+            <div class="form-group">
+              <textarea class="form-control" id="comment" placeholder="Thoughts?  Comments?  Put them here!" name="comment"></textarea>
+            </div>
+            <div class="container" style="width: 25%">
+              <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </div>
+            <br>
+          </div>
         </form>
 
         

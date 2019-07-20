@@ -3,11 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <title>Student</title>
+    <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- BootStrap CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="/scripts/login.js" defer></script> 
     <!-- jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <!-- Popper.js CDN -->
@@ -16,19 +15,25 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="/stylesheets/login.css">
+    <!-- local Script -->
+    <script src="/scripts/login.js"></script> 
   </head>
   <body>
     <div class ="login-container">
       <form class="login-form" action="/login" method="POST">
         <h3> Login to Restaurant Finder</h3>
+        <% if (err_msg != null) {%>
+          <div class="form-group" >
+            <span><%= err_msg %></span>
+          </div>
+        <% } %>
         <div class="form-group" >
-          <input type="username" class="form-control" aria-describedby="emailHelp" placeholder="User Name" name="username">
+          <input type="username" class="form-control" aria-describedby="emailHelp" placeholder="User Name" name="username" maxlength="25" value="<%= username %>">
         </div>
         <div class="form-group">
-          <input type="password" class="form-control" placeholder="Password" name = "password">
+          <input type="password" class="form-control" placeholder="Password" name="password">
         </div>
-        <!-- <button type="submit" class="btn btn-primary">Login</button> -->
-        <button type="submit" class="btn btn-danger btn-block"> Log in</button>
+        <button type="submit" class="btn btn-danger btn-block" disabled>Log in</button>
         <div class="user-redirect">
           <span> Don't have an account? </span>
           <a class="text-dark" href="/register">Register here</a>

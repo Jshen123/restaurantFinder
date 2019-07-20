@@ -37,6 +37,8 @@ function checkFileType(file, cb) {
 
   if (mimetype && extName) {
     return cb(null, true);
+  } else if (file.originalname == "") {
+    cb('Error: no file selected');
   } else {
     cb('Error: JPG, JPEG, or PNG only!');
   }
@@ -296,8 +298,14 @@ module.exports = function (queries, io) {
   router.post('/admin/add', (req, res) => {
     upload(req, res, (err) => {
       if (err) {
-        res.send("something's wrong...");
+        res.send("Invalid image.");
       } else {
+        // Do not allow for restaurants with no image file
+        if (typeof req.file === "undefined") {
+          res.send("No image submitted.");
+          return;
+        }
+
         imgName = req.file.filename;
         var restData = convertForm(req.body);
 
@@ -335,25 +343,61 @@ module.exports = function (queries, io) {
   })
 
   router.post('/admin/edit/:id', (req, res) => {
-    const restaurant_id = req.params.id;
-    const name = req.body.name;
-    const address = req.body.address;
-    const description = req.body.description;
-    const price = req.body.price;
-    const sunday = req.body.sunday;
-    const monday = req.body.monday;
-    const tuesday = req.body.tuesday;
-    const wednesday = req.body.wednesday;
-    const thursday = req.body.thursday;
-    const friday = req.body.friday;
-    const saturday = req.body.saturday;
+    upload(req, res, (err) => {
+      if (err) {
+        res.send("Invalid image.");
+      } else {
+        const restaurant_id = req.params.id;
 
-    queries.updateRestaurant(restaurant_id, name, price, address, description, (value, error) => {
+        if (typeof req.file !== "undefined") {
+          // delete image file from directory so we can replace it
+          queries.getImagePath(restaurant_id, (value) => {
+            var imgPath = "./public" + value[0].image_path;
 
-      queries.updateOpenHours(restaurant_id, sunday, monday, tuesday, wednesday, thursday, friday, saturday, (value, error) => {
+            fs.unlink(imgPath, function(e) {
+              if (e) {
+                console.log("image deletion failed");
+              } else {
+                console.log("image successfully deleted");
+              }
+            });
+          })
 
-        return res.redirect('/admin');
-      })
+          var imgName = req.file.filename;
+          var newPath = "/Pictures/" + imgName;
+        }
+
+        var restData = convertForm(req.body);
+
+        const name = restData.name;
+        const address = restData.address;
+        const description = restData.description;
+        const price = restData.price;
+        const sunday = restData.sunday;
+        const monday = restData.monday;
+        const tuesday = restData.tuesday;
+        const wednesday = restData.wednesday;
+        const thursday = restData.thursday;
+        const friday = restData.friday;
+        const saturday = restData.saturday;
+
+        queries.updateRestaurant(restaurant_id, name, price, address, description, (value, error) => {
+
+          queries.updateOpenHours(restaurant_id, sunday, monday, tuesday, wednesday, thursday, friday, saturday, (value, error) => {
+
+            if (typeof req.file !== "undefined") {
+              queries.updateImagePath(restaurant_id, newPath, (value, error) => {
+                return res.redirect('/admin');
+              })
+            }
+
+            else {
+              return res.redirect('/admin');
+            }
+            
+          })
+        })
+      }
     })
   })
 

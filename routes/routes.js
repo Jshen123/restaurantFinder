@@ -38,13 +38,17 @@ module.exports = function (queries, io) {
 
   // rendering the login page
   router.get('/login', function (req, res) {
+    const username = req.session.username;
     const err_msg = req.session.msg;
-    req.session.msg = null;  // resets session variable
+    
+    // resets session variables
+    req.session.username = null;
+    req.session.msg = null;
 
     if (req.session.user_id != null){
       res.redirect('/');
     } else {
-      const payload = {user_id: req.session.user_id, err_msg: err_msg};
+      const payload = {username: username, err_msg: err_msg};
       res.render('pages/login', payload);
     }
   })
@@ -78,6 +82,7 @@ module.exports = function (queries, io) {
 
     const username = req.body.username;
     const password = req.body.password;
+    req.session.username = username;
 
     try{
       if (!username.length) {

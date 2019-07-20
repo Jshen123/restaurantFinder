@@ -38,12 +38,14 @@ module.exports = function (queries, io) {
 
   // rendering the login page
   router.get('/login', function (req, res) {
+    const err_msg = req.session.msg;
+    req.session.msg = null;  // resets session variable
 
     if (req.session.user_id != null){
-      return res.redirect('/');
+      res.redirect('/');
     } else {
-      const payload = {user_id: req.session.user_id}
-      res.render('pages/login', payload)
+      const payload = {user_id: req.session.user_id, err_msg: err_msg};
+      res.render('pages/login', payload);
     }
   })
 
@@ -79,11 +81,14 @@ module.exports = function (queries, io) {
 
     try{
       if (!username.length) {
-        res.send({err: true, msg: 'Please enter in a username.'});
+        req.session.msg = 'Please enter in a username.';
+        res.redirect('/login');
       } else if (username.length > 25) {
-        res.send({err: true, msg: 'The username you entered is too long.'});
+        req.session.msg = 'The username you entered is too long.';
+        res.redirect('/login');
       } else if (!password.length) {
-        res.send({err: true, msg: 'Please enter in a password.'});
+        req.session.msg = 'Please enter in a password.';
+        res.redirect('/login');
 
       } else {
         queries.Authenticate(username, (value) => {
@@ -94,20 +99,24 @@ module.exports = function (queries, io) {
               // Correct password
               req.session.user_id = value[0].user_id;
               req.session.username = value[0].username;
-              res.send({err: false, msg: 'Login success.'});
+              req.session.msg = null;
+              res.redirect('/');
             } else {
               // Incorrect password
-              res.send({err: true, msg: 'Incorrect username or password.'});
+              req.session.msg = 'Incorrect username or password.';
+              res.redirect('/login');
             }
           } else {
             // No such username
-            res.send({err: true, msg: 'Incorrect username or password.'});
+            req.session.msg = 'Incorrect username or password.';
+            res.redirect('/login');
           }
         })
       }
     } catch(e) {
       // Error
-      res.send({err: true, msg: 'Error'});
+      req.session.msg = 'Error';
+      res.redirect('/login');
     }
 
 

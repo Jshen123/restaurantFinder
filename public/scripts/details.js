@@ -149,14 +149,14 @@ $(document).ready(function() {
         var {username, rating, create_date, comment} = comment;
 
         $("#comments-section").append(`
-          <div class="card bg-light p-3">
+          <div class="card p-3 border-0">
             <div class="userText">
               <strong>${username}</strong> <span class="commentDate">at ${create_date}</span>
             </div>
             <div class="userRating">
               ${generateStars(rating)}
             </div>
-            <p>${comment}</p>         
+            <p>${comment}</p>                 
           </div>
           <br>
         `);

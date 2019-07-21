@@ -554,8 +554,7 @@ module.exports = function (queries, io) {
 
         if(body.success !== undefined && !body.success && !captcha_verified) {
           // failed captcha
-          return res.send({err: true, msg: body});
-          //return res.send({err: true, msg: 'Failed captcha verification.'});
+          return res.send({err: true, msg: 'Failed captcha verification.'});
 
         } else {
           // captcha verified

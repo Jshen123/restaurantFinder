@@ -65,13 +65,13 @@ $(document).ready(function() {
       captcha: captcha
     }
 
-    var urlString = "/restaurants/" + id;
+    var urlString = "/comments/" + id;
 
     $.ajax({
       type: "POST",
       url: urlString,
       data: commentData,
-      success: postSuccessHandler,
+      success: postCommentSuccessHandler,
       error: function() {
         console.log('something went wrong');
       }
@@ -80,7 +80,7 @@ $(document).ready(function() {
   });
 
   // Post request success handler
-  function postSuccessHandler(res) {
+  function postCommentSuccessHandler(res) {
     const {err, msg} = res;
 
     if (err) {
@@ -125,7 +125,7 @@ $(document).ready(function() {
     }
 
     const sortOrder = {clause: sort_clause, order: sort_order};
-    const urlString = "/comments/" + id;
+    const urlString = "/sort_comments/" + id;
     
     $.ajax({
       type: "POST",

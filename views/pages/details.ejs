@@ -15,11 +15,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-        const room_id = <%-JSON.stringify(value[0].restaurant_id)%>;
-    </script>
     <script src="/scripts/restaurants_socket.js"></script>
     <script src="/scripts/details.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+      function onCaptchaVerified() {
+        setTimeout(function(){ 
+          document.getElementById("g-recaptcha").style.display = "none"; 
+        }, 1500);
+      }
+      function showCaptcha() {
+        document.getElementById("g-recaptcha").style.display = "block";
+      }
+     </script>
   </head>
 
   <body>
@@ -109,9 +117,30 @@
         </div>
 
         <hr>
+        <div class="row">
+          <div class="col-10">
+              <p align="center" class="h5 m-auto"><u>Comments and Reviews</u></p>
+            </div>
+  
+            <div class="col-2 align-right">
+              <form class="form-inline" id="sort-form">
+                <label for="sort"><strong>Sort by:&nbsp&nbsp&nbsp</strong></label>
+                <select class="custom-select" id="sort" name="sort">
+                  <option value="time_DESC">Newest</option>
+                  <option value="time_ASC">Oldest</option>
+                  <option value="rating_DESC">Highest Rating</option>
+                  <option value="rating_ASC">Lowest Rating</option>
+                </select><br/>
+              </form>
+            </div>
+        </div>
 
-        <p align="center" class="h5 m-auto">Comments and Reviews</p>
+
+        </div>
+        
+
         <br>
+
         <div id="comments-section">
         <% comments.forEach(function(comment) { %>
 
@@ -129,35 +158,36 @@
                         <% } %>
                     <% } %>
                 </div>
-                <p><%= comment.comment %></p>         
-            </div>
-            <br>
+                <p><%= comment.comment %></p>                 
+          </div>
+          <br>
             
         <% }) %>
         </div>
 
         <form id="comment-form">
-            <div class="container review-container">
-                <br>
-                <p align="left"><strong>Write a Review</strong></p>
-                <div class="stars" data-rating="3">
-                    <span class="fa fa-star rate-star"></span>
-                    <span class="fa fa-star rate-star"></span>
-                    <span class="fa fa-star rate-star"></span>
-                    <span class="fa fa-star rate-star"></span>
-                    <span class="fa fa-star rate-star"></span>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-control" id="comment" placeholder="Thoughts?  Comments?  Put them here!" name="comment"></textarea>
-                </div>
-                <div class="container" style="width: 25%">
-                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                </div>
-                <br>
+          <div class="container review-container">  
+            <br>
+            <p align="left"><strong>Write a Review</strong></p>
+            <div class="stars" data-rating="3">
+              <span class="fa fa-star rate-star"></span>
+              <span class="fa fa-star rate-star"></span>
+              <span class="fa fa-star rate-star"></span>
+              <span class="fa fa-star rate-star"></span>
+              <span class="fa fa-star rate-star"></span>
             </div>
+            <div class="form-group">
+              <textarea class="form-control" id="comment" placeholder="Thoughts?  Comments?  Put them here!" name="comment"></textarea>
+            </div>
+            <div class="form-group" align="center">
+              <div id="g-recaptcha" class="g-recaptcha" data-sitekey="6Le9sK4UAAAAAGytBTORu7qdkn2cMeAuWZPewMTW" data-callback="onCaptchaVerified" data-expired-callback="showCaptcha"></div>
+            </div>
+            <div class="container" style="width: 25%">
+              <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </div>
+            <br>
+          </div>
         </form>
-
-        
 
         <br>
     </div>

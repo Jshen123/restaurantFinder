@@ -6,7 +6,6 @@ $(document).ready(function() {
             url: "/admin/delete/" + $(this).data('id'),
             type: "DELETE",
             success: function() {
-                console.log("success");
                 window.location.reload(true);
             },
             error: function() {

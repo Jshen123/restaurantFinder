@@ -73,15 +73,26 @@
 
         <hr>
 
-        <p align="center" class="h5 m-auto"><u>Comments and Reviews</u></p>
-        <form id="sort-form">
-          <select id="sort" name="sort">
-            <option value="time_DESC">Latest comments</option>
-            <option value="time_ASC">Oldest comments</option>
-            <option value="rating_DESC">Highest ratings</option>
-            <option value="rating_ASC">Lowest ratings</option>
-          </select><br/>
-        </form>
+        <div class="row">
+          <div class="col-4">
+
+          </div>
+          <div class="col-5">
+            <p align="center" class="h5 m-auto"><u>Comments and Reviews</u></p>
+          </div>
+          <div class="col-3 text-right">
+            <form class="form-inline" id="sort-form">
+              <label for="sort"><strong>Sort by:&nbsp&nbsp&nbsp</strong></label>
+              <select class="custom-select" id="sort" name="sort">
+                <option value="time_DESC">Newest</option>
+                <option value="time_ASC">Oldest</option>
+                <option value="rating_DESC">Highest Rating</option>
+                <option value="rating_ASC">Lowest Rating</option>
+              </select><br/>
+            </form>
+          </div>
+        </div>
+        
 
         <br>
 

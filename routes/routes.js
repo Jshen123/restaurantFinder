@@ -481,7 +481,9 @@ module.exports = function (queries, io) {
     })
 
     queries.deleteRestaurant(restaurant_id, (value, error) => {
-      return res.redirect('/admin');
+      queries.getRestaurants((value) => {
+        return res.render('pages/admin', {value:value, user_id: req.session.user_id})
+      })
     })
   })
 
@@ -593,7 +595,6 @@ module.exports = function (queries, io) {
     }
 
   });
-
 
   router.get('/admin/edit/:id', (req, res) => {
     const restaurant_id = req.params.id

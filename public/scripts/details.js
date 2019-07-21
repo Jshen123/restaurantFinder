@@ -84,8 +84,7 @@ $(document).ready(function() {
     const {err, msg} = res;
 
     if (err) {
-      console.log(msg);
-      //alert(msg);   // Alert error message
+      alert(msg);   // Alert error message
 
     } else {
       alert(`You've succesfully posted a review!`);

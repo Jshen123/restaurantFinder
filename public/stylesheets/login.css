@@ -29,3 +29,12 @@ h3 {
   margin-top: 1em;
   font-size: 0.75em;
 }
+
+#err-triangle {
+  color: #dc3545;
+  font-size: 30px;
+}
+
+#err-msg {
+  margin-top: -13px;
+}

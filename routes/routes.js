@@ -481,7 +481,10 @@ module.exports = function (queries, io) {
     })
 
     queries.deleteRestaurant(restaurant_id, (value, error) => {
-      return res.redirect('/admin');
+      if (error) {
+        return res.send({err: true, msg: 'Failed to delete restaurant.'});
+      }
+      return res.send({err: false, msg: 'Successfully deleted restaurant.'});
     })
   })
 
@@ -593,7 +596,6 @@ module.exports = function (queries, io) {
     }
 
   });
-
 
   router.get('/admin/edit/:id', (req, res) => {
     const restaurant_id = req.params.id

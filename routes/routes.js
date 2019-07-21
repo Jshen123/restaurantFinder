@@ -519,29 +519,29 @@ module.exports = function (queries, io) {
     const restaurant_id = req.params.id;
     const user_id = req.session.user_id;
     const username = req.session.username;
-    const rating = req.body.rating;
-    const create_date = req.body.create_date;
-    const comment = req.body.comment;
 
+    const secretKey = process.env.CAPTCHA_SECRET_KEY;
+
+    const {rating, create_date, comment, captcha} = req.body;
 
     if (!comment.replace(/\s/g, '').length) {
       // empty review
-      res.send({err: true, msg: 'Please filled in something to comment!'});
+      return res.send({err: true, msg: 'Please filled in something to comment!'});
 
-    } else if (!rating){
+    } else if (!rating) {
       // no rating
-      res.send({err: true, msg: 'Please enter in a rating.'});
+      return res.send({err: true, msg: 'Please enter in a rating.'});
 
-    } else if (!username || !user_id){
+    } else if (!username || !user_id) {
       // no username
-      res.send({err: true, msg: 'Please login to post a comment.'});
+      return res.send({err: true, msg: 'Please login to post a comment.'});
 
     } else {
       // add comment into database
       queries.postComment(restaurant_id, user_id, rating, comment, (value, error) => {
         if (error) {
           // failed to add comment
-          res.send({err: true, msg: 'Failed to post the comment.'});
+          return res.send({err: true, msg: 'Failed to post the comment.'});
 
         } else {
           // send new comments to all clients in the same page
@@ -552,7 +552,7 @@ module.exports = function (queries, io) {
             comment: comment
           });
 
-          res.send({err: false, msg: 'success'});
+          return res.send({err: false, msg: 'success'});
         }
       });
     }

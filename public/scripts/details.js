@@ -55,12 +55,14 @@ $(document).ready(function() {
 
     var numStars = rating.getAttribute("data-rating");  //rating
     var comment = $('#comment').val();                  //comment
-    var id = $("#getId").attr("data-id");               //restaurant_id
+    const id = $("#getId").attr("data-id");             //restaurant_id
+    const captcha = $('#g-recaptcha-response').val();
 
     var commentData = {
       rating: numStars,
       comment: comment,
-      create_date: getDate()
+      create_date: getDate(),
+      captcha: captcha
     }
 
     var urlString = "/restaurants/" + id;

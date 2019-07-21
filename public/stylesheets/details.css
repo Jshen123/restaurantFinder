@@ -1,3 +1,7 @@
+body{
+  background-color:#f2f2f7 !important;
+}
+
 .checked {
     color: orange;
 }
@@ -18,4 +22,28 @@
 
 .commentDate {
     font-size: 12px;
+}
+
+
+.card {
+  background-color:#f2f2f7 !important;
+}
+
+.review-container {
+  background-color:#f2f2f7 !important;
+}
+
+.h5{
+  font-weight: 750 !important;
+}
+
+hr {
+  background-color: #8e8e93;
+  border: none;
+  border-top: 0.05em solid #8e8e93;
+}
+
+iframe {
+  height:17em;
+  width:22.5em;
 }

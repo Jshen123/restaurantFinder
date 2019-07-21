@@ -14,6 +14,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="/scripts/restaurants.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">   
   </head>
 
   <body>
@@ -52,7 +54,7 @@
             </div>
             <% open.forEach(function(val) { %>
               <% restId = val.restaurant_id; %>
-              <div class="card mb-0 rounded-0 border-0">
+              <div class="card mb-0 rounded-0 border-top-0 border-left-1 border-right-1 border-bottom-1">
                 <div class="row no-gutters">
                   <div class="col-md-5 m-1">
                     <a href="/restaurants/<%= restId %>">
@@ -94,6 +96,7 @@
                       <div class ="row justify-content-center">
                         <div class="col-md-0">
                             <button type="button" class="btn-map mt-3" data-toggle="modal" data-target="#modal<%= restId %>">
+                              <i class="fa fa-location-arrow" aria-hidden="true"></i>
                               See Map
                             </button>
   
@@ -144,7 +147,7 @@
                 </div>
                 <% closed.forEach(function(val) { %>
                   <% restId = val.restaurant_id; %>
-                  <div class="card mb-0 rounded-0 border-0">
+                  <div class="card mb-0 rounded-0 border-top-0 border-left-1 border-right-1 border-bottom-1">
                     <div class="row no-gutters">
                       <div class="col-md-5 m-1">
                         <a href="/restaurants/<%= restId %>">
@@ -186,6 +189,7 @@
                           <div class ="row justify-content-center">
                             <div class="col-md-0">
                                 <button type="button" class="btn-map-closed mt-3" data-toggle="modal" data-target="#modal<%= restId %>">
+                                  <i class="fa fa-location-arrow" aria-hidden="true"></i>
                                   See Map
                                 </button>
       
@@ -231,9 +235,10 @@
               <a class="twitter-timeline" data-width="100%" data-height="1500" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/sfudFinder/timelines/1143756982601392130?ref_src=twsrc%5Etfw">New tweets - Curated tweets by sfudFinder</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
           </div>
         </div>
+        <br>
     </div> 
     <!-- </div> -->
-    <br>
+   
     <!-- <% include ../partials/siteFooter.ejs %> -->
  
   </body>

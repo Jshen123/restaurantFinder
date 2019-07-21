@@ -481,9 +481,10 @@ module.exports = function (queries, io) {
     })
 
     queries.deleteRestaurant(restaurant_id, (value, error) => {
-      queries.getRestaurants((value) => {
-        return res.render('pages/admin', {value:value, user_id: req.session.user_id})
-      })
+      if (error) {
+        return res.send({err: true, msg: 'Failed to delete restaurant.'});
+      }
+      return res.send({err: false, msg: 'Successfully deleted restaurant.'});
     })
   })
 

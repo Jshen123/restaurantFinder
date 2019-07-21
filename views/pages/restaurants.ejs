@@ -8,7 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/nav.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/footer.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/restaurants.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="/scripts/restaurants.js"></script>
   </head>
 
   <body>
@@ -36,40 +41,62 @@
           </form>
         </div>
       </div>
+      
 
-      <div class="row">
+     <div class="row"> 
         <div class="col-8">
           <br>
-          <div class="container-flush p-3 border">
-            <h2><u>OPEN:</u></h2>
-            <div class="row">
-              <% open.forEach(function(val) { %>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt-4 mb-4">
-                  <div class="card">
-                    <div class="card-body">
-                      <% restId = val.restaurant_id; %>
+          <div class="container-flush p-1">
+            <div class="card rounded-0 status-card text-center text-success">
+              <span class="open-status mt-2">Open</span>
+            </div>
+            <% open.forEach(function(val) { %>
+              <% restId = val.restaurant_id; %>
+              <div class="card mb-0 rounded-0 border-0">
+                <div class="row no-gutters">
+                  <div class="col-md-5 m-1">
+                    <a href="/restaurants/<%= restId %>">
+                      <img src="<%= val.image_path %>" class="card-img rounded-0" alt="...">
+                    </a>
+                  </div>
+                  <div class="col-md-6 mt-0">
+                    <div class="card-body text-center">
+                      <!-- <% restId = val.restaurant_id; %> -->
                       <a class="card-title link" href="/restaurants/<%= restId %>" data-id="<%= restId %>"><%= val.name %></a>
-      
-                      <img class="card-img mt-2" src="<%= val.image_path %>" width="100" height="225">
-                      <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle mt-3" type="button" id="hourMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Restaurant Hours
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="hourMenu">
-                          <p class="dropdown-item">Sunday - <%= val.sunday %></p>
-                          <p class="dropdown-item">Monday - <%= val.monday %></p>
-                          <p class="dropdown-item">Tuesday - <%= val.tuesday %></p>
-                          <p class="dropdown-item">Wednesday - <%= val.wednesday %></p>
-                          <p class="dropdown-item">Thursday - <%= val.thursday %></p>
-                          <p class="dropdown-item">Friday - <%= val.friday %></p>
-                          <p class="dropdown-item">Saturday - <%= val.saturday %></p>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="dropdown">
+                              <button class="btn btn-light dropdown-toggle mt-3" type="button" id="hourMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Hours
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="hourMenu">
+                                <p class="dropdown-item">Sunday - <%= val.sunday %></p>
+                                <p class="dropdown-item">Monday - <%= val.monday %></p>
+                                <p class="dropdown-item">Tuesday - <%= val.tuesday %></p>
+                                <p class="dropdown-item">Wednesday - <%= val.wednesday %></p>
+                                <p class="dropdown-item">Thursday - <%= val.thursday %></p>
+                                <p class="dropdown-item">Friday - <%= val.friday %></p>
+                                <p class="dropdown-item">Saturday - <%= val.saturday %></p>
+                              </div>
+                          </div>
                         </div>
-                        <ul class="list-group list-group-flush mt-3">
-                          <li class="list-group-item">
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal<%= restId %>">
-                              Open in Map
-                            </button>
 
+                        <%= dollars = "";%>
+                         <% if (val.price == 1) {dollars = "$";} else if (val.price == 2) {dollars = "$$";} else {dollars = "$$$"} %>
+                        <div class="col-md-2 mt-4">
+                            <%= dollars %>
+                        </div>
+                        <div class="col-md-6 mt-4">
+                            <%=val.tag[0] %>
+                        </div>                       
+                      </div>
+
+                      <div class ="row justify-content-center">
+                        <div class="col-md-0">
+                            <button type="button" class="btn-map mt-3" data-toggle="modal" data-target="#modal<%= restId %>">
+                              See Map
+                            </button>
+  
                             <div class="modal fade" id="modal<%= restId %>" tabindex="-1" role="dialog" aria-labelledby="forModal<%= restId %>" aria-hidden="true">
                               <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -91,117 +118,124 @@
                                     </div>
                                   </div>
                                   <div class="modal-footer">
-
                                   </div>
                                 </div>
                               </div>
                             </div>
-
-                          </li>
-                          <%= dollars = "";%>
-                          <% if (val.price == 1) {dollars = "$";} else if (val.price == 2) {dollars = "$$";} else {dollars = "$$$"} %>
-                          <li class="list-group-item"><%= dollars %></li>
-                          <li class="list-group-item"><%= val.tag[0] %></li>
-                        </ul>
+                          </div>
                       </div>
+
                     </div>
                   </div>
                 </div>
-              <% }) %>
+              </div>
+            <% }) %>
             </div>
-          </div>
-          
-          <br>
+
+
             
-            <div class="container-flush bg-light p-3 border">
-              <h2><u>CLOSED:</u></h2>
-              <div class="row">
+            <br>
+
+
+
+            <div class="container-flush p-1">
+                <div class="card rounded-0 status-card text-center text-danger">
+                  <span class="open-status mt-2">Closed</span>
+                </div>
                 <% closed.forEach(function(val) { %>
-                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt-4 mb-4">
-                    <div class="card">
-                      <div class="card-body">
-                        <% restId = val.restaurant_id; %>
-                        <a class="card-title link" href="/restaurants/<%= restId %>" data-id="<%= restId %>"><%= val.name %></a>
-        
-                        <img class="card-img mt-2" src="<%= val.image_path %>" width="100" height="225">
-                        <div class="dropdown">
-                          <button class="btn btn-secondary dropdown-toggle mt-3" type="button" id="hourMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Restaurant Hours
-                          </button>
-                          <div class="dropdown-menu" aria-labelledby="hourMenu">
-                            <p class="dropdown-item">Sunday - <%= val.sunday %></p>
-                            <p class="dropdown-item">Monday - <%= val.monday %></p>
-                            <p class="dropdown-item">Tuesday - <%= val.tuesday %></p>
-                            <p class="dropdown-item">Wednesday - <%= val.wednesday %></p>
-                            <p class="dropdown-item">Thursday - <%= val.thursday %></p>
-                            <p class="dropdown-item">Friday - <%= val.friday %></p>
-                            <p class="dropdown-item">Saturday - <%= val.saturday %></p>
+                  <% restId = val.restaurant_id; %>
+                  <div class="card mb-0 rounded-0 border-0">
+                    <div class="row no-gutters">
+                      <div class="col-md-5 m-1">
+                        <a href="/restaurants/<%= restId %>">
+                          <img src="<%= val.image_path %>" class="card-img card-img-closed rounded-0" alt="...">
+                        </a>
+                      </div>
+                      <div class="col-md-6 mt-0">
+                        <div class="card-body text-center">
+                          <!-- <% restId = val.restaurant_id; %> -->
+                          <a class="card-title link" href="/restaurants/<%= restId %>" data-id="<%= restId %>"><%= val.name %></a>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <div class="dropdown">
+                                  <button class="btn btn-light dropdown-toggle mt-3" type="button" id="hourMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Hours
+                                  </button>
+                                  <div class="dropdown-menu" aria-labelledby="hourMenu">
+                                    <p class="dropdown-item">Sunday - <%= val.sunday %></p>
+                                    <p class="dropdown-item">Monday - <%= val.monday %></p>
+                                    <p class="dropdown-item">Tuesday - <%= val.tuesday %></p>
+                                    <p class="dropdown-item">Wednesday - <%= val.wednesday %></p>
+                                    <p class="dropdown-item">Thursday - <%= val.thursday %></p>
+                                    <p class="dropdown-item">Friday - <%= val.friday %></p>
+                                    <p class="dropdown-item">Saturday - <%= val.saturday %></p>
+                                  </div>
+                              </div>
+                            </div>
+    
+                            <%= dollars = "";%>
+                             <% if (val.price == 1) {dollars = "$";} else if (val.price == 2) {dollars = "$$";} else {dollars = "$$$"} %>
+                            <div class="col-md-2 mt-4">
+                                <%= dollars %>
+                            </div>
+                            <div class="col-md-6 mt-4">
+                                <%=val.tag[0] %>
+                            </div> 
                           </div>
-                          <ul class="list-group list-group-flush mt-3">
-                            <li class="list-group-item">
-                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal<%= restId %>">
-                                Open in Map
-                              </button>
-  
-                              <div class="modal fade" id="modal<%= restId %>" tabindex="-1" role="dialog" aria-labelledby="forModal<%= restId %>" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title" id="modal<%= restId %>Title">Map</h5>
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <div class="mapouter">
-                                        <div class="gmap_canvas">
-                                            <% mapPath = "https://maps.google.com/maps?q=" + val.address + "&t=&z=16&ie=UTF8&iwloc=&output=embed" %>
-                                            <iframe width="465" height="500" id="gmap_canvas" src="<%= mapPath %>" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
-                                            </iframe>
-                                            <a href="https://www.yellowrocketagency.com/%22%3E"></a>
-                                        </div>
-                                        <style>.mapouter{position:relative;text-align:left;height:500px;width:550px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:550px;}</style>
+    
+                          <div class ="row justify-content-center">
+                            <div class="col-md-0">
+                                <button type="button" class="btn-map-closed mt-3" data-toggle="modal" data-target="#modal<%= restId %>">
+                                  See Map
+                                </button>
+      
+                                <div class="modal fade" id="modal<%= restId %>" tabindex="-1" role="dialog" aria-labelledby="forModal<%= restId %>" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="modal<%= restId %>Title">Map</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
                                       </div>
-                                    </div>
-                                    <div class="modal-footer">
-  
+                                      <div class="modal-body">
+                                        <div class="mapouter">
+                                          <div class="gmap_canvas">
+                                              <% mapPath = "https://maps.google.com/maps?q=" + val.address + "&t=&z=16&ie=UTF8&iwloc=&output=embed" %>
+                                              <iframe width="465" height="500" id="gmap_canvas" src="<%= mapPath %>" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                                              </iframe>
+                                              <a href="https://www.yellowrocketagency.com/%22%3E"></a>
+                                          </div>
+                                          <style>.mapouter{position:relative;text-align:left;height:500px;width:550px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:550px;}</style>
+                                        </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-
-                            </li>
-                            <%= dollars = "";%>
-                            <% if (val.price == 1) {dollars = "$";} else if (val.price == 2) {dollars = "$$";} else {dollars = "$$$"} %>
-                            <li class="list-group-item"><%= dollars %></li>
-                            <li class="list-group-item"><%=val.tag[0] %></li>
-                          </ul>
+                          </div>
+    
                         </div>
                       </div>
                     </div>
                   </div>
                 <% }) %>
-              </div>
-            </div>
-            
+                </div>
           </div>
+
         <div class="col-4">
           <br>
-          <h3>Twitter Feed</h3>
           <div class="t-container border">
               <a class="twitter-timeline" data-width="100%" data-height="1500" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/sfudFinder/timelines/1143756982601392130?ref_src=twsrc%5Etfw">New tweets - Curated tweets by sfudFinder</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
           </div>
         </div>
-        
-      </div>
-    </div>
+    </div> 
+    <!-- </div> -->
     <br>
-    
-    <% include ../partials/siteFooter.ejs %>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="/scripts/restaurants.js"></script>
+    <!-- <% include ../partials/siteFooter.ejs %> -->
+ 
   </body>
 
 </html>

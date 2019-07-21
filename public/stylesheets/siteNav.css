@@ -15,22 +15,23 @@
 .nav-btn-register {
   height:2em;
   width:5em;
-  border: 0.15em solid white;
+  border: 0.115em solid white;
   background-color: #b30000;
   color: white;
+  border-radius: 0.25em;
 }
 
 .nav-btn {
-  height:2em;
-  width:5em;
+  height:2.25em;
+  width:5.5em;
   border: none;
   background-color: #b30000;
   color: white;
 }
 
 .nav-btn button:focus {
-  border:0;
-  outline: 0;
+  border:none;
+  outline: none;
   box-shadow: 0;
 }
 

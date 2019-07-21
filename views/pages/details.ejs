@@ -8,9 +8,9 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/nav.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/footer.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/details.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">   
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -34,74 +34,108 @@
     <% include ../partials/siteNav.ejs %>
 
     <div class="container" id="getId" data-id="<%= value[0].restaurant_id %>">
-        <p class="h1 mt-4"><%= value[0].name%></p>
+        <p class="h3 mt-4"><%= value[0].name%></p>
 
         <div class="row">
+            <div class="container">
+                <%= dollars = "";%>
+                <% if (value[0].price == 1) {dollars = "$";} else if (value[0].price == 2) {dollars = "$$";} else {dollars = "$$$"} %>
+                <span class="badge badge-light"><%= dollars %></span>
+                <span class="badge badge-light"><%= value[0].type %></span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
             <div class="col-4">
                 <% restId = value[0].restaurant_id; %>
                 <% imgPath = "/Pictures/restaurant_" + restId + ".jpg" %>
                 <img src="<%= value[0].image_path %>" class="img-thumbnail" width="100%">
             </div>
-            <div class="col-8">
+            <!-- <div class="col-8">
                 <p><%= value[0].description %></p>
+            </div> -->
+            <div class="col-4">
+              <table class="table table-sm table-striped">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Day</th>
+                    <th scope="col">Hours</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Sunday</td>
+                    <td><%= value[0].sunday %></td>
+                  </tr>
+                  <tr>
+                      <td>Monday</td>
+                      <td><%= value[0].monday %></td>
+                  </tr>
+                  <tr>
+                      <td>Tuesday</td>
+                      <td><%= value[0].tuesday %></td>
+                  </tr>
+                  <tr>
+                      <td>Wednesday</td>
+                      <td><%= value[0].wednesday %></td>
+                  </tr>
+                  <tr>
+                      <td>Thursday</td>
+                      <td><%= value[0].thursday %></td>
+                  </tr>
+                  <tr>
+                      <td>Friday</td>
+                      <td><%= value[0].friday %></td>
+                  </tr>
+                  <tr>
+                      <td>Saturday</td>
+                      <td><%= value[0].saturday %></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-        </div>
 
-        <div class="container mt-2">
-            <%= dollars = "";%>
-            <% if (value[0].price == 1) {dollars = "$";} else if (value[0].price == 2) {dollars = "$$";} else {dollars = "$$$"} %>
-            <span class="badge badge-light"><%= dollars %></span>
-            <span class="badge badge-light"><%= value[0].type %></span>
-        </div>
-
-        <hr>
-
-        <div class="row">
-            <div class="col-6">
+            <div class="col-4">
                 <div class="mapouter">
                     <div class="gmap_canvas">
                         <% mapPath = "https://maps.google.com/maps?q=" + value[0].address + "&t=&z=15&ie=UTF8&iwloc=&output=embed" %>
-                        <iframe width="550" height="500" id="gmap_canvas" src="<%= mapPath %>" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                        <iframe id="gmap_canvas" src="<%= mapPath %>" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
                         </iframe>
                         <a href="https://www.yellowrocketagency.com/%22%3E"></a>
                     </div>
-                    <style>.mapouter{position:relative;text-align:right;height:500px;width:550px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:550px;}</style>
+                    <!-- <style>.mapouter{position:relative;text-align:right;height:500px;width:550px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:550px;}</style> -->
                 </div>
-            </div>
-            <div class="col-4">
-                <h2><u>Hours:</u></h2>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Sunday : <%= value[0].sunday %></li>
-                    <li class="list-group-item">Monday : <%= value[0].monday %></li>
-                    <li class="list-group-item">Tuesday : <%= value[0].tuesday %></li>
-                    <li class="list-group-item">Wednesday : <%= value[0].wednesday %></li>
-                    <li class="list-group-item">Thursday : <%= value[0].thursday %></li>
-                    <li class="list-group-item">Friday : <%= value[0].friday %></li>
-                    <li class="list-group-item">Saturday : <%= value[0].saturday %></li>
-                </ul>
             </div>
         </div>
 
         <hr>
 
         <div class="row">
-          <div class="col-4">
+          <div class="col-12 ">
+            <p><%= value[0].description %></p>
+          </div>
+        </div>
 
-          </div>
-          <div class="col-5">
-            <p align="center" class="h5 m-auto"><u>Comments and Reviews</u></p>
-          </div>
-          <div class="col-3 text-right">
-            <form class="form-inline" id="sort-form">
-              <label for="sort"><strong>Sort by:&nbsp&nbsp&nbsp</strong></label>
-              <select class="custom-select" id="sort" name="sort">
-                <option value="time_DESC">Newest</option>
-                <option value="time_ASC">Oldest</option>
-                <option value="rating_DESC">Highest Rating</option>
-                <option value="rating_ASC">Lowest Rating</option>
-              </select><br/>
-            </form>
-          </div>
+        <hr>
+        <div class="row">
+          <div class="col-10">
+              <p align="center" class="h5 m-auto"><u>Comments and Reviews</u></p>
+            </div>
+  
+            <div class="col-2 align-right">
+              <form class="form-inline" id="sort-form">
+                <label for="sort"><strong>Sort by:&nbsp&nbsp&nbsp</strong></label>
+                <select class="custom-select" id="sort" name="sort">
+                  <option value="time_DESC">Newest</option>
+                  <option value="time_ASC">Oldest</option>
+                  <option value="rating_DESC">Highest Rating</option>
+                  <option value="rating_ASC">Lowest Rating</option>
+                </select><br/>
+              </form>
+            </div>
+        </div>
+
+
         </div>
         
 
@@ -110,21 +144,21 @@
         <div id="comments-section">
         <% comments.forEach(function(comment) { %>
 
-          <div class="card bg-light p-3">
-            <div class="userText">
-              <strong><%= comment.username %></strong> <span class="commentDate">at <%= comment.create_date %></span>
-            </div>
-            <div class="userRating">
-              <% rating = parseInt(comment.rating)%>
-              <% for (i = 0; i < 5; i++) { %>
-                <% if (i < rating) { %>
-                  <span class="fa fa-star checked"></span>
-                <% } else { %>
-                  <span class="fa fa-star"></span>
-                <% } %>
-              <% } %>
-            </div>
-            <p><%= comment.comment %></p>         
+            <div class="card p-3 border-0">
+                <div class="userText">
+                    <strong><%= comment.username %></strong> <span class="commentDate">at <%= comment.create_date %></span>
+                </div>
+                <div class="userRating">
+                    <% rating = parseInt(comment.rating)%>
+                    <% for (i = 0; i < 5; i++) { %>
+                        <% if (i < rating) { %>
+                            <span class="fa fa-star checked"></span>
+                        <% } else { %>
+                            <span class="fa fa-star"></span>
+                        <% } %>
+                    <% } %>
+                </div>
+                <p><%= comment.comment %></p>                 
           </div>
           <br>
             
@@ -132,9 +166,9 @@
         </div>
 
         <form id="comment-form">
-          <div class="container bg-light">
+          <div class="container review-container">  
             <br>
-            <p align="center"><u><strong>Write a Review</strong></u></p>
+            <p align="left"><strong>Write a Review</strong></p>
             <div class="stars" data-rating="3">
               <span class="fa fa-star rate-star"></span>
               <span class="fa fa-star rate-star"></span>
@@ -145,7 +179,7 @@
             <div class="form-group">
               <textarea class="form-control" id="comment" placeholder="Thoughts?  Comments?  Put them here!" name="comment"></textarea>
             </div>
-            <div class="form-group">
+            <div class="form-group" align="center">
               <div id="g-recaptcha" class="g-recaptcha" data-sitekey="6Le9sK4UAAAAAGytBTORu7qdkn2cMeAuWZPewMTW" data-callback="onCaptchaVerified" data-expired-callback="showCaptcha"></div>
             </div>
             <div class="container" style="width: 25%">

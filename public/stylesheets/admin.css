@@ -1,0 +1,57 @@
+body{
+  background-color:#f2f2f7 !important;
+  font-family: 'Lato', sans-serif !important;
+}
+
+.card {
+  /* border-radius: 0em !important; */
+  box-shadow: 0 0.01em 0.01em 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+}
+
+.button{
+  height:2.25em;
+  width:6em;
+  border: none;
+  border-radius: 0.3em;
+  background-color: #b30000;
+  border: 0.115em solid white;
+  color: white;
+}
+
+
+.edit-restaurant{
+  height:2.25em;
+  width:6em;
+  border: none;
+  background-color: #34c759;
+  border: 0.115em solid white;
+  color: white;
+}
+
+.add-restaurant{
+  height:2.25em;
+  width:10em;
+  border: none;
+  background-color: #007bff;
+  border: 0.115em solid white;
+  color: white;
+}
+
+.restaurant-name{
+  color: #007bff;
+}
+
+/* .row{
+  display:flex;
+  flex-direction:row;
+}
+
+.row h5 {
+  display:flex;
+  justify-content:flex-start;
+}
+
+.row .btn-add{
+  display:flex;
+  justify-content:flex-end;
+} */

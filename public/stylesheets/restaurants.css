@@ -1,0 +1,51 @@
+body{
+  background-color:#f2f2f7 !important;
+  font-family: 'Lato', sans-serif !important;
+}
+
+.open-status{
+  font-weight:750;
+  font-size:1.25em;
+}
+
+
+.btn-map{
+  height:2.25em;
+  width:12em;
+  border: none;
+  border-radius: 1em;
+  background-color: #b30000;
+  border: 0.115em solid white;
+  color: white;
+}
+
+.btn-map-closed{
+  height:2.25em;
+  width:12em;
+  border: none;
+  border-radius: 1em;
+  background-color: #8e8e93;
+  border: 0.115em solid white;
+  color: white;
+}
+
+.status-card{
+  height:3em;
+}
+
+.card-title{
+  font-weight:750;
+  color:black;
+}
+
+.card-title:hover{
+  text-decoration: none;
+}
+
+.card-img {
+  border-radius: 0;
+}
+
+.card-img-closed {
+  filter: grayscale(85%);
+}

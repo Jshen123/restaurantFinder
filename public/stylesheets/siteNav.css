@@ -1,4 +1,40 @@
-.navbar .display-4 {
+.navbar .nav-brand {
+  color: white;
   font-size: 1.5rem;
   font-weight: 750;
 }
+
+.navbar .nav-brand:hover {
+  text-decoration: none;
+}
+
+.nav-item {
+  float:right
+}
+
+.nav-btn-register {
+  height:2em;
+  width:5em;
+  border: 0.115em solid white;
+  background-color: #b30000;
+  color: white;
+  border-radius: 0.25em;
+}
+
+.nav-btn {
+  height:2.25em;
+  width:5.5em;
+  border: none;
+  background-color: #b30000;
+  color: white;
+}
+
+.nav-btn button:focus {
+  border:none;
+  outline: none;
+  box-shadow: 0;
+}
+
+/* .nav-btn button:active{
+  color: grey;
+} */

@@ -142,28 +142,31 @@
         <br>
 
         <div id="comments-section">
-        <% comments.forEach(function(comment) { %>
+        <div class="container">
+            <% comments.forEach(function(comment) { %>
 
-            <div class="card p-3 border-0">
-                <div class="userText">
-                    <strong><%= comment.username %></strong> <span class="commentDate">at <%= comment.create_date %></span>
-                </div>
-                <div class="userRating">
-                    <% rating = parseInt(comment.rating)%>
-                    <% for (i = 0; i < 5; i++) { %>
-                        <% if (i < rating) { %>
-                            <span class="fa fa-star checked"></span>
-                        <% } else { %>
-                            <span class="fa fa-star"></span>
-                        <% } %>
-                    <% } %>
-                </div>
-                <p><%= comment.comment %></p>                 
+              <div  class="card p-3 border-0">
+                  <div class="userText">
+                      <strong><%= comment.username %></strong> <span class="commentDate">at <%= comment.create_date %></span>
+                  </div>
+                  <div class="userRating">
+                      <% rating = parseInt(comment.rating)%>
+                      <% for (i = 0; i < 5; i++) { %>
+                          <% if (i < rating) { %>
+                              <span class="fa fa-star checked"></span>
+                          <% } else { %>
+                              <span class="fa fa-star"></span>
+                          <% } %>
+                      <% } %>
+                  </div>
+                  <p><%= comment.comment %></p>                 
+            </div>
+            <br>
+              
+          <% }) %>
           </div>
-          <br>
-            
-        <% }) %>
         </div>
+
 
         <form id="comment-form">
           <div class="container review-container">  

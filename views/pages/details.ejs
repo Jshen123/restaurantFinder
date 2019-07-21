@@ -17,6 +17,17 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/scripts/restaurants_socket.js"></script>
     <script src="/scripts/details.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+      function onCaptchaVerified() {
+        setTimeout(function(){ 
+          document.getElementById("g-recaptcha").style.display = "none"; 
+        }, 1500);
+      }
+      function showCaptcha() {
+        document.getElementById("g-recaptcha").style.display = "block";
+      }
+     </script>
   </head>
 
   <body>
@@ -134,14 +145,15 @@
             <div class="form-group">
               <textarea class="form-control" id="comment" placeholder="Thoughts?  Comments?  Put them here!" name="comment"></textarea>
             </div>
+            <div class="form-group">
+              <div id="g-recaptcha" class="g-recaptcha" data-sitekey="6Le9sK4UAAAAAGytBTORu7qdkn2cMeAuWZPewMTW" data-callback="onCaptchaVerified" data-expired-callback="showCaptcha"></div>
+            </div>
             <div class="container" style="width: 25%">
               <button type="submit" class="btn btn-primary btn-block">Submit</button>
             </div>
             <br>
           </div>
         </form>
-
-        
 
         <br>
     </div>

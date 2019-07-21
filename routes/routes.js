@@ -4,6 +4,7 @@ const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const moment = require('moment-timezone');
+const request = require('request');
 
 const multer = require('multer');
 const path = require('path');
@@ -518,44 +519,65 @@ module.exports = function (queries, io) {
     })
   })
 
-  router.post('/restaurants/:id', (req, res) => {
+  router.post('/comments/:id', (req, res) => {
     const restaurant_id = req.params.id;
     const user_id = req.session.user_id;
     const username = req.session.username;
-    const rating = req.body.rating;
-    const create_date = req.body.create_date;
-    const comment = req.body.comment;
+    const captcha_verified = req.session.captcha_verified;
 
+    req.session.captcha_verified = false;
+
+    const {rating, create_date, comment, captcha} = req.body;
 
     if (!comment.replace(/\s/g, '').length) {
       // empty review
-      res.send({err: true, msg: 'Please filled in something to comment!'});
+      return res.send({err: true, msg: 'Please filled in something to comment!'});
 
-    } else if (!rating){
+    } else if (!rating) {
       // no rating
-      res.send({err: true, msg: 'Please enter in a rating.'});
+      return res.send({err: true, msg: 'Please enter in a rating.'});
 
-    } else if (!username || !user_id){
+    } else if (!username || !user_id) {
       // no username
-      res.send({err: true, msg: 'Please login to post a comment.'});
+      return res.send({err: true, msg: 'Please login to post a comment.'});
+
+    } else if (!captcha) {
+      // capthca not selected
+      return res.send({err: true, msg: 'Please select captcha.'});
 
     } else {
-      // add comment into database
-      queries.postComment(restaurant_id, user_id, rating, comment, (value, error) => {
-        if (error) {
-          // failed to add comment
-          res.send({err: true, msg: 'Failed to post the comment.'});
+      const secretKey = process.env.CAPTCHA_SECRET_KEY;
+      const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captcha}&remoteip=${req.connection.remoteAddress}`;
+
+      request(verifyUrl, (error, respond, body) => {
+        var body = JSON.parse(body);
+
+        if(body.success !== undefined && !body.success && !captcha_verified) {
+          // failed captcha
+          return res.send({err: true, msg: 'Failed captcha verification.'});
 
         } else {
-          // send new comments to all clients in the same page
-          restaurants_io.to(restaurant_id).emit('new_comment', {
-            username: username, 
-            rating: rating, 
-            create_date: create_date, 
-            comment: comment
-          });
+          // captcha verified
+          req.session.captcha_verified = true;
 
-          res.send({err: false, msg: 'success'});
+          // add comment into database
+          queries.postComment(restaurant_id, user_id, rating, comment, (value, error) => {
+            if (error) {
+              // failed to add comment
+              return res.send({err: true, msg: 'Failed to post the comment.'});
+
+            } else {
+              // send new comments to all clients in the same page
+              restaurants_io.to(restaurant_id).emit('new_comment', {
+                username: username, 
+                rating: rating, 
+                create_date: create_date, 
+                comment: comment
+              });
+
+              return res.send({err: false, msg: 'success'});
+            }
+          });
         }
       });
     }
@@ -563,7 +585,7 @@ module.exports = function (queries, io) {
   });
 
   // get comments in a sorted order
-  router.post('/comments/:id', (req, res) => {
+  router.post('/sort_comments/:id', (req, res) => {
     const restaurant_id = req.params.id;
     const sortOrder = req.body;
 

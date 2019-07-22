@@ -23,26 +23,7 @@
 
     <br>
     <div class="container">
-      <div class="bg" style="margin: auto; width: 25%; text-align: center;">
-        <button data-toggle="collapse" data-target="#search" type="button" class="btn">
-          Search&nbsp<span class="fa fa-search"></span>
-        </button>
-
-        <div id="search" class="collapse">
-          <form id="search-form">
-            <div class="form-group p-3">
-              <div class="row no-gutters">
-                <div class="col-8">
-                    <input type="text" class="form-control" id="searchField" placeholder="Search for..." name="name">
-                </div>
-                <div class="col-4">
-                    <button class="btn btn-success">Confirm</button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
+      
       
 
      <div class="row"> 
@@ -230,7 +211,158 @@
           </div>
 
         <div class="col-4">
+
           <br>
+
+          <div class="bg">
+            Filter Restaurants By:
+            <button data-toggle="collapse" data-target="#search" type="button" class="btn">
+              <strong>Click to Expand</strong>
+            </button>
+      
+            <div id="search" class="collapse">
+              <form id="search-form">
+                <div class="mt-2"></div>
+
+                <div class="ind-1">
+                  <strong>Food Type</strong>
+                  <div class="ind-2">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Burgers" id="check0">Burgers
+                    </div>
+        
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Pizza" id="check1">Pizza
+                    </div>
+        
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Fast Food" id="check2">Fast Food
+                    </div>
+        
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Sandwiches" id="check3">Sandwiches
+                    </div>
+    
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Salads" id="check8">Salads
+                    </div>
+        
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Noodles" id="check9">Noodles
+                    </div>
+        
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Coffee" id="check10">Coffee
+                    </div>
+    
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Rice" id="check12">Rice
+                    </div>
+        
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Bubble Tea" id="check13">Bubble Tea
+                    </div>
+        
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Juice and Smoothies" id="check14">Juice and Smoothies
+                    </div>
+        
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Burritos" id="check15">Burritos
+                    </div>
+    
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Seafood" id="check19">Seafood
+                    </div>
+    
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Alcohol" id="check21">Alcohol
+                    </div>
+                  </div>                  
+                </div>
+
+                <div class="ind-1">
+                  <strong>Culture</strong>
+
+                  <div class="ind-2">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Chinese" id="check4">Chinese
+                    </div>
+        
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Vietnamese" id="check5">Vietnamese
+                    </div>
+        
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Korean" id="check6">Korean
+                    </div>
+        
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Japanese" id="check7">Japanese
+                    </div>
+        
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Middle Eastern" id="check17">Middle Eastern
+                    </div>
+        
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Mediterranean" id="check18">Mediterranean
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ind-1">
+                  <strong>Location</strong>
+
+                  <div class="ind-2">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Cornerstone" id="check23">Cornerstone
+                    </div>
+        
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Maggie Benston Centre" id="check24">Maggie Benston Centre
+                    </div>
+        
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="West Mall Centre" id="check25">West Mall Centre
+                    </div>
+        
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Academic Quadrangle" id="check26">Academic Quadrangle
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ind-1">
+                  <strong>Miscellaneous</strong>
+
+                  <div class="ind-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="Buffet" id="check11">Buffet
+                      </div>
+          
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="Cafeteria" id="check16">Cafeteria
+                      </div>
+    
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Healthy" id="check20">Healthy
+                    </div>
+        
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="Vegetarian" id="check22">Vegetarian
+                    </div>
+                  </div>    
+                </div>
+    
+                <button type="submit" class="btn btn-success mt-3">Confirm</button>
+      
+              </form>
+            </div>
+          </div>
+
+          <br>
+
           <div class="t-container border">
               <a class="twitter-timeline" data-width="100%" data-height="1500" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/sfudFinder/timelines/1143756982601392130?ref_src=twsrc%5Etfw">New tweets - Curated tweets by sfudFinder</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
           </div>

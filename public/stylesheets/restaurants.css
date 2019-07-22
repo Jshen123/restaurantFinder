@@ -49,3 +49,11 @@ body{
 .card-img-closed {
   filter: grayscale(85%);
 }
+
+.ind-1 {
+  margin-left: 25px;
+}
+
+.ind-2 {
+  margin-left: 15px;
+}

@@ -18,4 +18,17 @@ $(document).ready(function() {
 
         console.log(qString);
     })
+
+    var expButton = $("#expand");
+
+    expButton.on('click', function() {
+        if (expButton.html() == "<strong>Click here to Filter Restaurants</strong>") {
+            expButton.html("<strong>Click to Contract</strong>");
+            $('#search').collapse('toggle');
+        } else {
+            expButton.html("<strong>Click here to Filter Restaurants</strong>");
+            $('#search').collapse('toggle');
+        }
+
+    })
 })

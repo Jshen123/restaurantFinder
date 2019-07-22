@@ -283,7 +283,7 @@ module.exports = function (queries, io) {
     const weekdays = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday']
     const day = weekdays[today.day()]   // determine which day of the week
 
-    const tags = req.query.tag;
+    const tags = (typeof(req.query.tag) === 'string') ? [req.query.tag] : req.query.tag;
 
     if (!tags) {
       // default get '/restaurants' with no query string

@@ -287,22 +287,16 @@ module.exports = function (queries, io) {
 
     if (!tags) {
       // default get '/restaurants' with no query string
-      queries.getRestaurants((value) => {
-        const payload = get_payload(value);
-        return res.render('pages/restaurants', payload);
-      });
+      queries.getRestaurants(render_page);
 
     } else {
       // filter restaurants with tags
-      //queries.filterRestaurants(tags, (value) => {
-      queries.getRestaurants((value) => {
-        const payload = get_payload(value);
-        return res.render('pages/restaurants', payload);
-      });
+      //queries.filterRestaurants(tags, render_page);
+      queries.getRestaurants(render_page);
     }
 
     // function to get the payload for rendering the page
-    function get_payload(value) {
+    function render_page(value) {
       const payload = {
         user_id: req.session.user_id, 
         open:[],
@@ -327,7 +321,7 @@ module.exports = function (queries, io) {
         }
       })
 
-      return payload;
+      return res.render('pages/restaurants', payload);
     }
     
   })

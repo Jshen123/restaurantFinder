@@ -15,7 +15,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="/scripts/restaurants.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">   
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Maven+Pro&display=swap" rel="stylesheet">   
   </head>
 
   <body>
@@ -23,26 +24,7 @@
 
     <br>
     <div class="container">
-      <div class="bg" style="margin: auto; width: 25%; text-align: center;">
-        <button data-toggle="collapse" data-target="#search" type="button" class="btn">
-          Search&nbsp<span class="fa fa-search"></span>
-        </button>
-
-        <div id="search" class="collapse">
-          <form id="search-form">
-            <div class="form-group p-3">
-              <div class="row no-gutters">
-                <div class="col-8">
-                    <input type="text" class="form-control" id="searchField" placeholder="Search for..." name="name">
-                </div>
-                <div class="col-4">
-                    <button class="btn btn-success">Confirm</button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
+      
       
 
      <div class="row"> 
@@ -230,7 +212,78 @@
           </div>
 
         <div class="col-4">
+
           <br>
+
+          <div class="bg">
+            <button data-toggle="collapse" data-target="#search" type="button" class="btn btn-warning text-white mt-2" id="expand"><strong>Click here to Filter Restaurants</strong></button>
+      
+            <div id="search" class="collapse">
+              &nbsp&nbsp<h2>Filter restaurants by:</h2>
+              <div class="mt-1"></div>
+              <div class="ind-1">
+                <strong>Food Type</strong>
+                <div class="ind-2">
+                  <div class="select-box">Burgers</div>
+                  <div class="select-box">Pizza</div>
+                  <div class="select-box">Fast Food</div>
+                  <div class="select-box">Sandwiches</div>
+                  <div class="select-box">Salads</div>
+                  <div class="select-box">Noodles</div>
+                  <div class="select-box">Coffee</div>
+                  <div class="select-box">Rice</div>
+                  <div class="select-box">Bubble Tea</div>
+                  <div class="select-box">Juice and Smoothies</div>
+                  <div class="select-box">Burritos</div>
+                  <div class="select-box">Seafood</div>
+                  <div class="select-box">Alcohol</div>
+                </div>                  
+              </div>
+
+              <div class="ind-1">
+                <strong>Culture</strong>
+
+                <div class="ind-2">
+                  <div class="select-box">Chinese</div>
+                  <div class="select-box">Vietnamese</div>
+                  <div class="select-box">Korean</div>
+                  <div class="select-box">Japanese</div>
+                  <div class="select-box">Middle Eastern</div>
+                  <div class="select-box">Mediterranean</div>
+                </div>
+              </div>
+
+              <div class="ind-1">
+                <strong>Location</strong>
+
+                <div class="ind-2">
+                  <div class="select-box">Cornerstone</div>
+                  <div class="select-box">Maggie Benston Centre</div>
+                  <div class="select-box">West Mall Centre</div>
+                  <div class="select-box">Academic Quadrangle</div>
+                </div>
+              </div>
+
+              <div class="ind-1">
+                <strong>Miscellaneous</strong>
+
+                <div class="ind-2">
+                  <div class="select-box">Buffet</div>
+                  <div class="select-box">Cafeteria</div>
+                  <div class="select-box">Healthy</div>
+                  <div class="select-box">Vegetarian</div>
+                </div>    
+              </div>
+
+              <br>
+  
+              <button type="button" class="conf-button" id="confirm"><strong>Confirm</strong></button>
+      
+            </div>
+
+          </div>
+          <br>
+
           <div class="t-container border">
               <a class="twitter-timeline" data-width="100%" data-height="1500" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/sfudFinder/timelines/1143756982601392130?ref_src=twsrc%5Etfw">New tweets - Curated tweets by sfudFinder</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
           </div>

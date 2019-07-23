@@ -285,8 +285,6 @@ module.exports = function (queries, io) {
 
     const tags = (typeof(req.query.tag) === 'string') ? [req.query.tag] : req.query.tag;
 
-    console.log(tags);
-
     if (!tags) {
       // default get '/restaurants' with no query string
       queries.getRestaurants(render_page);

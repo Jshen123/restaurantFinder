@@ -10,70 +10,70 @@ exports.seed = function(knex, Promise) {
           price: 1,
           address: 'A%26W%20Canada%20SFU',
           tag:  ['Fast food restaurant'],
-          description: 'Test Restaurant'
+          description: 'Find out what is cooking at A&W. From tasty burgers to crispy onion rings to frosty mugs of Root Beer to the plant-based Beyond Meat Burger, we have got it all.'
         },
         {
           name: 'Bun & Me',
           price: 2,
           address: 'Bun%20%26%20Me',
           tag:  ['Vietnamese restaurant'],
-          description: 'Test Restaurant'
+          description: 'Serving up delicious fresh, local, and quality authentic Vietnamese food including bánh mì, rice plates and Vietnamese Coffee to SFU!'
         },
         {
           name: 'Togo Sushi',
           price: 2,
           address: 'Togo%20Sushi%20SFU',
           tag:  ['Japanese restaurant'],
-          description: 'Test Restaurant'
+          description: 'We take pride in serving you fresh assortments of nigiri sushi, maki sushi and sashimi made on site, everyday with top quality, nutritious ingredients. Togo Sushi is dedicated to bringing you ultimate sushi experience.'
         },
         {
           name: 'Chopped Leaf',
           price: 2,
           address: 'Chopped%20Leaf%20SFU',
           tag:  ['Salad shop'],
-          description: 'Test Restaurant'
+          description: 'Our goal is fast, fresh and healthy food delivered with exceptional timeliness for premium customer service. Raising the bar for fast food everywhere.'
         },
         {
           name: 'Uncle Fatih\'s Pizza',
           price: 1,
           address: 'Uncle%20Fatih\'s%20Pizza%20SFU',
           tag:  ['Pizza restaurant'],
-          description: 'Test Restaurant'
+          description: 'Healthy, freshly made dough everyday, combined with rustic, traditional, never frozen ingredients. Drop on by to our pizza-pie shop and refuel your belly with the non-hydrogenated energy your body craves and your taste buds cant resist.'
         },
         {
           name: 'Chef Hung Taiwanese Beef Noodle',
           price: 2,
           address: 'Chef%20Hung%20Taiwanese%20Beef%20Noodle%20SFU',
           tag:  ['Taiwanese restaurant'],
-          description: 'Test Restaurant'
+          description: 'Serving authentic Taiwanese cuisine, Chef Hung is an award-winning chef known for his Taiwanese beef noodle dishes. Our store offers a variety of bowls of noodles as well as other Taiwanese delicacies that are bound to satisfy your taste buds.'
         },
         {
           name: 'Tim Hortons Cornerstone',
           price: 1,
           address: 'Tim%20Hortons%20University%20High',
           tag:  ['Coffee shop'],
-          description: 'Test Restaurant'
+          description: 'Tim Hortons is the perfect place for great-tasting, freshly brewed coffee. We also offer specialty beverages including lattes, cappuccinos, espresso, iced and frozen coffee, hot chocolate and tea.'
         },
         {
           name: 'Nature\'s Garden Cafe SFU',
           price: 2,
           address: 'Nature\'s%20Garden%20Cafe%20SFU',
           tag:  ['Health food restaurant'],
-          description: 'Test Restaurant'
+          description: 'We are your weekday morning ritual. We are fresh baked breads, cookies and muffins. We are your place for lunch with a friend. We are your local meeting place. We are your place to escape and enjoy yourself over coffee drinks made with care.'
         },
         {
           name: 'Quesada Burritos & Tacos',
           price: 1,
           address: 'Quesada%20Burritos%20and%20Tacos%20SFU',
           tag:  ['Tex-Mex restaurant'],
-          description: 'Test Restaurant'
+          description: 'Hand-mashed guacamole and house-made salsa take hours of chopping, roasting and blending, but we wouldn\’t have it any other way. Creating a delicious, pleasurable experience is our ultimate goal. Bite into Quesada and to experience The Joy of Mex.'
         },
         {
           name: 'Steve\'s Poké Bar',
           price: 2,
           address: 'Steve\'s%20Poke%20Bar%20SFU',
           tag:  ['Hawaiian restaurant'],
-          description: 'Test restaurant'
+          description: 'Steve’s Poké Bar is a locally owned Hawaiian poké joint serving a variety of flavoured and seasoned raw fish with many options. Customers can enjoy poké with homemade recipes mixed fresh daily, and can choose whichever seafood and toppings they desire.'
         },
         {
           name: 'Donair Town',
@@ -220,7 +220,7 @@ exports.seed = function(knex, Promise) {
           price: 1,
           address: 'Tim%20Hortons%20SFU%20West%20Mall',
           tag:  ['Cafe'],
-          description: 'Test restaurant'
+          description: 'Tim Hortons is the perfect place for great-tasting, freshly brewed coffee. We also offer specialty beverages including lattes, cappuccinos, espresso, iced and frozen coffee, hot chocolate and tea.'
         },
         {
           name: 'Residence Dining Hall',

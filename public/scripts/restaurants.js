@@ -1,13 +1,20 @@
 $(document).ready(function() {
+    $(".select-box").click(function() {
+        if ($(this).hasClass("checked")) {
+            $(this).removeClass("checked");
+        } else {
+            $(this).addClass("checked");
+        }
+    });
+
+    var selectBoxes = document.getElementsByClassName("select-box");
+
     $('#confirm').on('click', function() {
         var qString = "?"
 
-        var arrLength = 27;
-        for (i = 0; i < arrLength; i++) {
-            var checkId = '#check' + i;
-            var checkBox = $(checkId)
-            if (checkBox.is(':checked')) {
-                qString += "tag=" + checkBox.val() + "&";
+        for (i = 0; i < selectBoxes.length; i++) {
+            if (selectBoxes[i].classList.contains("checked")) {
+                qString += "tag=" + selectBoxes[i].innerHTML + "&"; 
             }
         }
 
@@ -29,6 +36,5 @@ $(document).ready(function() {
             expButton.html("<strong>Click here to Filter Restaurants</strong>");
             $('#search').collapse('toggle');
         }
-
     })
 })

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#test').submit(function() {
+    $('#confirm').on('click', function() {
         var qString = "?"
 
         var arrLength = 27;
@@ -16,7 +16,7 @@ $(document).ready(function() {
             qString = qString.substring(0, qString.length - 1);
         }
 
-        console.log(qString);
+        window.location.href = '/restaurants' + qString;
     })
 
     var expButton = $("#expand");

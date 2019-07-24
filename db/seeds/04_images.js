@@ -7,7 +7,7 @@ exports.seed = function(knex, Promise) {
         {
           restaurant_id: 1,
           image_path: "/Pictures/restaurant_1.jpg"
-        }
+        },
         {
           restaurant_id: 2,
           image_path: "/Pictures/restaurant_2.jpg"

@@ -51,7 +51,7 @@ exports.seed = function(knex, Promise) {
           name: 'Tim Hortons Cornerstone',
           price: 1,
           address: 'Tim%20Hortons%20University%20High',
-          tag:  ['Fast Food','Coffee','Baked Goods','Cornerstone'],
+          tag:  ['Fast Food','Coffee','Cornerstone'],
           description: 'Test Restaurant'
         },
         {
@@ -198,7 +198,7 @@ exports.seed = function(knex, Promise) {
           name: 'The Study Public House',
           price: 2,
           address: 'The%20Study%20Public%20House',
-          tag:  ['Pub','Burgers','Sandwiches','Alcohol','Maggie Benston Centre'],
+          tag:  ['Burgers','Sandwiches','Alcohol','Maggie Benston Centre'],
           description: 'Test restaurant'
         },
         {

@@ -281,39 +281,48 @@ module.exports = function (queries, io) {
   router.get('/restaurants', (req, res) => {
     const today = moment().tz("America/Vancouver")
     const weekdays = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday']
-    // determine which day of the week
-    const day = weekdays[today.day()]
-    // console.log(today)
+    const day = weekdays[today.day()]   // determine which day of the week
 
-    queries.getRestaurants((value) => {
+    const tags = (typeof(req.query.tag) === 'string') ? [req.query.tag] : req.query.tag;
 
+    if (!tags) {
+      // default get '/restaurants' with no query string
+      queries.getRestaurants(render_page);
+
+    } else {
+      // filter restaurants with tags
+      //queries.filterRestaurants(tags, render_page);
+      queries.getRestaurants(render_page);
+    }
+
+    // function to get the payload for rendering the page
+    function render_page(value) {
       const payload = {
-                        user_id: req.session.user_id, 
-                        open:[],
-                        closed:[]
-                      };
+        user_id: req.session.user_id, 
+        open:[],
+        closed:[]
+      };
         
-        value.forEach(function(val){
+      value.forEach(function(val) {
+        if (val[day] == 'CLOSED'){
+          payload.closed.push(val)
+        } else if (val[day] == 'OPEN') {
+          payload.open.push(val)
+        } else {
+          const businessHours = val[day].split("-")
+          const startHour = moment(businessHours[0], "LT").tz("America/Vancouver")
+          const endHour = moment(businessHours[1], "LT").tz("America/Vancouver")            
 
-
-          if (val[day] == 'CLOSED'){
-            payload.closed.push(val)
-          } else if (val[day] == 'OPEN') {
+          if (today.isBetween(startHour, endHour) || today.isSame(startHour) || today.isSame(endHour)){
             payload.open.push(val)
           } else {
-            const businessHours = val[day].split("-")
-            const startHour = moment(businessHours[0], "LT").tz("America/Vancouver")
-            const endHour = moment(businessHours[1], "LT").tz("America/Vancouver")            
-
-            if (today.isBetween(startHour, endHour) || today.isSame(startHour) || today.isSame(endHour)){
-              payload.open.push(val)
-            } else {
-              payload.closed.push(val)
-            }
+            payload.closed.push(val)
           }
-        })
-        res.render('pages/restaurants', payload)
-    })
+        }
+      })
+
+      return res.render('pages/restaurants', payload);
+    }
     
   })
 

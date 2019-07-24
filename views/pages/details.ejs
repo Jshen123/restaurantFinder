@@ -41,7 +41,9 @@
                 <%= dollars = "";%>
                 <% if (value[0].price == 1) {dollars = "$";} else if (value[0].price == 2) {dollars = "$$";} else {dollars = "$$$"} %>
                 <span class="badge badge-light"><%= dollars %></span>
-                <span class="badge badge-light"><%= value[0].type %></span>
+                <% value[0].tag.forEach(function(t) { %>
+                  <span class="badge badge-light"><%= t %></span>
+                <% }) %>
             </div>
         </div>
 

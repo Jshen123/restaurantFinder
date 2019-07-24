@@ -71,7 +71,12 @@
                             <%= dollars %>
                         </div>
                         <div class="col-md-6 mt-4">
-                            <%=val.tag[0] %>
+                            <% for (i = 0; i < val.tag.length; i++) { %>
+                              <%= val.tag[i] %>
+                              <% if (i < val.tag.length - 1) { %>
+                                &#9679
+                              <% } %>
+                            <% } %>
                         </div>                       
                       </div>
 
@@ -164,7 +169,12 @@
                                 <%= dollars %>
                             </div>
                             <div class="col-md-6 mt-4">
-                                <%=val.tag[0] %>
+                                <% for (i = 0; i < val.tag.length; i++) { %>
+                                  <%= val.tag[i] %>
+                                  <% if (i < val.tag.length - 1) { %>
+                                    &#9679
+                                  <% } %>
+                                <% } %>
                             </div> 
                           </div>
     
@@ -237,6 +247,7 @@
                   <div class="select-box">Burritos</div>
                   <div class="select-box">Seafood</div>
                   <div class="select-box">Alcohol</div>
+                  <div class="select-box">Frozen Yogurt</div>
                 </div>                  
               </div>
 
@@ -249,7 +260,10 @@
                   <div class="select-box">Korean</div>
                   <div class="select-box">Japanese</div>
                   <div class="select-box">Middle Eastern</div>
-                  <div class="select-box">Mediterranean</div>
+                  <div class="select-box">Taiwanese</div>
+                  <div class="select-box">Mexican</div>
+                  <div class="select-box">Italian</div>
+                  <div class="select-box">Hawaiian</div>
                 </div>
               </div>
 
@@ -261,6 +275,8 @@
                   <div class="select-box">Maggie Benston Centre</div>
                   <div class="select-box">West Mall Centre</div>
                   <div class="select-box">Academic Quadrangle</div>
+                  <div class="select-box">Residence and Housing Building</div>
+                  <div class="select-box">Applied Science Building</div>
                 </div>
               </div>
 
@@ -268,7 +284,6 @@
                 <strong>Miscellaneous</strong>
 
                 <div class="ind-2">
-                  <div class="select-box">Buffet</div>
                   <div class="select-box">Cafeteria</div>
                   <div class="select-box">Healthy</div>
                   <div class="select-box">Vegetarian</div>

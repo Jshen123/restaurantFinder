@@ -291,8 +291,7 @@ module.exports = function (queries, io) {
 
     } else {
       // filter restaurants with tags
-      //queries.filterRestaurants(tags, render_page);
-      queries.getRestaurants(render_page);
+      queries.filterRestaurants(tags, render_page);
     }
 
     // function to get the payload for rendering the page

@@ -377,6 +377,8 @@ module.exports = function (queries, io) {
           return;
         }
 
+        console.log(req.body);
+
         imgName = req.file.filename;
         var restData = convertForm(req.body);
 

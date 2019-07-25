@@ -179,18 +179,76 @@
 
                 <!-- For picture of restaurant -->
                 <div class="form-group">
-                    <label for="fileInput">Picture of Restaurant (.PNG, .jpg, or .jpeg only!)</label>
+                    <label for="fileInput">Picture of Restaurant (.PNG, .JPG, or .JPEG only!)</label>
                     <input name="restaurantPic" type="file" class="form-control-file" id="fileInput">
                 </div>
 
                 <!-- Food type -->
-                <label for="foodTypes">Restaurant Food Type</label>
-                <select class="custom-select" name="foodType" id="foodTypes">
-                    <option selected>Food Types</option>
-                    <option value="x">Type 1</option>
-                    <option value="y">Type 2</option>
-                    <option value="z">Type 3</option>
-                </select>
+                <p>Food Type</p>
+                <div class="row">
+                    <div class="col-4">
+                        <input type="checkbox" name="tag" value="Burgers"> Burgers<br>
+                        <input type="checkbox" name="tag" value="Pizza"> Pizza<br>
+                        <input type="checkbox" name="tag" value="Fast Food"> Fast Food<br>
+                        <input type="checkbox" name="tag" value="Sandwiches"> Sandwiches<br>
+                        <input type="checkbox" name="tag" value="Salads"> Salads<br>
+                    </div>
+                    <div class="col-4">
+                        <input type="checkbox" name="tag" value="Noodles"> Noodles<br>
+                        <input type="checkbox" name="tag" value="Coffee"> Coffee<br>
+                        <input type="checkbox" name="tag" value="Rice"> Rice<br>
+                        <input type="checkbox" name="tag" value="Bubble Tea"> Bubble Tea<br>
+                        <input type="checkbox" name="tag" value="Juice and Smoothies"> Juice and Smoothies<br>
+                    </div>
+                    <div class="col-4">
+                        <input type="checkbox" name="tag" value="Burritos"> Burritos<br>
+                        <input type="checkbox" name="tag" value="Seafood"> Seafood<br>
+                        <input type="checkbox" name="tag" value="Alcohol"> Alcohol<br>
+                        <input type="checkbox" name="tag" value="Frozen Yogurt"> Frozen Yogurt<br>
+                    </div>
+                </div>
+                <br>
+
+                <p>Culture</p>
+                <div class="row">
+                    <div class="col-4">
+                        <input type="checkbox" name="tag" value="Chinese"> Chinese<br>
+                        <input type="checkbox" name="tag" value="Vietnamese"> Vietnamese<br>
+                        <input type="checkbox" name="tag" value="Korean"> Korean<br>
+                        <input type="checkbox" name="tag" value="Middle Eastern"> Middle Eastern<br>
+                        <input type="checkbox" name="tag" value="Taiwanese"> Taiwanese<br>
+                    </div>
+                    <div class="col-4">
+                        <input type="checkbox" name="tag" value="Mexican"> Mexican<br>
+                        <input type="checkbox" name="tag" value="Italian"> Italian<br>
+                        <input type="checkbox" name="tag" value="Japanese"> Japanese<br>
+                        <input type="checkbox" name="tag" value="Hawaiian"> Hawaiian<br>
+                    </div>
+                </div>
+                <br>
+                    
+                    
+                <p>Location</p>
+                <div class="row">
+                    <div class="col-4">
+                        <input type="checkbox" name="tag" value="Cornerstone"> Cornerstone<br>
+                        <input type="checkbox" name="tag" value="Maggie Benston Centre"> Maggie Benston Centre<br>
+                        <input type="checkbox" name="tag" value="West Mall Centre"> West Mall Centre<br>
+                    </div>
+                    <div class="col-4">
+                        <input type="checkbox" name="tag" value="Residence and Housing Building"> Residence and Housing Building<br>
+                        <input type="checkbox" name="tag" value="Academic Quadrangle"> Academic Quadrangle<br>
+                        <input type="checkbox" name="tag" value="Applied Science Building"> Applied Science Building<br>
+                    </div>
+                </div>
+                <br>
+                    
+                    
+                <p>Miscellaneous</p>
+                <input type="checkbox" name="tag" value="Cafeteria"> Cafeteria<br>
+                <input type="checkbox" name="tag" value="Healthy"> Healthy<br>
+                <input type="checkbox" name="tag" value="Vegetarian"> Vegetarian<br>
+                
                 <br>
                 <button type="submit" class="btn btn-lg btn-primary mt-3">Submit</button>
             </form>

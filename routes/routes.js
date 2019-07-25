@@ -299,7 +299,8 @@ module.exports = function (queries, io) {
       const payload = {
         user_id: req.session.user_id, 
         open:[],
-        closed:[]
+        closed:[],
+        tagMsg: tags
       };
         
       value.forEach(function(val) {
@@ -392,7 +393,7 @@ module.exports = function (queries, io) {
         const thursday = restData.thursday;
         const friday = restData.friday;
         const saturday = restData.saturday;
-        const tags = ['good', 'food', 'cheap'];
+        const tags = req.body.tag;
 
         queries.addRestaurant(name, price, address, description, tags, (value, error) => {
 
@@ -453,8 +454,9 @@ module.exports = function (queries, io) {
         const thursday = restData.thursday;
         const friday = restData.friday;
         const saturday = restData.saturday;
+        const tags = req.body.tag;
 
-        queries.updateRestaurant(restaurant_id, name, price, address, description, (value, error) => {
+        queries.updateRestaurant(restaurant_id, name, price, address, description, tags, (value, error) => {
 
           queries.updateOpenHours(restaurant_id, sunday, monday, tuesday, wednesday, thursday, friday, saturday, (value, error) => {
 

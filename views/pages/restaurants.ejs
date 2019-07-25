@@ -25,9 +25,18 @@
     <br>
     <div class="container">
       
-      
+      <% if (tagMsg !== undefined) { %>
+        <h4>Restaurants Filtered By:&nbsp
+        <% for (i = 0; i < tagMsg.length; i++) { %>
+          <%= tagMsg[i] %>
+          <% if (i < tagMsg.length - 1) { %>
+            ,&nbsp
+          <% } %>
+        <% } %>
+        </h4>
+      <% } %>
 
-     <div class="row"> 
+      <div class="row"> 
         <div class="col-8">
           <br>
           <div class="container-flush p-1">

@@ -393,7 +393,22 @@ module.exports = function (queries, io) {
         const thursday = restData.thursday;
         const friday = restData.friday;
         const saturday = restData.saturday;
-        const tags = req.body.tag;
+
+        const tagVar = req.body.tag
+        // Restaurant has multiple tags
+        if (Array.isArray(tagVar)) {
+          tags = tagVar;
+        } 
+        
+        // No tags
+        else if (typeof tagVar === "undefined") {
+          tags = [];
+        }
+
+        // One tag
+        else {
+          tags = [ tagVar ];
+        }
 
         queries.addRestaurant(name, price, address, description, tags, (value, error) => {
 
@@ -454,7 +469,22 @@ module.exports = function (queries, io) {
         const thursday = restData.thursday;
         const friday = restData.friday;
         const saturday = restData.saturday;
-        const tags = req.body.tag;
+
+        const tagVar = req.body.tag
+        // Restaurant has multiple tags
+        if (Array.isArray(tagVar)) {
+          tags = tagVar;
+        } 
+        
+        // No tags
+        else if (typeof tagVar === "undefined") {
+          tags = [];
+        }
+
+        // One tag
+        else {
+          tags = [ tagVar ];
+        }
 
         queries.updateRestaurant(restaurant_id, name, price, address, description, tags, (value, error) => {
 

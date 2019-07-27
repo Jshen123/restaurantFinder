@@ -24,6 +24,11 @@
         <div class="jumbotron">
             <form id="edit-form" enctype="multipart/form-data" action="/admin/edit/<%= value[0].restaurant_id %>" method="POST" data-id="<%= value[0].restaurant_id %>">
                 <div class="form-group">
+                  <% if (err_msg != null) {%>
+                    <div class="text-danger"><strong><%= err_msg %></strong></div>
+                  <% } %>
+                </div>
+                <div class="form-group">
                     <div class="row">
                         <div class="col">
                             <!-- Restaurant name -->

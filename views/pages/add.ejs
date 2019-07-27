@@ -17,13 +17,22 @@
             <div class="jumbotron">
                 <form id="add-form" enctype="multipart/form-data" action="/admin/add" method="POST">
                     <div class="form-group">
+                        <% if (err_msg != null) {%>
+                          <div class="text-danger"><strong><%= err_msg %></strong></div>
+                        <% } %>
+                    </div>
+                    <div class="form-group">
                         <div class="row">
                             <div class="col">
+
                                 <!-- Restaurant name -->
                                 <label for="restaurantName">Restaurant Name</label>
                                 <input type="text" class="form-control" id="restaurantName" placeholder="Restaurant Name Here" name="name">
                             </div>
                             <div class="col">
+                                <% if (err_msg != null) {%>
+                                  <div class="text-danger"><strong><%= "" %></strong></div>
+                                <% } %>
                                 <!-- Restaurant description -->
                                 <label for="restaurantAddress">Restaurant Address</label>
                                 <input type="text" class="form-control" id="restaurantAddress" placeholder="Restaurant Address Here" name="address">

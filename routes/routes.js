@@ -350,9 +350,8 @@ module.exports = function (queries, io) {
 
   router.get('/admin/add', (req, res) => {
 
-    if (req.session.user_id == null){
-      return res.redirect('/')
-    }
+    const err_msg = req.session.msg;
+    req.session.msg =null;
 
     queries.verifyAdmin(req.session.user_id, (value) => {
       const admin = value[0].admin;
@@ -360,13 +359,14 @@ module.exports = function (queries, io) {
       if (admin == false){
         return res.redirect('/');
       } else {
-        res.render('pages/add', {user_id: req.session.user_id});
+        res.render('pages/add', {user_id: req.session.user_id, err_msg: err_msg});
       }
     })    
 
   })
 
   router.post('/admin/add', (req, res) => {
+
     upload(req, res, (err) => {
       if (err) {
         res.send("Invalid image.");
@@ -377,7 +377,6 @@ module.exports = function (queries, io) {
           return;
         }
 
-        console.log(req.body);
 
         imgName = req.file.filename;
         var restData = convertForm(req.body);
@@ -393,7 +392,27 @@ module.exports = function (queries, io) {
         const thursday = restData.thursday;
         const friday = restData.friday;
         const saturday = restData.saturday;
-        const tags = req.body.tag;
+        
+        if (name == "" || address == ''){
+          req.session.msg = "Please include a valid restaurant name and address"
+          return res.redirect('/admin/add')
+        } 
+
+        const tagVar = req.body.tag
+        // Restaurant has multiple tags
+        if (Array.isArray(tagVar)) {
+          tags = tagVar;
+        } 
+        
+        // No tags
+        else if (typeof tagVar === "undefined") {
+          tags = [];
+        }
+
+        // One tag
+        else {
+          tags = [ tagVar ];
+        }
 
         queries.addRestaurant(name, price, address, description, tags, (value, error) => {
 
@@ -454,7 +473,28 @@ module.exports = function (queries, io) {
         const thursday = restData.thursday;
         const friday = restData.friday;
         const saturday = restData.saturday;
-        const tags = req.body.tag;
+
+        const tagVar = req.body.tag
+
+        if (name == "" || address == ''){
+          req.session.msg = "Please include a valid restaurant name and address"
+          return res.redirect(`/admin/edit/${restaurant_id}`)
+        } 
+
+        // Restaurant has multiple tags
+        if (Array.isArray(tagVar)) {
+          tags = tagVar;
+        } 
+        
+        // No tags
+        else if (typeof tagVar === "undefined") {
+          tags = [];
+        }
+
+        // One tag
+        else {
+          tags = [ tagVar ];
+        }
 
         queries.updateRestaurant(restaurant_id, name, price, address, description, tags, (value, error) => {
 
@@ -633,6 +673,10 @@ module.exports = function (queries, io) {
 
   router.get('/admin/edit/:id', (req, res) => {
     const restaurant_id = req.params.id
+
+    const err_msg = req.session.msg;
+    req.session.msg =null;
+
     queries.getRestaurantDetail(restaurant_id, (value, error) => {
       
       const restaurants = value;
@@ -640,7 +684,8 @@ module.exports = function (queries, io) {
       const payload = {
                         value: restaurants,
                         user_id: req.session.user_id,
-                        username: req.session.username
+                        username: req.session.username,
+                        err_msg: err_msg
                       }
 
       res.render('pages/edit', payload);

@@ -180,6 +180,8 @@ module.exports = function (queries, io) {
     const confirmPassword = req.body.confirmPassword;
     const hash = bcrypt.hashSync(password, saltRounds);
 
+    const acceptedChars = /[^a-zA-Z0-9\-\_]/
+
     if (!username.length) {
       req.session.msg = 'Please enter in a username.';
       return res.redirect('/register');
@@ -192,7 +194,9 @@ module.exports = function (queries, io) {
     } else if (password != confirmPassword) {
       req.session.msg = 'The password you entered does not match your confirm password.';
       return res.redirect('/register');
-
+    } else if (acceptedChars.test(username)) {
+      req.session.msg = 'Username contains non-alphanumeric characters or non-hyphen or underscore characters'
+      return res.redirect('/register');
     } else {
       queries.verifyUsername(username, (value) => {
         if (value.length == 0) {

@@ -9,6 +9,7 @@ const db = require('knex')(configuration);
 const queries = require("../lib/queries.js")(db);
 
 chai.use(chaiHttp);
+
 describe('Populate database', () =>{
 
   before(function(done) {
@@ -30,6 +31,97 @@ describe('Populate database', () =>{
       done();
     });
   });
+
+  describe('Test Registrations', () => {
+    describe('Invalid registrations', () => {
+  
+      it("Should reject registration if username is longer than 25 characters", (done) => {
+        longUName = 'oneTwoThreeFourFiveSixSevenEightNineTen';
+        chai.request(server).post('/register').send({username: longUName, password: 'pw', confirmPassword: 'pw'}).end((err, res) => {
+          queries.getUserByName(longUName, (value, error) => {
+            (typeof value[0]).should.equal('undefined')
+            done();
+          })
+        })
+      })
+  
+      it("Should reject registration if passwords do not match", (done) => {
+        uName = 'testUser'
+        chai.request(server).post('/register').send({username: uName, password: 'pw1', confirmPassword: 'pw2'}).end((err, res) => {
+          queries.getUserByName(uName, (value, error) => {
+            (typeof value[0]).should.equal('undefined')
+            done();
+          })
+        })
+      })
+  
+      it("Should reject registration if username is null", (done) => {
+        nullUName = ''
+        chai.request(server).post('/register').send({username: nullUName, password: "pw", confirmPassword: "pw"}).end((err, res) => {
+          queries.getUserByName(nullUName, (value, error) => {
+            (typeof value[0]).should.equal('undefined')
+            done();
+          })
+        })
+      })
+  
+      it("Should reject registration if password is null", (done) => {
+        uName = 'testUser'
+        chai.request(server).post('/register').send({username: uName, password: '', confirmPassword: ''}).end((err, res) => {
+          queries.getUserByName(nullUName, (value, error) => {
+            (typeof value[0]).should.equal('undefined')
+            done();
+          })
+        })
+      })
+  
+      it("Should reject registration if username already taken", (done) => {
+        repeatUName = 'user1'
+  
+        queries.countUsersByName(repeatUName, (value, error) => {
+          value[0].count.should.equal('1')
+        })
+  
+        chai.request(server).post('/register').send({username: repeatUName, password: 'pw', confirmPassword: 'pw'}).end((err, res) => {
+          queries.countUsersByName(repeatUName, (value, error) => {
+            value[0].count.should.equal('1')
+            done();
+          })
+        })
+      })
+  
+      it("Should reject registration if username contains characters which are alphanumeric, -, or _", (done) => {
+        badUName1 = "~!@#$%^&*()+{}|:'<>? ";
+        badUName2 = "=[]\\;\",./ ";
+  
+        chai.request(server).post('/register').send({username: badUName1, password: 'pw', confirmPassword: 'pw'}).end((err, res) => {
+  
+        })
+  
+        chai.request(server).post('/register').send({username: badUName2, password: 'pw', confirmPassword: 'pw'}).end((err, res) => {
+          queries.getUserByName(badUName1, (value1, error) => {
+            (typeof value1[0]).should.equal('undefined')
+            queries.getUserByName(badUName2, (value2, error) => {
+              (typeof value2[0]).should.equal('undefined')
+              done();
+            })
+          })
+        })
+      })
+    })
+  
+    describe('Success cases', () => {
+      it("Should accept registration if requirements are met", (done) => {
+        uName = 'success-User_1234'
+        chai.request(server).post('/register').send({username: uName, password: 'pw', confirmPassword: 'pw'}).end((err, res) => {
+          queries.getUserByName(uName, (value, error) => {
+            (typeof value[0]).should.not.equal('undefined')
+            done();
+          })
+        })
+      })
+    })
+  })
 
   describe('Users', () => {
 
@@ -196,30 +288,30 @@ describe('Populate database', () =>{
       });
     });
 
-    it('should delete a single restaurant on /admin/delete/:id POST', (done) => {
+    // it('should delete a single restaurant on /admin/delete/:id POST', (done) => {
 
-      queries.countRestaurants((value, error) => {
+    //   queries.countRestaurants((value, error) => {
 
-        var beforeCount = value[0].count;
+    //     var beforeCount = value[0].count;
 
-        queries.getLatestRestaurantId((value, error) => {
+    //     queries.getLatestRestaurantId((value, error) => {
 
-          var restaurant_id = value[0].restaurant_id
+    //       var restaurant_id = value[0].restaurant_id
 
-          chai.request(server).delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
+    //       chai.request(server).delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
 
-            res.should.have.status(200);
+    //         res.should.have.status(200);
 
-            queries.countRestaurants((value, error) => {
+    //         queries.countRestaurants((value, error) => {
 
-              var afterCount = value[0].count;
-              (beforeCount - afterCount).should.equal(1);
-              done();
-            });
-          });
-        });
-      });
-    });
+    //           var afterCount = value[0].count;
+    //           (beforeCount - afterCount).should.equal(1);
+    //           done();
+    //         });
+    //       });
+    //     });
+    //   });
+    // });
 
     // no rejection for invalid post yet
     // it('should successfully reject a POST request using invalid params', (done) => {

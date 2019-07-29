@@ -3,7 +3,7 @@ var chai = require('chai');
 var should = chai.should();
 var chaiHttp = require('chai-http');
 var server = require('../index.js');
-supertest = require('supertest');
+const supertest = require('supertest');
 var request = supertest(server);
 const environment = process.env.NODE_ENV || 'test';
 const configuration = require('../knexfile')[environment];
@@ -156,6 +156,36 @@ describe('Populate database', () =>{
           queries.getUserByName(uName, (value, error) => {
             (typeof value[0]).should.not.equal('undefined')
             res.should.have.status(200);
+            done();
+          })
+        })
+      })
+    })
+  })
+
+  describe('Test Logins', () => {
+
+    describe('Invalid login', () => {
+
+    })
+
+    describe('Valid login', () => {
+
+      it('Should successfully login as user', (done) => {
+
+        var username = 'user1'
+        var password = 'test'
+
+        var agent = supertest.agent(server);
+
+        agent.post('/login').send({username:username, password:password}).then((res) => {
+
+          return agent.get('/user').set('accept', 'json').then((res) => {
+
+            console.log(res.body)
+
+            chai.expect(username).to.equal(res.body.username)
+
             done();
           })
         })

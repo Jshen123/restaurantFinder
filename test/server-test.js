@@ -11,6 +11,7 @@ const db = require('knex')(configuration);
 const queries = require("../lib/queries.js")(db);
 
 chai.use(chaiHttp);
+
 describe('Populate database', () =>{
 
   before(function(done) {
@@ -33,6 +34,128 @@ describe('Populate database', () =>{
     });
   });
 
+  describe('Test Registrations', () => {
+    describe('Invalid registrations', () => {
+  
+      it("Should reject registration if username is longer than 25 characters", (done) => {
+        longUName = 'oneTwoThreeFourFiveSixSevenEightNineTen';
+        chai.request(server).post('/register').send({username: longUName, password: 'pw', confirmPassword: 'pw'}).end((err, res) => {
+          var location = res.redirects[res.redirects.length-1];
+          location = location.slice(location.lastIndexOf('/'), location.length);
+          chai.expect(location).to.equal('/register')
+          
+          queries.getUserByName(longUName, (value, error) => {
+            (typeof value[0]).should.equal('undefined')
+            done();
+          })
+        })
+      })
+  
+      it("Should reject registration if passwords do not match", (done) => {
+        uName = 'testUser'
+        chai.request(server).post('/register').send({username: uName, password: 'pw1', confirmPassword: 'pw2'}).end((err, res) => {
+          var location = res.redirects[res.redirects.length-1];
+          location = location.slice(location.lastIndexOf('/'), location.length);
+          chai.expect(location).to.equal('/register')
+
+          queries.getUserByName(uName, (value, error) => {
+            (typeof value[0]).should.equal('undefined')
+            done();
+          })
+        })
+      })
+  
+      it("Should reject registration if username is null", (done) => {
+        nullUName = ''
+        chai.request(server).post('/register').send({username: nullUName, password: "pw", confirmPassword: "pw"}).end((err, res) => {
+          var location = res.redirects[res.redirects.length-1];
+          location = location.slice(location.lastIndexOf('/'), location.length);
+          chai.expect(location).to.equal('/register')
+
+          queries.getUserByName(nullUName, (value, error) => {
+            (typeof value[0]).should.equal('undefined')
+            done();
+          })
+        })
+      })
+  
+      it("Should reject registration if password is null", (done) => {
+        uName = 'testUser'
+        chai.request(server).post('/register').send({username: uName, password: '', confirmPassword: ''}).end((err, res) => {
+          var location = res.redirects[res.redirects.length-1];
+          location = location.slice(location.lastIndexOf('/'), location.length);
+          chai.expect(location).to.equal('/register')
+
+          queries.getUserByName(nullUName, (value, error) => {
+            (typeof value[0]).should.equal('undefined')
+            done();
+          })
+        })
+      })
+  
+      it("Should reject registration if username already taken", (done) => {
+        repeatUName = 'user1'
+  
+        queries.countUsersByName(repeatUName, (value, error) => {
+          chai.expect(value[0].count, 1)
+        })
+  
+        chai.request(server).post('/register').send({username: repeatUName, password: 'pw', confirmPassword: 'pw'}).end((err, res) => {
+          var location = res.redirects[res.redirects.length-1];
+          location = location.slice(location.lastIndexOf('/'), location.length);
+          chai.expect(location).to.equal('/register')
+
+          queries.countUsersByName(repeatUName, (value, error) => {
+            chai.expect(value[0].count, 1)
+            done();
+          })
+        })
+      })
+  
+      it("Should reject registration if username contains characters which are alphanumeric, -, or _", (done) => {
+        badUName1 = "~!@#$%^&*()+{}|:'<>? ";
+        badUName2 = "=[]\\;\",./ ";
+  
+        chai.request(server).post('/register').send({username: badUName1, password: 'pw', confirmPassword: 'pw'}).end((err, res) => {
+          var location = res.redirects[res.redirects.length-1];
+          location = location.slice(location.lastIndexOf('/'), location.length);
+          chai.expect(location).to.equal('/register')
+        })
+  
+        chai.request(server).post('/register').send({username: badUName2, password: 'pw', confirmPassword: 'pw'}).end((err, res) => {
+          var location = res.redirects[res.redirects.length-1];
+          location = location.slice(location.lastIndexOf('/'), location.length);
+          chai.expect(location).to.equal('/register')
+
+          queries.getUserByName(badUName1, (value1, error) => {
+            (typeof value1[0]).should.equal('undefined')
+            queries.getUserByName(badUName2, (value2, error) => {
+              (typeof value2[0]).should.equal('undefined')
+              done();
+            })
+          })
+        })
+      })
+    })
+  
+    describe('Successful registrations', () => {
+      it("Should accept registration if requirements are met", (done) => {
+        uName = 'success-User_1234'
+        chai.request(server).post('/register').send({username: uName, password: 'pw', confirmPassword: 'pw'}).end((err, res) => {
+          var location = res.redirects[res.redirects.length-1];
+          location = location.slice(location.lastIndexOf('/'), location.length);
+          chai.expect(location).to.equal('/restaurants')
+
+          queries.getUserByName(uName, (value, error) => {
+            (typeof value[0]).should.not.equal('undefined')
+            res.should.have.status(200);
+            done();
+          })
+        })
+      })
+    })
+  })
+  
   describe('Redirects', () => {
 
     describe('As User', () => {
@@ -498,9 +621,7 @@ describe('Populate database', () =>{
       })
 
       it('Should reject restaurant edit if no address is provided', (done) => {
-
-        queries.getLatestRestaurantId((value, error) => {
-
+        
           var restaurant_id = value[0].restaurant_id;
 
           var testRestaurant = {

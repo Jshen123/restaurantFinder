@@ -311,7 +311,7 @@ describe('Populate database', () =>{
       //
       //   var agent = chai.request.agent(server);
       //   agent.post('/login').send({username: 'user1', password: 'test'}).end((err, res) => {
-      //
+      // 
       //     res.should.have.status(200);
       //
       //     var location = res.redirects[res.redirects.length-1];
@@ -319,7 +319,7 @@ describe('Populate database', () =>{
       //
       //     // after logging in as an admin, redirects to /restaurants
       //     chai.expect(location).to.equal('/restaurants');
-      // 
+      //
       //     agent.get('/admin').then((err, res) => {
       //       // attempting to access admin page as an admin redirects to /admin
       //       chai.expect(location).to.equal('/admin');

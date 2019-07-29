@@ -30,7 +30,13 @@ describe('Populate database', () =>{
   after(function(done) {
     db.migrate.rollback()
     .then(function() {
-      done();
+      db.migrate.latest()
+      .then(function() {
+        return db.seed.run()
+        .then(function() {
+          done();
+        });
+      });
     });
   });
 

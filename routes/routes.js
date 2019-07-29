@@ -149,7 +149,7 @@ module.exports = function (queries, io) {
 
   router.get('/user', function(req, res){
     var user_info = {user_id: req.session.user_id, username: req.session.username}
-    
+
     res.json(user_info);
   })
 
@@ -256,7 +256,6 @@ module.exports = function (queries, io) {
               req.session.user_id = value[0].user_id;
               req.session.username = value[0].username;
               req.session.msg = null;
-              res.cookie()
               return res.redirect('/');
             } else {
               // Incorrect password

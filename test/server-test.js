@@ -4,7 +4,6 @@ var should = chai.should();
 var chaiHttp = require('chai-http');
 var server = require('../index.js');
 const supertest = require('supertest');
-// const superagent = require('superagent');
 var request = supertest(server);
 const environment = process.env.NODE_ENV || 'test';
 const configuration = require('../knexfile')[environment];

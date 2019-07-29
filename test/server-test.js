@@ -525,10 +525,6 @@ describe('Populate database', () =>{
 
                 var restaurant_id = value[0].restaurant_id;
 
-                // request.delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
-
-                //   done();
-                // })
                 queries.deleteRestaurant(restaurant_id, (value, error) => {
                   done();
                 })

@@ -576,7 +576,7 @@ module.exports = function (queries, io) {
     const restaurant_id = req.params.id;
     const user_id = req.session.user_id;
     const username = req.session.username;
-    const captcha_verified = req.session.captcha_verified;
+    var captcha_verified = req.session.captcha_verified;
 
     req.session.captcha_verified = false;
 
@@ -599,6 +599,15 @@ module.exports = function (queries, io) {
       return res.send({err: true, msg: 'Please select captcha.'});
 
     } else {
+      queries.verifyAdmin(user_id, (value) => {
+        if (value[0].admin) {
+          captcha_verified = true;
+        }
+        postComment();
+      });
+    }
+
+    function postComment() {
       const secretKey = process.env.CAPTCHA_SECRET_KEY;
       const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captcha}&remoteip=${req.connection.remoteAddress}`;
 

@@ -147,6 +147,12 @@ module.exports = function (queries, io) {
     return res.redirect('/restaurants');
   })
 
+  router.get('/user', function(req, res){
+    var user_info = {user_id: req.session.user_id, username: req.session.username}
+    
+    res.json(user_info);
+  })
+
   // rendering the login page
   router.get('/login', function (req, res) {
     const username = req.session.username;
@@ -250,6 +256,7 @@ module.exports = function (queries, io) {
               req.session.user_id = value[0].user_id;
               req.session.username = value[0].username;
               req.session.msg = null;
+              res.cookie()
               return res.redirect('/');
             } else {
               // Incorrect password

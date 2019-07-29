@@ -67,8 +67,8 @@ function convertTime(timeString) {
           hour += 12;
       }
       convHour = hour.toString()
-  } 
-  
+  }
+
   else {
       amPm = "pm";
       convHour = (hour - 12).toString()
@@ -136,7 +136,7 @@ module.exports = function (queries, io) {
       socket.join(room_id);
       //console.log(`Client ${socket.id} has joined room ${room_id}`);
     });
-    
+
     socket.on('disconnect', function() {
       //console.log("Client has disconnected");
     });
@@ -299,12 +299,12 @@ module.exports = function (queries, io) {
     // function to get the payload for rendering the page
     function render_page(value) {
       const payload = {
-        user_id: req.session.user_id, 
+        user_id: req.session.user_id,
         open:[],
         closed:[],
         tagMsg: tags
       };
-        
+
       value.forEach(function(val) {
         if (val[day] == 'CLOSED'){
           payload.closed.push(val)
@@ -313,7 +313,7 @@ module.exports = function (queries, io) {
         } else {
           const businessHours = val[day].split("-")
           const startHour = moment(businessHours[0], "LT").tz("America/Vancouver")
-          const endHour = moment(businessHours[1], "LT").tz("America/Vancouver")            
+          const endHour = moment(businessHours[1], "LT").tz("America/Vancouver")
 
           if (today.isBetween(startHour, endHour) || today.isSame(startHour) || today.isSame(endHour)){
             payload.open.push(val)
@@ -325,7 +325,7 @@ module.exports = function (queries, io) {
 
       return res.render('pages/restaurants', payload);
     }
-    
+
   })
 
 
@@ -357,13 +357,13 @@ module.exports = function (queries, io) {
 
     queries.verifyAdmin(req.session.user_id, (value) => {
       const admin = value[0].admin;
-      // console.log(admin)
+
       if (admin == false){
         return res.redirect('/');
       } else {
         res.render('pages/add', {user_id: req.session.user_id, err_msg: err_msg});
       }
-    })    
+    })
 
   })
 
@@ -393,18 +393,18 @@ module.exports = function (queries, io) {
         const thursday = restData.thursday;
         const friday = restData.friday;
         const saturday = restData.saturday;
-        
+
         if (name == "" || address == ''){
           req.session.msg = "Please include a valid restaurant name and address"
           return res.redirect('/admin/add')
-        } 
+        }
 
         const tagVar = req.body.tag
         // Restaurant has multiple tags
         if (Array.isArray(tagVar)) {
           tags = tagVar;
-        } 
-        
+        }
+
         // No tags
         else if (typeof tagVar === "undefined") {
           tags = [];
@@ -418,15 +418,15 @@ module.exports = function (queries, io) {
         queries.addRestaurant(name, price, address, description, tags, (value, error) => {
 
           queries.getLatestRestaurantId((value, error) => {
-            
+
             const restaurant_id = value[0].restaurant_id;
-    
+
             queries.addOpenHours(restaurant_id, sunday, monday, tuesday, wednesday, thursday, friday, saturday, (value, error) => {
-              
+
               const image_path = "/Pictures/" + imgName;
-    
+
               queries.addImage(restaurant_id, image_path, (value, error) => {
-    
+
                 return res.redirect('/admin/add');
               })
             }) // addImage
@@ -480,13 +480,13 @@ module.exports = function (queries, io) {
         if (name == "" || address == ''){
           req.session.msg = "Please include a valid restaurant name and address"
           return res.redirect(`/admin/edit/${restaurant_id}`)
-        } 
+        }
 
         // Restaurant has multiple tags
         if (Array.isArray(tagVar)) {
           tags = tagVar;
-        } 
-        
+        }
+
         // No tags
         else if (typeof tagVar === "undefined") {
           tags = [];
@@ -510,7 +510,7 @@ module.exports = function (queries, io) {
             else {
               return res.redirect('/admin');
             }
-            
+
           })
         })
       }
@@ -545,7 +545,7 @@ module.exports = function (queries, io) {
   router.get('/restaurants/:id', (req, res) => {
     const restaurant_id = req.params.id
     queries.getRestaurantDetail(restaurant_id, (value, error) => {
-      
+
       const restaurants = value;
       const sortOrder = {clause: 'create_date', order: 'desc'};
 
@@ -622,9 +622,9 @@ module.exports = function (queries, io) {
             } else {
               // send new comments to all clients in the same page
               restaurants_io.to(restaurant_id).emit('new_comment', {
-                username: username, 
-                rating: rating, 
-                create_date: create_date, 
+                username: username,
+                rating: rating,
+                create_date: create_date,
                 comment: comment
               });
 
@@ -679,7 +679,7 @@ module.exports = function (queries, io) {
     req.session.msg =null;
 
     queries.getRestaurantDetail(restaurant_id, (value, error) => {
-      
+
       const restaurants = value;
 
       const payload = {

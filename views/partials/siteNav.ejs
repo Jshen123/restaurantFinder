@@ -13,7 +13,6 @@
     </button>
       <!-- Collapsible content -->
 
-
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
@@ -23,12 +22,8 @@
     </div>
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item ml-3">
-                <!-- <a class="nav-link" href="/admin"><strong>Edit</strong></a> -->
-              <form action="/admin" method="GET">
-                <button type="submit" class="nav-btn"><strong>Edit</strong></button>
-              </form>
-            </li>
+
+        <!-- if user is not logged in -->
         <% if (user_id == null) { %>
             <li class="nav-item ml-3">
               <form action="/login" method="GET">
@@ -40,7 +35,13 @@
                 <button type="submit" class="nav-btn-register"><strong>Register</strong></button>
               </form>
             </li>
+        <!-- user logged in -->
         <% } else { %>
+            <li class="nav-item ml-3">
+              <form action="/admin" method="GET">
+                <button type="submit" class="nav-btn"><strong>Edit</strong></button>
+              </form>
+            </li>
             <li class="nav-item ml-3">
               <form action="/logout" method="POST">
                 <button type="submit" class="nav-btn"><strong>Logout</strong></button>
@@ -50,4 +51,3 @@
         </ul>
     </div>
 </nav>
-

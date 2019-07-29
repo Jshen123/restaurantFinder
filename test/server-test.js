@@ -43,21 +43,21 @@ describe('Populate database', () =>{
   describe('Test Registrations', () => {
 
     describe('Invalid registrations', () => {
-  
+
       it("Should reject registration if username is longer than 25 characters", (done) => {
         longUName = 'oneTwoThreeFourFiveSixSevenEightNineTen';
         chai.request(server).post('/register').send({username: longUName, password: 'pw', confirmPassword: 'pw'}).end((err, res) => {
           var location = res.redirects[res.redirects.length-1];
           location = location.slice(location.lastIndexOf('/'), location.length);
           chai.expect(location).to.equal('/register')
-          
+
           queries.getUserByName(longUName, (value, error) => {
             (typeof value[0]).should.equal('undefined')
             done();
           })
         })
       })
-  
+
       it("Should reject registration if passwords do not match", (done) => {
         uName = 'testUser'
         chai.request(server).post('/register').send({username: uName, password: 'pw1', confirmPassword: 'pw2'}).end((err, res) => {
@@ -71,7 +71,7 @@ describe('Populate database', () =>{
           })
         })
       })
-  
+
       it("Should reject registration if username is null", (done) => {
         nullUName = ''
         chai.request(server).post('/register').send({username: nullUName, password: "pw", confirmPassword: "pw"}).end((err, res) => {
@@ -85,7 +85,7 @@ describe('Populate database', () =>{
           })
         })
       })
-  
+
       it("Should reject registration if password is null", (done) => {
         uName = 'testUser'
         chai.request(server).post('/register').send({username: uName, password: '', confirmPassword: ''}).end((err, res) => {
@@ -99,14 +99,14 @@ describe('Populate database', () =>{
           })
         })
       })
-  
+
       it("Should reject registration if username already taken", (done) => {
         repeatUName = 'user1'
-  
+
         queries.countUsersByName(repeatUName, (value, error) => {
           chai.expect(value[0].count, 1)
         })
-  
+
         chai.request(server).post('/register').send({username: repeatUName, password: 'pw', confirmPassword: 'pw'}).end((err, res) => {
           var location = res.redirects[res.redirects.length-1];
           location = location.slice(location.lastIndexOf('/'), location.length);
@@ -118,17 +118,17 @@ describe('Populate database', () =>{
           })
         })
       })
-  
+
       it("Should reject registration if username contains characters which are alphanumeric, -, or _", (done) => {
         badUName1 = "~!@#$%^&*()+{}|:'<>? ";
         badUName2 = "=[]\\;\",./ ";
-  
+
         chai.request(server).post('/register').send({username: badUName1, password: 'pw', confirmPassword: 'pw'}).end((err, res) => {
           var location = res.redirects[res.redirects.length-1];
           location = location.slice(location.lastIndexOf('/'), location.length);
           chai.expect(location).to.equal('/register')
         })
-  
+
         chai.request(server).post('/register').send({username: badUName2, password: 'pw', confirmPassword: 'pw'}).end((err, res) => {
           var location = res.redirects[res.redirects.length-1];
           location = location.slice(location.lastIndexOf('/'), location.length);
@@ -144,7 +144,7 @@ describe('Populate database', () =>{
         })
       })
     })
-  
+
     describe('Successful registrations', () => {
       it("Should accept registration if requirements are met", (done) => {
         uName = 'success-User_1234'
@@ -162,7 +162,7 @@ describe('Populate database', () =>{
       })
     })
   })
-  
+
   describe('Test Logins', () => {
 
     describe('Invalid login', () => {
@@ -212,9 +212,24 @@ describe('Populate database', () =>{
         })
       })
 
+      it('Should be redirected back to /register on failed registration', (done) => {
+
+        chai.request(server).post('/register').send({username:'testuser', password:'test', confirmPassword:'wrongpw' }).end((err, res) => {
+
+          res.should.have.status(200);
+
+          var location = res.redirects[res.redirects.length-1];
+          location = location.slice(location.lastIndexOf("/"), location.length);
+
+          chai.expect(location).to.equal('/register')
+
+          done();
+        })
+      })
+
       it('Should be redirected to /restaurants on successful login', (done) => {
 
-        chai.request(server).post('/login').send({username: 'testuser', password: 'test'}).end((err, res) => {
+        chai.request(server).post('/login').send({username: 'user1', password: 'test'}).end((err, res) => {
 
           res.should.have.status(200);
 
@@ -222,7 +237,22 @@ describe('Populate database', () =>{
           location = location.slice(location.lastIndexOf("/"), location.length);
 
           chai.expect(location).to.equal('/restaurants');
-          
+
+          done();
+        })
+      })
+
+      it('Should be redirected back to /restaurants on failed login', (done) => {
+
+        chai.request(server).post('/login').send({username: 'testuser', password: 'wrongpw'}).end((err, res) => {
+
+          res.should.have.status(200);
+
+          var location = res.redirects[res.redirects.length-1];
+          location = location.slice(location.lastIndexOf("/"), location.length);
+
+          chai.expect(location).to.equal('/login');
+
           done();
         })
       })
@@ -237,7 +267,7 @@ describe('Populate database', () =>{
           location = location.slice(location.lastIndexOf("/"), location.length);
 
           chai.expect(location).to.equal('/restaurants');
-          
+
           done();
         })
       })
@@ -253,11 +283,12 @@ describe('Populate database', () =>{
 
           return agent.get('/').then((res) => {
 
+            res.should.have.status(200);
             var location = res.redirects[res.redirects.length-1];
             location = location.slice(location.lastIndexOf("/"), location.length);
 
             chai.expect(location).to.equal('/restaurants')
-            
+
             done();
           })
         })
@@ -271,11 +302,12 @@ describe('Populate database', () =>{
 
           return agent.get('/admin').then((res) => {
 
+            res.should.have.status(200);
             var location = res.redirects[res.redirects.length-1];
             location = location.slice(location.lastIndexOf("/"), location.length);
 
             chai.expect(location).to.equal('/restaurants')
-            
+
             done();
           })
         })
@@ -289,11 +321,12 @@ describe('Populate database', () =>{
 
           return agent.get('/admin/add').then((res) => {
 
+            res.should.have.status(200);
             var location = res.redirects[res.redirects.length-1];
             location = location.slice(location.lastIndexOf("/"), location.length);
 
             chai.expect(location).to.equal('/restaurants')
-            
+
             done();
           })
         })
@@ -307,6 +340,7 @@ describe('Populate database', () =>{
 
           return agent.post('/logout').then((res) => {
 
+            res.should.have.status(200);
             var location = res.redirects[res.redirects.length-1];
             location = location.slice(location.lastIndexOf("/"), location.length);
 
@@ -320,6 +354,24 @@ describe('Populate database', () =>{
 
     describe('As admin', () => {
 
+      // it('Should be redirected to /admin on accessing /admin', (done) => {
+      //
+      //   var agent = chai.request.agent(server)
+      //
+      //   agent.post('/login').send({username:'admin', password:'test'}).then((res) => {
+      //
+      //     return agent.get('/admin').then((res) => {
+      //
+      //       res.should.have.status(200);
+      //       var location = res.redirects[res.redirects.length-1];
+      //       location = location.slice(location.lastIndexOf("/"), location.length);
+      //
+      //       chai.expect(location).to.equal('/admin')
+      //
+      //       done();
+      //     })
+      //   })
+      // })
     })
   })
 
@@ -353,7 +405,7 @@ describe('Populate database', () =>{
           })
         })
       })
-    
+
       it('Should reject comment additon if logged in but no rating', (done) => {
 
         var restaurant_id = 1;
@@ -407,7 +459,7 @@ describe('Populate database', () =>{
           })
         })
       })
-    
+
       it('Should reject comment addition if logged out', (done) => {
 
         var restaurant_id = 1;
@@ -415,7 +467,7 @@ describe('Populate database', () =>{
         queries.countComments(restaurant_id, (value, error) => {
 
           beforeCount = value[0].count;
-          var testComment = {comment:'Test comment.', rating: 5, captcha:'Test'}; 
+          var testComment = {comment:'Test comment.', rating: 5, captcha:'Test'};
 
           chai.request(server).post('/comments/' + restaurant_id.toString()).send(testComment).end((err, res) => {
 
@@ -486,7 +538,7 @@ describe('Populate database', () =>{
           var imagePath = './public/Pictures/placeholder.jpg';
 
           request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-            
+
             queries.countRestaurants((value, error) => {
 
               var afterCount = value[0].count;
@@ -516,7 +568,7 @@ describe('Populate database', () =>{
           var imagePath = './public/Pictures/placeholder.jpg';
 
           request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-            
+
             queries.countRestaurants((value, error) => {
 
               var afterCount = value[0].count;
@@ -546,7 +598,7 @@ describe('Populate database', () =>{
           var imagePath = './public/Pictures/placeholder.bmp';
 
           request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-            
+
             queries.countRestaurants((value, error) => {
 
               var afterCount = value[0].count;
@@ -579,7 +631,7 @@ describe('Populate database', () =>{
           var imagePath = './public/Pictures/placeholder.jpg';
 
           request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-            
+
             queries.countRestaurants((value, error) => {
 
               var afterCount = value[0].count;
@@ -617,7 +669,7 @@ describe('Populate database', () =>{
           var imagePath = './public/Pictures/placeholder.jpg';
 
           request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-            
+
             queries.countRestaurants((value, error) => {
 
               var afterCount = value[0].count;
@@ -655,7 +707,7 @@ describe('Populate database', () =>{
           var imagePath = './public/Pictures/placeholder.jpg';
 
           request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-            
+
             queries.countRestaurants((value, error) => {
 
               var afterCount = value[0].count;
@@ -691,7 +743,7 @@ describe('Populate database', () =>{
           };
 
           request.post('/admin/add').field(testRestaurant).end((err, res) => {
-            
+
             queries.countRestaurants((value, error) => {
 
               var afterCount = value[0].count;
@@ -728,7 +780,7 @@ describe('Populate database', () =>{
           var imagePath = './public/Pictures/placeholder.jpg';
 
           request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-            
+
             queries.countRestaurants((value, error) => {
 
               var afterCount = value[0].count;
@@ -784,7 +836,7 @@ describe('Populate database', () =>{
             imagePath = './public/Pictures/placeholder.jpg';
 
             request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-            
+
               queries.getRestaurantDetail(restaurant_id, (value, error) => {
 
                 chai.expect(value[0].name).to.not.equal('');
@@ -797,7 +849,7 @@ describe('Populate database', () =>{
       })
 
       it('Should reject restaurant edit if no address is provided', (done) => {
-        
+
         queries.getLatestRestaurantId((value, error) => {
 
           var restaurant_id = value[0].restaurant_id;
@@ -813,9 +865,9 @@ describe('Populate database', () =>{
           var imagePath = './public/Pictures/placeholder.jpg';
 
           request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-          
+
             queries.getRestaurantDetail(restaurant_id, (value, error) => {
-              
+
               chai.expect(value[0].address).to.not.equal('');
 
               done();
@@ -841,9 +893,9 @@ describe('Populate database', () =>{
           var imagePath = './public/Pictures/placeholder.bmp';
 
           request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-          
+
             queries.getRestaurantDetail(restaurant_id, (value, error) => {
-              
+
               chai.expect(value[0].name).to.not.equal('New test name');
 
               done();
@@ -872,9 +924,9 @@ describe('Populate database', () =>{
           var imagePath = './public/Pictures/placeholder.jpg';
 
           request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-          
+
             queries.getRestaurantDetail(restaurant_id, (value, error) => {
-              
+
               chai.expect(value[0].description).to.equal('');
 
               done();
@@ -900,9 +952,9 @@ describe('Populate database', () =>{
           var imagePath = './public/Pictures/placeholder.jpg';
 
           request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-          
+
             queries.getRestaurantDetail(restaurant_id, (value, error) => {
-              
+
               chai.expect(value[0].monday).to.equal('CLOSED');
 
               done();
@@ -928,9 +980,9 @@ describe('Populate database', () =>{
           var imagePath = './public/Pictures/placeholder.jpg';
 
           request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-          
+
             queries.getRestaurantDetail(restaurant_id, (value, error) => {
-              
+
               chai.expect(value[0].tag).to.be.empty;
 
               done();
@@ -954,9 +1006,9 @@ describe('Populate database', () =>{
           };
 
           request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).end((err, res) => {
-          
+
             queries.getRestaurantDetail(restaurant_id, (value, error) => {
-              
+
               chai.expect(value[0].name).to.equal('New test name');
 
               done();
@@ -980,9 +1032,9 @@ describe('Populate database', () =>{
           };
 
           request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).end((err, res) => {
-          
+
             queries.getRestaurantDetail(restaurant_id, (value, error) => {
-            
+
               chai.expect(value[0].name).to.equal('New test name');
               chai.expect(value[0].description).to.equal('New test description');
               chai.expect(value[0].address).to.equal('New test address');
@@ -1010,7 +1062,7 @@ describe('Populate database', () =>{
         })
       })
     })
-  })  
+  })
 
   describe('Test Deleting Restaurants', () => {
 
@@ -1037,7 +1089,7 @@ describe('Populate database', () =>{
             var restaurant_id = value[0].restaurant_id;
 
             request.delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
-            
+
               queries.countRestaurants((value, error) => {
 
                 var afterCount = value[0].count;

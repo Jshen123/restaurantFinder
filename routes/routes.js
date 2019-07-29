@@ -38,8 +38,6 @@ function checkFileType(file, cb) {
 
   if (mimetype && extName) {
     return cb(null, true);
-  } else if (file.originalname == "") {
-    cb('Error: no file selected');
   } else {
     cb('Error: JPG, JPEG, or PNG only!');
   }
@@ -180,6 +178,8 @@ module.exports = function (queries, io) {
     const confirmPassword = req.body.confirmPassword;
     const hash = bcrypt.hashSync(password, saltRounds);
 
+    const acceptedChars = /[^a-zA-Z0-9\-\_]/
+
     if (!username.length) {
       req.session.msg = 'Please enter in a username.';
       return res.redirect('/register');
@@ -192,7 +192,9 @@ module.exports = function (queries, io) {
     } else if (password != confirmPassword) {
       req.session.msg = 'The password you entered does not match your confirm password.';
       return res.redirect('/register');
-
+    } else if (acceptedChars.test(username)) {
+      req.session.msg = 'Username contains non-alphanumeric characters or non-hyphen or underscore characters'
+      return res.redirect('/register');
     } else {
       queries.verifyUsername(username, (value) => {
         if (value.length == 0) {
@@ -350,9 +352,8 @@ module.exports = function (queries, io) {
 
   router.get('/admin/add', (req, res) => {
 
-    if (req.session.user_id == null){
-      return res.redirect('/')
-    }
+    const err_msg = req.session.msg;
+    req.session.msg =null;
 
     queries.verifyAdmin(req.session.user_id, (value) => {
       const admin = value[0].admin;
@@ -360,26 +361,25 @@ module.exports = function (queries, io) {
       if (admin == false){
         return res.redirect('/');
       } else {
-        res.render('pages/add', {user_id: req.session.user_id});
+        res.render('pages/add', {user_id: req.session.user_id, err_msg: err_msg});
       }
     })    
 
   })
 
   router.post('/admin/add', (req, res) => {
+
     upload(req, res, (err) => {
       if (err) {
         res.send("Invalid image.");
       } else {
         // Do not allow for restaurants with no image file
         if (typeof req.file === "undefined") {
-          res.send("No image submitted.");
-          return;
+          imgName = 'placeholder.jpg'
+        } else {
+          imgName = req.file.filename;
         }
 
-        console.log(req.body);
-
-        imgName = req.file.filename;
         var restData = convertForm(req.body);
 
         const name = restData.name;
@@ -393,6 +393,11 @@ module.exports = function (queries, io) {
         const thursday = restData.thursday;
         const friday = restData.friday;
         const saturday = restData.saturday;
+        
+        if (name == "" || address == ''){
+          req.session.msg = "Please include a valid restaurant name and address"
+          return res.redirect('/admin/add')
+        } 
 
         const tagVar = req.body.tag
         // Restaurant has multiple tags
@@ -471,6 +476,12 @@ module.exports = function (queries, io) {
         const saturday = restData.saturday;
 
         const tagVar = req.body.tag
+
+        if (name == "" || address == ''){
+          req.session.msg = "Please include a valid restaurant name and address"
+          return res.redirect(`/admin/edit/${restaurant_id}`)
+        } 
+
         // Restaurant has multiple tags
         if (Array.isArray(tagVar)) {
           tags = tagVar;
@@ -663,6 +674,10 @@ module.exports = function (queries, io) {
 
   router.get('/admin/edit/:id', (req, res) => {
     const restaurant_id = req.params.id
+
+    const err_msg = req.session.msg;
+    req.session.msg =null;
+
     queries.getRestaurantDetail(restaurant_id, (value, error) => {
       
       const restaurants = value;
@@ -670,7 +685,8 @@ module.exports = function (queries, io) {
       const payload = {
                         value: restaurants,
                         user_id: req.session.user_id,
-                        username: req.session.username
+                        username: req.session.username,
+                        err_msg: err_msg
                       }
 
       res.render('pages/edit', payload);

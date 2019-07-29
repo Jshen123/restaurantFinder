@@ -41,6 +41,7 @@ describe('Populate database', () =>{
   });
 
   describe('Test Registrations', () => {
+
     describe('Invalid registrations', () => {
   
       it("Should reject registration if username is longer than 25 characters", (done) => {
@@ -164,30 +165,11 @@ describe('Populate database', () =>{
   
   describe('Test Redirects', () => {
 
-    describe('As user', () => {
+    describe('As non-user', () => {
 
-      // it('should be redirected to /login on "login" button press', (done) => {
+      it('Should be redirected to /restaurants on successful registration', (done) => {
 
-      //   chai.request(server).get('/login').redirects(0).end((err, res) => {
-
-      //     res.should.have.status(200);
-
-      //     var location = res.redirects[res.redirects.length-1];
-      //     location = location.slice(location.lastIndexOf("/"), location.length);
-
-      //     chai.expect(location).to.equal('/login')
-
-      //     done();
-      //   })
-      // })
-
-      it('should be redirected to /restaurants on successful logout', (done) => {
-
-        chai.request(server).post('/logout').end((err, res) => {
-
-          const logoutSessionId = res.session_user_id;
-
-          chai.expect(logoutSessionId).to.be.undefined;
+        chai.request(server).post('/register').send({username:'testuser', password:'test', confirmPassword:'test' }).end((err, res) => {
 
           res.should.have.status(200);
 
@@ -200,42 +182,114 @@ describe('Populate database', () =>{
         })
       })
 
-      it('should be redirected to /restaurants on successful registration', (done) => {
+      it('Should be redirected to /restaurants on successful login', (done) => {
 
-        chai.request(server).post('/register').send({username: 'user3', password: 'test'}).end((err, res) => {
+        chai.request(server).post('/login').send({username: 'testuser', password: 'test'}).end((err, res) => {
 
           res.should.have.status(200);
 
           var location = res.redirects[res.redirects.length-1];
           location = location.slice(location.lastIndexOf("/"), location.length);
 
-          chai.expect(location).to.equal('/register')
-
-          chai.expect((db.select('username').from('users').where({username: 'user3'} && {admin: false})));
-
+          chai.expect(location).to.equal('/restaurants');
+          
           done();
+        })
+      })
+
+      it('Should be redirected to /restaurants on accessing /admin', (done) => {
+
+        chai.request(server).get('/admin').end((err, res) => {
+
+          res.should.have.status(200);
+
+          var location = res.redirects[res.redirects.length-1];
+          location = location.slice(location.lastIndexOf("/"), location.length);
+
+          chai.expect(location).to.equal('/restaurants');
+          
+          done();
+        })
+      })
+    })
+
+    describe('As user', () => {
+
+      it('Should be redirected to /restaurants on accessing /', (done) => {
+
+        var agent = chai.request.agent(server)
+
+        agent.post('/login').send({username:'user1', password:'test'}).then((res) => {
+
+          return agent.get('/').then((res) => {
+
+            var location = res.redirects[res.redirects.length-1];
+            location = location.slice(location.lastIndexOf("/"), location.length);
+
+            chai.expect(location).to.equal('/restaurants')
+            
+            done();
+          })
+        })
+      })
+
+      it('Should be redirected to /restaurants on accessing /admin', (done) => {
+
+        var agent = chai.request.agent(server)
+
+        agent.post('/login').send({username:'user1', password:'test'}).then((res) => {
+
+          return agent.get('/admin').then((res) => {
+
+            var location = res.redirects[res.redirects.length-1];
+            location = location.slice(location.lastIndexOf("/"), location.length);
+
+            chai.expect(location).to.equal('/restaurants')
+            
+            done();
+          })
+        })
+      })
+
+      it('Should be redirected to /restaurants on accessing /admin/add', (done) => {
+
+        var agent = chai.request.agent(server)
+
+        agent.post('/login').send({username:'user1', password:'test'}).then((res) => {
+
+          return agent.get('/admin/add').then((res) => {
+
+            var location = res.redirects[res.redirects.length-1];
+            location = location.slice(location.lastIndexOf("/"), location.length);
+
+            chai.expect(location).to.equal('/restaurants')
+            
+            done();
+          })
+        })
+      })
+
+      it('Should be redirected to /restaurants on successful logout', (done) => {
+
+        var agent = chai.request.agent(server)
+
+        agent.post('/login').send({username:'user1', password:'test'}).then((res) => {
+
+          return agent.post('/logout').then((res) => {
+
+            var location = res.redirects[res.redirects.length-1];
+            location = location.slice(location.lastIndexOf("/"), location.length);
+
+            chai.expect(location).to.equal('/restaurants')
+
+            done();
+          })
         })
       })
     })
 
     describe('As admin', () => {
 
-      it('Should be redirected to /restaurants on successful login', (done) => {
-
-        chai.request(server).post('/login').send({username: 'admin', password: 'test'}).end((err, res) => {
-
-          res.should.have.status(200);
-
-          var location = res.redirects[res.redirects.length-1];
-          location = location.slice(location.lastIndexOf("/"), location.length);
-
-          chai.expect(location).to.equal('/restaurants')
-
-          chai.expect((db.select('username').from('users').where({username: 'admin'} && {admin: true})));
-          
-          done();
-        })
-      })
     })
   })
 
@@ -253,9 +307,9 @@ describe('Populate database', () =>{
           var beforeCount = value[0].count;
           var testComment = {comment:'', rating:5, captcha:'Test'};
 
-          agent.post('/login').send({username:'admin', password:'test'}).then((err, res) => {
+          agent.post('/login').send({username:'admin', password:'test'}).then((res) => {
 
-            return agent.post('/comments/' + restaurant_id.toString()).send(testComment).then((err, res) => {
+            return agent.post('/comments/' + restaurant_id.toString()).send(testComment).then((res) => {
 
               queries.countComments(restaurant_id, (value, error) => {
 

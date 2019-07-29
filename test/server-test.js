@@ -156,9 +156,9 @@ describe('Populate database', () =>{
     })
   })
   
-  describe('Redirects', () => {
+  describe('Test Redirects', () => {
 
-    describe('As User', () => {
+    describe('As user', () => {
 
       // it('should be redirected to /login on "login" button press', (done) => {
 
@@ -212,7 +212,7 @@ describe('Populate database', () =>{
       })
     })
 
-    describe('As Admin', () => {
+    describe('As admin', () => {
 
       it('Should be redirected to /restaurants on successful login', (done) => {
 
@@ -233,62 +233,149 @@ describe('Populate database', () =>{
     })
   })
 
-  describe('Comments', () => {
+  describe('Test comments', () => {
 
-    //  it('should leave a comment on /restaurants/1 POST (logged in)', (done) => {
+    describe('Invalid post', () => {
 
-    //   var restaurant_id = 1;
-    //   var agent = chai.request.agent(server)
+      it('Should reject comment additon if logged in but empty comment', (done) => {
 
-    //   queries.countComments(restaurant_id, (value, error) => {
+        var restaurant_id = 1;
+        var agent = chai.request.agent(server)
 
-    //     var beforeCount = value[0].count;
-    //     var testComment = {comment:'Test comment', rating:5};
+        queries.countComments(restaurant_id, (value, error) => {
 
-    //     agent.post('/login').send({username:'user1', password:'test'}).then((err, res) => {
+          var beforeCount = value[0].count;
+          var testComment = {comment:'', rating:5, captcha:'Test'};
 
-    //       return agent.post('/restaurants/' + restaurant_id.toString()).send(testComment).then((err, res) => {
+          agent.post('/login').send({username:'admin', password:'test'}).then((err, res) => {
 
-    //         queries.countComments(restaurant_id, (value, error) => {
+            return agent.post('/comments/' + restaurant_id.toString()).send(testComment).then((err, res) => {
 
-    //           var afterCount = value[0].count;
+              queries.countComments(restaurant_id, (value, error) => {
 
-    //           (afterCount - beforeCount).should.equal(1);
+                var afterCount = value[0].count;
 
-    //           done();
-    //         })
-    //       })
-    //     })
-    //   })
-    // })
+                (afterCount - beforeCount).should.equal(0);
 
-    // it('should not leave a comment on /restaurants/1 POST (logged out)', (done) => {
+                done();
+              })
+            })
+          })
+        })
+      })
+    
+      it('Should reject comment additon if logged in but no rating', (done) => {
 
-    //   var restaurant_id = 1;
+        var restaurant_id = 1;
+        var agent = chai.request.agent(server)
 
-    //   queries.countComments(restaurant_id, (value, error) => {
+        queries.countComments(restaurant_id, (value, error) => {
 
-    //     beforeCount = value[0].count;
-    //     var testComment = {comment:'Test comment.', rating: 5}; 
+          var beforeCount = value[0].count;
+          var testComment = {comment:'Test comment', captcha:'Test'};
 
-    //     chai.request(server).post('/restaurants/1').send(testComment).end((err, res) => {
+          agent.post('/login').send({username:'admin', password:'test'}).then((err, res) => {
 
-    //       res.should.have.status(200);
+            return agent.post('/comments/' + restaurant_id.toString()).send(testComment).then((err, res) => {
 
-    //       queries.countComments(restaurant_id, (value, error) => {
+              queries.countComments(restaurant_id, (value, error) => {
 
-    //         var afterCount = value[0].count;
+                var afterCount = value[0].count;
 
-    //         (afterCount - beforeCount).should.equal(0);
+                (afterCount - beforeCount).should.equal(0);
 
-    //         done();
-    //       })
-    //     })
-    //   })
-    // })
+                done();
+              })
+            })
+          })
+        })
+      })
+
+      it('Should reject comment additon if logged in but no captcha verification', (done) => {
+
+        var restaurant_id = 1;
+        var agent = chai.request.agent(server)
+
+        queries.countComments(restaurant_id, (value, error) => {
+
+          var beforeCount = value[0].count;
+          var testComment = {comment:'Test comment', rating:5, captcha:''};
+
+          agent.post('/login').send({username:'admin', password:'test'}).then((err, res) => {
+
+            return agent.post('/comments/' + restaurant_id.toString()).send(testComment).then((err, res) => {
+
+              queries.countComments(restaurant_id, (value, error) => {
+
+                var afterCount = value[0].count;
+
+                (afterCount - beforeCount).should.equal(0);
+
+                done();
+              })
+            })
+          })
+        })
+      })
+    
+      it('Should reject comment addition if logged out', (done) => {
+
+        var restaurant_id = 1;
+
+        queries.countComments(restaurant_id, (value, error) => {
+
+          beforeCount = value[0].count;
+          var testComment = {comment:'Test comment.', rating: 5, captcha:'Test'}; 
+
+          chai.request(server).post('/comments/' + restaurant_id.toString()).send(testComment).end((err, res) => {
+
+            res.should.have.status(200);
+
+            queries.countComments(restaurant_id, (value, error) => {
+
+              var afterCount = value[0].count;
+
+              (afterCount - beforeCount).should.equal(0);
+
+              done();
+            })
+          })
+        })
+      })
+    })
+
+    describe('Successful post', () => {
+
+      it('Should successfully add comment if logged in and all fields filled', (done) => {
+
+        var restaurant_id = 1;
+        var agent = chai.request.agent(server)
+
+        queries.countComments(restaurant_id, (value, error) => {
+
+          var beforeCount = value[0].count;
+          var testComment = {comment:'Test comment', rating:5, captcha:'Test'};
+
+          agent.post('/login').send({username:'admin', password:'test'}).then((err, res) => {
+
+            return agent.post('/comments/' + restaurant_id.toString()).send(testComment).then((err, res) => {
+
+              queries.countComments(restaurant_id, (value, error) => {
+
+                var afterCount = value[0].count;
+
+                (afterCount - beforeCount).should.equal(1);
+
+                done();
+              })
+            })
+          })
+        })
+      })
+    })
   })
 
-  describe('Adding Restaurants', () => {
+  describe('Test Adding Restaurants', () => {
 
     describe('Invalid restaurant input', () => {
 
@@ -574,7 +661,7 @@ describe('Populate database', () =>{
     })
   })
 
-  describe('Editing Restaurants', () => {
+  describe('Test Editing Restaurants', () => {
 
     describe('Invalid restaurant input', () => {
 
@@ -835,7 +922,7 @@ describe('Populate database', () =>{
     })
   })  
 
-  describe('Deleting Restaurants', () => {
+  describe('Test Deleting Restaurants', () => {
 
     it('Should successfully delete a restaurant', (done) => {
 
@@ -876,7 +963,7 @@ describe('Populate database', () =>{
     })
   })
 
-  describe('Filtering Restaurants', () => {
+  describe('Test Filtering Restaurants', () => {
 
     it('Should successfully filter the restaurants with one tag', (done) => {
 

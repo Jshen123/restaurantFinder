@@ -450,9 +450,9 @@ module.exports = function (queries, io) {
 
             fs.unlink(imgPath, function(e) {
               if (e) {
-                console.log("image deletion failed");
+                // console.log("image deletion failed");
               } else {
-                console.log("image successfully deleted");
+                // console.log("image successfully deleted");
               }
             });
           })
@@ -527,9 +527,9 @@ module.exports = function (queries, io) {
       // delete image file from directory
       fs.unlink(imgPath, function(e) {
         if (e) {
-          console.log("image deletion failed");
+          // console.log("image deletion failed");
         } else {
-          console.log("image successfully deleted");
+          // console.log("image successfully deleted");
         }
       });
     })

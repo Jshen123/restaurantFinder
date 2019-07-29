@@ -218,7 +218,73 @@ describe('Populate database', () =>{
           done();
         })
       })
+
+      it('should not be redirected to /admin when attempting access admin page', (done) => {
+
+        var agent = chai.request.agent(server);
+        agent.post('/login').send({username: 'user1', password: 'test'}).end((err, res) => {
+
+          res.should.have.status(200);
+
+          var location = res.redirects[res.redirects.length-1];
+          location = location.slice(location.lastIndexOf("/"), location.length);
+
+          // after logging in as a user, redirects to /restaurants
+          chai.expect(location).to.equal('/restaurants');
+
+          agent.get('/admin').then((err, res) => {
+            // attempting to access admin page as a user redirects back to /restaurants
+            chai.expect(location).to.not.equal('/admin');
+
+            done();
+        })
+      })
     })
+
+      it('should not be redirected to /admin/add when attempting access add page', (done) => {
+
+        var agent = chai.request.agent(server);
+        agent.post('/login').send({username: 'user1', password: 'test'}).end((err, res) => {
+
+          res.should.have.status(200);
+
+          var location = res.redirects[res.redirects.length-1];
+          location = location.slice(location.lastIndexOf("/"), location.length);
+
+          // after logging in as a user, redirects to /restaurants
+          chai.expect(location).to.equal('/restaurants');
+
+          agent.get('/admin/add').then((err, res) => {
+            // attempting to access add page as a user redirects back to /restaurants
+            chai.expect(location).to.not.equal('/admin/add');
+
+            done();
+        })
+      })
+    })
+
+      it('should not be redirected to /admin/edit when attempting access edit page', (done) => {
+
+        var agent = chai.request.agent(server);
+        agent.post('/login').send({username: 'user1', password: 'test'}).end((err, res) => {
+
+          res.should.have.status(200);
+
+          var location = res.redirects[res.redirects.length-1];
+          location = location.slice(location.lastIndexOf("/"), location.length);
+
+          // after logging in as a user, redirects to /restaurants
+          chai.expect(location).to.equal('/restaurants');
+
+          agent.get('/admin/edit').then((err, res) => {
+            // attempting to access edit page as a user redirects back to /restaurants
+            chai.expect(location).to.not.equal('/admin/edit');
+
+            done();
+        })
+      })
+    })
+  })
 
     describe('As admin', () => {
 
@@ -240,6 +306,28 @@ describe('Populate database', () =>{
           done();
         })
       })
+
+      // it('should be redirected to /admin when attempting access admin page', (done) => {
+      //
+      //   var agent = chai.request.agent(server);
+      //   agent.post('/login').send({username: 'user1', password: 'test'}).end((err, res) => {
+      //
+      //     res.should.have.status(200);
+      //
+      //     var location = res.redirects[res.redirects.length-1];
+      //     location = location.slice(location.lastIndexOf("/"), location.length);
+      //
+      //     // after logging in as an admin, redirects to /restaurants
+      //     chai.expect(location).to.equal('/restaurants');
+      // 
+      //     agent.get('/admin').then((err, res) => {
+      //       // attempting to access admin page as an admin redirects to /admin
+      //       chai.expect(location).to.equal('/admin');
+      //
+      //       done();
+      //     })
+      //   })
+      // })
     })
   })
 

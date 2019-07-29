@@ -336,7 +336,7 @@ module.exports = function (queries, io) {
       return res.redirect('/')
     }
 
-    queries.verifyAdmin(req.session.user_id, (value, error) => {
+    queries.verifyAdmin(req.session.user_id, (value) => {
       const admin = value[0].admin;
 
       if (admin == false){
@@ -393,11 +393,11 @@ module.exports = function (queries, io) {
         const thursday = restData.thursday;
         const friday = restData.friday;
         const saturday = restData.saturday;
-        
+
         if (name == "" || address == ''){
           req.session.msg = "Please include a valid restaurant name and address"
           return res.redirect('/admin/add')
-        } 
+        }
 
         const tagVar = req.body.tag
         // Restaurant has multiple tags
@@ -480,7 +480,7 @@ module.exports = function (queries, io) {
         if (name == "" || address == ''){
           req.session.msg = "Please include a valid restaurant name and address"
           return res.redirect(`/admin/edit/${restaurant_id}`)
-        } 
+        }
 
         // Restaurant has multiple tags
         if (Array.isArray(tagVar)) {

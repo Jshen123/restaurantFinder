@@ -525,8 +525,11 @@ describe('Populate database', () =>{
 
                 var restaurant_id = value[0].restaurant_id;
 
-                request.delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
+                // request.delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
 
+                //   done();
+                // })
+                queries.deleteRestaurant(restaurant_id, (value, error) => {
                   done();
                 })
               })
@@ -622,6 +625,8 @@ describe('Populate database', () =>{
 
       it('Should reject restaurant edit if no address is provided', (done) => {
         
+        queries.getLatestRestaurantId((value, error) => {
+
           var restaurant_id = value[0].restaurant_id;
 
           var testRestaurant = {
@@ -832,7 +837,7 @@ describe('Populate database', () =>{
         })
       })
     })
-  })
+  })  
 
   describe('Deleting Restaurants', () => {
 
@@ -901,11 +906,17 @@ describe('Populate database', () =>{
 
         value.forEach((val) => {
 
-          chai.expect(val.tag).to.include(tags[0]);
-          chai.expect(val.tag).to.include(tags[1]);
+          var includes = false;
+
+          for(var i = 0; i < val.tag.length; i++){
+            if(val.tag[i] == tags[0] || val.tag[i] == tags[1]){
+              includes = true;
+            }
+          }
+
+          chai.expect(includes).to.equal(true);
 
         })
-
         done();
       })
     })

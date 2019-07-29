@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "request": "^2.88.0",
+    "supertest": "^4.0.2",
     "tape": "^4.7.0"
   },
   "repository": {

@@ -176,8 +176,6 @@ describe('Populate database', () => {
 
           return agent.get('/user').set('accept', 'json').then((res) => {
 
-            console.log(res.body)
-
             chai.expect(username).to.equal(res.body.username)
 
             done();
@@ -1136,6 +1134,245 @@ describe('Populate database', () => {
           chai.expect(includes).to.equal(true);
 
         })
+        done();
+      })
+    })
+  })
+
+  describe('Test Queries', () => {
+
+    it('verifyUsername should correctly identify existing user', (done) => {
+
+      queries.verifyUsername('user1', (value, error) => {
+
+        chai.expect(value[0].username).to.equal('user1');
+
+        done();
+      })
+    })
+
+    it('verifyUsername should correctly identify nonexistent user', (done) => {
+
+      queries.verifyUsername('nonuser', (value, error) => {
+
+        chai.expect(value[0]).to.be.undefined;
+
+        done();
+      })
+    })
+
+    it('verifyAdmin should correctly identify admin', (done) => {
+
+      var user_id = 1;
+
+      queries.verifyAdmin(user_id, (value, error) => {
+
+        chai.expect(value[0].admin).to.equal(true);
+
+        done();
+      })
+    })
+
+    it('verifyAdmin should correctly identify non-admin', (done) => {
+
+      var user_id = 2;
+
+      queries.verifyAdmin(user_id, (value, error) => {
+
+        chai.expect(value[0].admin).to.equal(false);
+
+        done();
+      })
+    })
+
+    it('getRestaurants should correctly return information of all restaurants', (done) => {
+
+      queries.getRestaurants((value, error) => {
+
+        value.forEach((val) => {
+          chai.expect(val.restaurant_id).to.be.not.null;
+          chai.expect(val.name).to.be.not.null;
+          chai.expect(val.address).to.be.not.null;
+          chai.expect(val.description).to.be.not.null;
+          chai.expect(val.tag).to.be.not.null;
+          chai.expect(val.sunday).to.be.not.null;
+          chai.expect(val.image_path).to.be.not.null;
+        })
+
+        done();
+      })
+    })
+
+    it('getRestaurantDetail should correctly return information of a restaurant', (done) => {
+
+      var restaurant_id = 1;
+
+      queries.getRestaurantDetail(restaurant_id, (value, error) => {
+
+        chai.expect(value[0].restaurant_id).to.be.not.null;
+        chai.expect(value[0].name).to.be.not.null;
+        chai.expect(value[0].address).to.be.not.null;
+        chai.expect(value[0].description).to.be.not.null;
+        chai.expect(value[0].tag).to.be.not.null;
+        chai.expect(value[0].sunday).to.be.not.null;
+        chai.expect(value[0].image_path).to.be.not.null;
+
+        done();
+      })
+    })
+
+    it('countRestaurants should correctly return the number of restaurants', (done) => {
+
+      queries.getRestaurants((value, error) => {
+
+        var count = 0;
+        value.forEach((val) => {
+          count++;
+        })
+
+        queries.countRestaurants((value, error) => {
+
+          chai.expect(Number(value[0].count)).to.equal(count);
+
+          done();
+        })
+      })
+    })
+
+    it('getLatestRestaurantId should correctly return the id of the last restaurant', (done) => {
+
+      queries.getLatestRestaurantId((value, error) => {
+
+        var restaurant_id = value[0].restaurant_id;
+
+        queries.countRestaurants((value, error) => {
+
+          chai.expect(restaurant_id).to.equal(Number(value[0].count));
+
+          done();
+        })
+      })
+    })
+
+    it('getImagePath should correctly return the image path of a restaurant', (done) => {
+
+      var restaurant_id = 1;
+
+      queries.getImagePath(restaurant_id, (value, error) => {
+
+        chai.expect(value[0].image_path).to.equal('/Pictures/restaurant_' + restaurant_id.toString() + '.jpg');
+
+        done();
+      })
+    })
+
+    it('getComments should correctly return all comments of a restaurant', (done) => {
+
+      var restaurant_id = 1;
+      var sort_order = {clause:'create_date', order:'desc'}
+
+      queries.getComments(restaurant_id, sort_order, (value, error) => {
+
+        value.forEach((val) => {          
+          chai.expect(val.comment).to.be.not.null;
+          chai.expect(val.rating).to.be.not.null;
+          chai.expect(val.create_date).to.be.not.null;
+          chai.expect(val.username).to.be.not.null;
+        })
+
+        done();
+      })
+    })
+
+    it('getComments should correctly sort comments by date in descending order', (done) => {
+
+      var restaurant_id = 1;
+      var sort_order = {clause:'create_date', order:'desc'}
+
+      queries.getComments(restaurant_id, sort_order, (value, error) => {
+
+        for(var i = 1; i < value.length; i++){
+          chai.expect(value[i-1].create_date).to.be.at.least(value[i].create_date);
+        }
+
+        done();
+      })
+    })
+
+    it('getComments should correctly sort comments by date in ascending order', (done) => {
+
+      var restaurant_id = 1;
+      var sort_order = {clause:'create_date', order:'asc'}
+
+      queries.getComments(restaurant_id, sort_order, (value, error) => {
+
+        for(var i = 1; i < value.length; i++){
+          chai.expect(value[i-1].create_date).to.be.at.most(value[i].create_date);
+        }
+
+        done();
+      })
+    })
+
+    it('getComments should correctly sort comments by rating in descending order', (done) => {
+
+      var restaurant_id = 1;
+      var sort_order = {clause:'rating', order:'desc'}
+
+      queries.getComments(restaurant_id, sort_order, (value, error) => {
+
+        for(var i = 1; i < value.length; i++){
+          chai.expect(value[i-1].rating).to.be.at.least(value[i].rating);
+        }
+
+        done();
+      })
+    })
+
+    it('getComments should correctly sort comments by rating in ascending order', (done) => {
+
+      var restaurant_id = 1;
+      var sort_order = {clause:'rating', order:'asc'}
+
+      queries.getComments(restaurant_id, sort_order, (value, error) => {
+
+        for(var i = 1; i < value.length; i++){
+          chai.expect(value[i-1].rating).to.be.at.most(value[i].rating);
+        }
+
+        done();
+      })
+    })
+
+    it('countComments should correctly return the number of comments', (done) => {
+
+      var restaurant_id = 1;
+      var sort_order = {clause:'rating', order:'asc'}
+
+      queries.getComments(restaurant_id, sort_order, (value, error) => {
+
+        var count = 0;
+        value.forEach((val) => {
+          count++;
+        })
+
+        queries.countComments(restaurant_id, (value, error) => {
+
+          chai.expect(Number(value[0].count)).to.equal(count);
+
+          done();
+        })
+      })
+    })
+
+    it('countUsersByName should correctly return the number of users of a username', (done) => {
+
+      var username = 'user1'
+
+      queries.countUsersByName(username, (value, error) => {
+
+        chai.expect(Number(value[0].count)).to.equal(1);
+
         done();
       })
     })

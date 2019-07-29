@@ -486,634 +486,634 @@ describe('Populate database', () =>{
       })
     })
   })
-  //
-  // describe('Test Adding Restaurants', () => {
-  //
-  //   describe('Invalid restaurant input', () => {
-  //
-  //     it('Should reject restaurant addition if no name is provided', (done) => {
-  //
-  //       queries.countRestaurants((value, error) => {
-  //
-  //         var beforeCount = value[0].count;
-  //
-  //         var testRestaurant = {
-  //           name:'', address:'Test address', desc:'Test Restaurant', priceRadio: '$$',
-  //           timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
-  //           timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
-  //           timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
-  //           timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
-  //         };
-  //
-  //         var imagePath = './public/Pictures/placeholder.jpg';
-  //
-  //         request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-  //
-  //           queries.countRestaurants((value, error) => {
-  //
-  //             var afterCount = value[0].count;
-  //
-  //             chai.expect(afterCount - beforeCount).to.equal(0);
-  //
-  //             done();
-  //           })
-  //         })
-  //       })
-  //     })
-  //
-  //     it('Should reject restaurant addition if no address is provided', (done) => {
-  //
-  //       queries.countRestaurants((value, error) => {
-  //
-  //         var beforeCount = value[0].count;
-  //
-  //         var testRestaurant = {
-  //           name:'Test name', address:'', desc:'Test Restaurant', priceRadio: '$$',
-  //           timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
-  //           timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
-  //           timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
-  //           timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
-  //         };
-  //
-  //         var imagePath = './public/Pictures/placeholder.jpg';
-  //
-  //         request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-  //
-  //           queries.countRestaurants((value, error) => {
-  //
-  //             var afterCount = value[0].count;
-  //
-  //             chai.expect(afterCount - beforeCount).to.equal(0);
-  //
-  //             done();
-  //           })
-  //         })
-  //       })
-  //     })
-  //
-  //     it('Should reject restaurant addition if wrong image format is provided', (done) => {
-  //
-  //       queries.countRestaurants((value, error) => {
-  //
-  //         var beforeCount = value[0].count;
-  //
-  //         var testRestaurant = {
-  //           name:'Test name', address:'', desc:'Test Restaurant', priceRadio: '$$',
-  //           timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
-  //           timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
-  //           timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
-  //           timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
-  //         };
-  //
-  //         var imagePath = './public/Pictures/placeholder.bmp';
-  //
-  //         request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-  //
-  //           queries.countRestaurants((value, error) => {
-  //
-  //             var afterCount = value[0].count;
-  //
-  //             chai.expect(afterCount - beforeCount).to.equal(0);
-  //
-  //             done();
-  //           })
-  //         })
-  //       })
-  //     })
-  //   })
-  //
-  //   describe('Valid restaurant input', () => {
-  //
-  //     it('Should successfully add restaurant with all fields filled except description', (done) => {
-  //
-  //       queries.countRestaurants((value, error) => {
-  //
-  //         var beforeCount = value[0].count;
-  //
-  //         var testRestaurant = {
-  //           name:'Test name', address:'Test address', desc:'', priceRadio: '$$',
-  //           timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
-  //           timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
-  //           timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
-  //           timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
-  //         };
-  //
-  //         var imagePath = './public/Pictures/placeholder.jpg';
-  //
-  //         request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-  //
-  //           queries.countRestaurants((value, error) => {
-  //
-  //             var afterCount = value[0].count;
-  //
-  //             chai.expect(afterCount - beforeCount).to.equal(1);
-  //
-  //             queries.getLatestRestaurantId((value, error) => {
-  //
-  //               var restaurant_id = value[0].restaurant_id;
-  //
-  //               request.delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
-  //
-  //                 done();
-  //               })
-  //             })
-  //           })
-  //         })
-  //       })
-  //     })
-  //
-  //     it('Should successfully add restaurant with all fields filled except open hours', (done) => {
-  //
-  //       queries.countRestaurants((value, error) => {
-  //
-  //         var beforeCount = value[0].count;
-  //
-  //         var testRestaurant = {
-  //           name:'Test name', address:'Test address', desc:'Test description', priceRadio: '$$',
-  //           timeFrom0: '', timeTo0: '', timeFrom1: '', timeTo1: '',
-  //           timeFrom2: '', timeTo2: '', timeFrom3: '', timeTo3: '',
-  //           timeFrom4: '', timeTo4: '', timeFrom5: '', timeTo5: '',
-  //           timeFrom6: '', timeTo6: '', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
-  //         };
-  //
-  //         var imagePath = './public/Pictures/placeholder.jpg';
-  //
-  //         request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-  //
-  //           queries.countRestaurants((value, error) => {
-  //
-  //             var afterCount = value[0].count;
-  //
-  //             chai.expect(afterCount - beforeCount).to.equal(1);
-  //
-  //             queries.getLatestRestaurantId((value, error) => {
-  //
-  //               var restaurant_id = value[0].restaurant_id;
-  //
-  //               request.delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
-  //
-  //                 done();
-  //               })
-  //             })
-  //           })
-  //         })
-  //       })
-  //     })
-  //
-  //     it('Should successfully add restaurant with all fields filled except tags', (done) => {
-  //
-  //       queries.countRestaurants((value, error) => {
-  //
-  //         var beforeCount = value[0].count;
-  //
-  //         var testRestaurant = {
-  //           name:'Test name', address:'Test address', desc:'Test description', priceRadio: '$$',
-  //           timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
-  //           timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
-  //           timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
-  //           timeFrom6: '10:00', timeTo6: '22:00', tag: []
-  //         };
-  //
-  //         var imagePath = './public/Pictures/placeholder.jpg';
-  //
-  //         request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-  //
-  //           queries.countRestaurants((value, error) => {
-  //
-  //             var afterCount = value[0].count;
-  //
-  //             chai.expect(afterCount - beforeCount).to.equal(1);
-  //
-  //             queries.getLatestRestaurantId((value, error) => {
-  //
-  //               var restaurant_id = value[0].restaurant_id;
-  //
-  //               request.delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
-  //
-  //                 done();
-  //               })
-  //             })
-  //           })
-  //         })
-  //       })
-  //     })
-  //
-  //     it('Should successfully add restaurant with all fields filled and no image provided', (done) => {
-  //
-  //       queries.countRestaurants((value, error) => {
-  //
-  //         var beforeCount = value[0].count;
-  //
-  //         var testRestaurant = {
-  //           name:'Test name', address:'Test address', desc:'Test Restaurant', priceRadio: '$$',
-  //           timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
-  //           timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
-  //           timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
-  //           timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
-  //         };
-  //
-  //         request.post('/admin/add').field(testRestaurant).end((err, res) => {
-  //
-  //           queries.countRestaurants((value, error) => {
-  //
-  //             var afterCount = value[0].count;
-  //
-  //             chai.expect(afterCount - beforeCount).to.equal(1);
-  //
-  //             queries.getLatestRestaurantId((value, error) => {
-  //
-  //               var restaurant_id = value[0].restaurant_id;
-  //
-  //               queries.deleteRestaurant(restaurant_id, (value, error) => {
-  //                 done();
-  //               })
-  //             })
-  //           })
-  //         })
-  //       })
-  //     })
-  //
-  //     it('Should successfully add restaurant with all fields filled', (done) => {
-  //
-  //       queries.countRestaurants((value, error) => {
-  //
-  //         var beforeCount = value[0].count;
-  //
-  //         var testRestaurant = {
-  //           name:'Test name', address:'Test address', desc:'Test description', priceRadio: '$$',
-  //           timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
-  //           timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
-  //           timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
-  //           timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast food', 'Burgers', 'Cornerstone' ]
-  //         };
-  //
-  //         var imagePath = './public/Pictures/placeholder.jpg';
-  //
-  //         request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-  //
-  //           queries.countRestaurants((value, error) => {
-  //
-  //             var afterCount = value[0].count;
-  //
-  //             chai.expect(afterCount - beforeCount).to.equal(1);
-  //
-  //             queries.getLatestRestaurantId((value, error) => {
-  //
-  //               var restaurant_id = value[0].restaurant_id;
-  //
-  //               request.delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
-  //
-  //                 done();
-  //               })
-  //             })
-  //           })
-  //         })
-  //       })
-  //     })
-  //   })
-  // })
-  //
-  // describe('Test Editing Restaurants', () => {
-  //
-  //   describe('Invalid restaurant input', () => {
-  //
-  //     it('Should reject restaurant edit if no name is provided', (done) => {
-  //
-  //       var testRestaurant = {
-  //           name:'Test name', address:'Test address', desc:'Test description', priceRadio: '$$',
-  //           timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
-  //           timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
-  //           timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
-  //           timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast food', 'Burgers', 'Cornerstone' ]
-  //       };
-  //
-  //       var imagePath = './public/Pictures/placeholder.jpg';
-  //
-  //       request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-  //
-  //         queries.getLatestRestaurantId((value, error) => {
-  //
-  //           var restaurant_id = value[0].restaurant_id;
-  //
-  //           testRestaurant = {
-  //             name:'', address:'Test address', desc:'Test Restaurant', priceRadio: '$$',
-  //             timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
-  //             timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
-  //             timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
-  //             timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
-  //           };
-  //
-  //           imagePath = './public/Pictures/placeholder.jpg';
-  //
-  //           request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-  //
-  //             queries.getRestaurantDetail(restaurant_id, (value, error) => {
-  //
-  //               chai.expect(value[0].name).to.not.equal('');
-  //
-  //               done();
-  //             })
-  //           })
-  //         })
-  //       })
-  //     })
-  //
-  //     it('Should reject restaurant edit if no address is provided', (done) => {
-  //
-  //       queries.getLatestRestaurantId((value, error) => {
-  //
-  //         var restaurant_id = value[0].restaurant_id;
-  //
-  //         var testRestaurant = {
-  //           name:'Test name', address:'', desc:'Test Restaurant', priceRadio: '$$',
-  //           timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
-  //           timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
-  //           timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
-  //           timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
-  //         };
-  //
-  //         var imagePath = './public/Pictures/placeholder.jpg';
-  //
-  //         request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-  //
-  //           queries.getRestaurantDetail(restaurant_id, (value, error) => {
-  //
-  //             chai.expect(value[0].address).to.not.equal('');
-  //
-  //             done();
-  //           })
-  //         })
-  //       })
-  //     })
-  //
-  //     it('Should reject restaurant edit if wrong image format is provided', (done) => {
-  //
-  //       queries.getLatestRestaurantId((value, error) => {
-  //
-  //         var restaurant_id = value[0].restaurant_id;
-  //
-  //         var testRestaurant = {
-  //           name:'New test name', address:'Test address', desc:'Test Restaurant', priceRadio: '$$',
-  //           timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
-  //           timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
-  //           timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
-  //           timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
-  //         };
-  //
-  //         var imagePath = './public/Pictures/placeholder.bmp';
-  //
-  //         request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-  //
-  //           queries.getRestaurantDetail(restaurant_id, (value, error) => {
-  //
-  //             chai.expect(value[0].name).to.not.equal('New test name');
-  //
-  //             done();
-  //           })
-  //         })
-  //       })
-  //     })
-  //   })
-  //
-  //   describe('Valid restaurant input', () => {
-  //
-  //     it('Should successfully edit restaurant with all fields filled except description', (done) => {
-  //
-  //       queries.getLatestRestaurantId((value, error) => {
-  //
-  //         var restaurant_id = value[0].restaurant_id;
-  //
-  //         var testRestaurant = {
-  //           name:'Test name', address:'Test address', desc:'', priceRadio: '$$',
-  //           timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
-  //           timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
-  //           timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
-  //           timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
-  //         };
-  //
-  //         var imagePath = './public/Pictures/placeholder.jpg';
-  //
-  //         request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-  //
-  //           queries.getRestaurantDetail(restaurant_id, (value, error) => {
-  //
-  //             chai.expect(value[0].description).to.equal('');
-  //
-  //             done();
-  //           })
-  //         })
-  //       })
-  //     })
-  //
-  //     it('Should successfully edit restaurant with all fields filled except open hours', (done) => {
-  //
-  //       queries.getLatestRestaurantId((value, error) => {
-  //
-  //         var restaurant_id = value[0].restaurant_id;
-  //
-  //         var testRestaurant = {
-  //           name:'Test name', address:'Test address', desc:'Test description', priceRadio: '$$',
-  //           timeFrom0: '', timeTo0: '', timeFrom1: '', timeTo1: '',
-  //           timeFrom2: '', timeTo2: '', timeFrom3: '', timeTo3: '',
-  //           timeFrom4: '', timeTo4: '', timeFrom5: '', timeTo5: '',
-  //           timeFrom6: '', timeTo6: '', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
-  //         };
-  //
-  //         var imagePath = './public/Pictures/placeholder.jpg';
-  //
-  //         request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-  //
-  //           queries.getRestaurantDetail(restaurant_id, (value, error) => {
-  //
-  //             chai.expect(value[0].monday).to.equal('CLOSED');
-  //
-  //             done();
-  //           })
-  //         })
-  //       })
-  //     })
-  //
-  //     it('Should successfully edit restaurant with all fields filled except tags', (done) => {
-  //
-  //       queries.getLatestRestaurantId((value, error) => {
-  //
-  //         var restaurant_id = value[0].restaurant_id;
-  //
-  //         var testRestaurant = {
-  //           name:'Test name', address:'Test address', desc:'Test description', priceRadio: '$$',
-  //           timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
-  //           timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
-  //           timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
-  //           timeFrom6: '10:00', timeTo6: '22:00', tag: []
-  //         };
-  //
-  //         var imagePath = './public/Pictures/placeholder.jpg';
-  //
-  //         request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-  //
-  //           queries.getRestaurantDetail(restaurant_id, (value, error) => {
-  //
-  //             chai.expect(value[0].tag).to.be.empty;
-  //
-  //             done();
-  //           })
-  //         })
-  //       })
-  //     })
-  //
-  //     it('Should successfully edit restaurant with all fields filled and no image provided', (done) => {
-  //
-  //       queries.getLatestRestaurantId((value, error) => {
-  //
-  //         var restaurant_id = value[0].restaurant_id;
-  //
-  //         var testRestaurant = {
-  //           name:'New test name', address:'Test address', desc:'Test description', priceRadio: '$$',
-  //           timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
-  //           timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
-  //           timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
-  //           timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
-  //         };
-  //
-  //         request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).end((err, res) => {
-  //
-  //           queries.getRestaurantDetail(restaurant_id, (value, error) => {
-  //
-  //             chai.expect(value[0].name).to.equal('New test name');
-  //
-  //             done();
-  //           })
-  //         })
-  //       })
-  //     })
-  //
-  //     it('Should successfully edit restaurant with all fields filled', (done) => {
-  //
-  //       queries.getLatestRestaurantId((value, error) => {
-  //
-  //         var restaurant_id = value[0].restaurant_id;
-  //
-  //         var testRestaurant = {
-  //           name:'New test name', address:'New test address', desc:'New test description', priceRadio: '$$$',
-  //           timeFrom0: '11:00', timeTo0: '23:00', timeFrom1: '11:00', timeTo1: '23:00',
-  //           timeFrom2: '11:00', timeTo2: '23:00', timeFrom3: '11:00', timeTo3: '23:00',
-  //           timeFrom4: '11:00', timeTo4: '23:00', timeFrom5: '11:00', timeTo5: '23:00',
-  //           timeFrom6: '11:00', timeTo6: '23:00', tag: [ 'Fast Food', 'Burgers', 'Sandwiches', 'Cornerstone' ]
-  //         };
-  //
-  //         request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).end((err, res) => {
-  //
-  //           queries.getRestaurantDetail(restaurant_id, (value, error) => {
-  //
-  //             chai.expect(value[0].name).to.equal('New test name');
-  //             chai.expect(value[0].description).to.equal('New test description');
-  //             chai.expect(value[0].address).to.equal('New test address');
-  //             chai.expect(value[0].price).to.equal(3);
-  //             chai.expect(value[0].sunday).to.equal('11:00am-11:00pm');
-  //             chai.expect(value[0].monday).to.equal('11:00am-11:00pm');
-  //             chai.expect(value[0].tuesday).to.equal('11:00am-11:00pm');
-  //             chai.expect(value[0].wednesday).to.equal('11:00am-11:00pm');
-  //             chai.expect(value[0].thursday).to.equal('11:00am-11:00pm');
-  //             chai.expect(value[0].friday).to.equal('11:00am-11:00pm');
-  //             chai.expect(value[0].saturday).to.equal('11:00am-11:00pm');
-  //             chai.expect(value[0].tag).to.include('Sandwiches');
-  //
-  //             queries.getLatestRestaurantId((value, error) => {
-  //
-  //               var restaurant_id = value[0].restaurant_id;
-  //
-  //               request.delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
-  //
-  //                 done();
-  //               })
-  //             })
-  //           })
-  //         })
-  //       })
-  //     })
-  //   })
-  // })
-  //
-  // describe('Test Deleting Restaurants', () => {
-  //
-  //   it('Should successfully delete a restaurant', (done) => {
-  //
-  //     queries.countRestaurants((value, error) => {
-  //
-  //       var beforeCount = value[0].count;
-  //
-  //       var testRestaurant = {
-  //           name:'Test name', address:'Test address', desc:'Test description', priceRadio: '$$',
-  //           timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
-  //           timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
-  //           timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
-  //           timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast food', 'Burgers', 'Cornerstone' ]
-  //       };
-  //
-  //       var imagePath = './public/Pictures/placeholder.jpg';
-  //
-  //       request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
-  //
-  //         queries.getLatestRestaurantId((value, error) => {
-  //
-  //           var restaurant_id = value[0].restaurant_id;
-  //
-  //           request.delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
-  //
-  //             queries.countRestaurants((value, error) => {
-  //
-  //               var afterCount = value[0].count;
-  //
-  //               chai.expect(afterCount - beforeCount).to.equal(0);
-  //
-  //               done();
-  //             })
-  //           })
-  //         })
-  //       })
-  //     })
-  //   })
-  // })
-  //
-  // describe('Test Filtering Restaurants', () => {
-  //
-  //   it('Should successfully filter the restaurants with one tag', (done) => {
-  //
-  //     var tags = ['Burgers'];
-  //
-  //     queries.filterRestaurants(tags, (value, error) => {
-  //
-  //       value.forEach((val) => {
-  //
-  //         chai.expect(val.tag).to.include(tags[0]);
-  //
-  //       })
-  //
-  //       done();
-  //     })
-  //   })
-  //
-  //   it('Should successfully filter the restaurants with more than one tag', (done) => {
-  //
-  //     var tags = ['Coffee', 'Cornerstone'];
-  //
-  //     queries.filterRestaurants(tags, (value, error) => {
-  //
-  //       value.forEach((val) => {
-  //
-  //         var includes = false;
-  //
-  //         for(var i = 0; i < val.tag.length; i++){
-  //           if(val.tag[i] == tags[0] || val.tag[i] == tags[1]){
-  //             includes = true;
-  //           }
-  //         }
-  //
-  //         chai.expect(includes).to.equal(true);
-  //
-  //       })
-  //       done();
-  //     })
-  //   })
-  // })
+
+  describe('Test Adding Restaurants', () => {
+
+    describe('Invalid restaurant input', () => {
+
+      it('Should reject restaurant addition if no name is provided', (done) => {
+
+        queries.countRestaurants((value, error) => {
+
+          var beforeCount = value[0].count;
+
+          var testRestaurant = {
+            name:'', address:'Test address', desc:'Test Restaurant', priceRadio: '$$',
+            timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+            timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+            timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+            timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
+          };
+
+          var imagePath = './public/Pictures/placeholder.jpg';
+
+          request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+            queries.countRestaurants((value, error) => {
+
+              var afterCount = value[0].count;
+
+              chai.expect(afterCount - beforeCount).to.equal(0);
+
+              done();
+            })
+          })
+        })
+      })
+
+      it('Should reject restaurant addition if no address is provided', (done) => {
+
+        queries.countRestaurants((value, error) => {
+
+          var beforeCount = value[0].count;
+
+          var testRestaurant = {
+            name:'Test name', address:'', desc:'Test Restaurant', priceRadio: '$$',
+            timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+            timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+            timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+            timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
+          };
+
+          var imagePath = './public/Pictures/placeholder.jpg';
+
+          request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+            queries.countRestaurants((value, error) => {
+
+              var afterCount = value[0].count;
+
+              chai.expect(afterCount - beforeCount).to.equal(0);
+
+              done();
+            })
+          })
+        })
+      })
+
+      it('Should reject restaurant addition if wrong image format is provided', (done) => {
+
+        queries.countRestaurants((value, error) => {
+
+          var beforeCount = value[0].count;
+
+          var testRestaurant = {
+            name:'Test name', address:'', desc:'Test Restaurant', priceRadio: '$$',
+            timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+            timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+            timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+            timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
+          };
+
+          var imagePath = './public/Pictures/placeholder.bmp';
+
+          request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+            queries.countRestaurants((value, error) => {
+
+              var afterCount = value[0].count;
+
+              chai.expect(afterCount - beforeCount).to.equal(0);
+
+              done();
+            })
+          })
+        })
+      })
+    })
+
+    describe('Valid restaurant input', () => {
+
+      it('Should successfully add restaurant with all fields filled except description', (done) => {
+
+        queries.countRestaurants((value, error) => {
+
+          var beforeCount = value[0].count;
+
+          var testRestaurant = {
+            name:'Test name', address:'Test address', desc:'', priceRadio: '$$',
+            timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+            timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+            timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+            timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
+          };
+
+          var imagePath = './public/Pictures/placeholder.jpg';
+
+          request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+            queries.countRestaurants((value, error) => {
+
+              var afterCount = value[0].count;
+
+              chai.expect(afterCount - beforeCount).to.equal(1);
+
+              queries.getLatestRestaurantId((value, error) => {
+
+                var restaurant_id = value[0].restaurant_id;
+
+                request.delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
+
+                  done();
+                })
+              })
+            })
+          })
+        })
+      })
+
+      it('Should successfully add restaurant with all fields filled except open hours', (done) => {
+
+        queries.countRestaurants((value, error) => {
+
+          var beforeCount = value[0].count;
+
+          var testRestaurant = {
+            name:'Test name', address:'Test address', desc:'Test description', priceRadio: '$$',
+            timeFrom0: '', timeTo0: '', timeFrom1: '', timeTo1: '',
+            timeFrom2: '', timeTo2: '', timeFrom3: '', timeTo3: '',
+            timeFrom4: '', timeTo4: '', timeFrom5: '', timeTo5: '',
+            timeFrom6: '', timeTo6: '', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
+          };
+
+          var imagePath = './public/Pictures/placeholder.jpg';
+
+          request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+            queries.countRestaurants((value, error) => {
+
+              var afterCount = value[0].count;
+
+              chai.expect(afterCount - beforeCount).to.equal(1);
+
+              queries.getLatestRestaurantId((value, error) => {
+
+                var restaurant_id = value[0].restaurant_id;
+
+                request.delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
+
+                  done();
+                })
+              })
+            })
+          })
+        })
+      })
+
+      it('Should successfully add restaurant with all fields filled except tags', (done) => {
+
+        queries.countRestaurants((value, error) => {
+
+          var beforeCount = value[0].count;
+
+          var testRestaurant = {
+            name:'Test name', address:'Test address', desc:'Test description', priceRadio: '$$',
+            timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+            timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+            timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+            timeFrom6: '10:00', timeTo6: '22:00', tag: []
+          };
+
+          var imagePath = './public/Pictures/placeholder.jpg';
+
+          request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+            queries.countRestaurants((value, error) => {
+
+              var afterCount = value[0].count;
+
+              chai.expect(afterCount - beforeCount).to.equal(1);
+
+              queries.getLatestRestaurantId((value, error) => {
+
+                var restaurant_id = value[0].restaurant_id;
+
+                request.delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
+
+                  done();
+                })
+              })
+            })
+          })
+        })
+      })
+
+      it('Should successfully add restaurant with all fields filled and no image provided', (done) => {
+
+        queries.countRestaurants((value, error) => {
+
+          var beforeCount = value[0].count;
+
+          var testRestaurant = {
+            name:'Test name', address:'Test address', desc:'Test Restaurant', priceRadio: '$$',
+            timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+            timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+            timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+            timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
+          };
+
+          request.post('/admin/add').field(testRestaurant).end((err, res) => {
+
+            queries.countRestaurants((value, error) => {
+
+              var afterCount = value[0].count;
+
+              chai.expect(afterCount - beforeCount).to.equal(1);
+
+              queries.getLatestRestaurantId((value, error) => {
+
+                var restaurant_id = value[0].restaurant_id;
+
+                queries.deleteRestaurant(restaurant_id, (value, error) => {
+                  done();
+                })
+              })
+            })
+          })
+        })
+      })
+
+      it('Should successfully add restaurant with all fields filled', (done) => {
+
+        queries.countRestaurants((value, error) => {
+
+          var beforeCount = value[0].count;
+
+          var testRestaurant = {
+            name:'Test name', address:'Test address', desc:'Test description', priceRadio: '$$',
+            timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+            timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+            timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+            timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast food', 'Burgers', 'Cornerstone' ]
+          };
+
+          var imagePath = './public/Pictures/placeholder.jpg';
+
+          request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+            queries.countRestaurants((value, error) => {
+
+              var afterCount = value[0].count;
+
+              chai.expect(afterCount - beforeCount).to.equal(1);
+
+              queries.getLatestRestaurantId((value, error) => {
+
+                var restaurant_id = value[0].restaurant_id;
+
+                request.delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
+
+                  done();
+                })
+              })
+            })
+          })
+        })
+      })
+    })
+  })
+
+  describe('Test Editing Restaurants', () => {
+
+    describe('Invalid restaurant input', () => {
+
+      it('Should reject restaurant edit if no name is provided', (done) => {
+
+        var testRestaurant = {
+            name:'Test name', address:'Test address', desc:'Test description', priceRadio: '$$',
+            timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+            timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+            timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+            timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast food', 'Burgers', 'Cornerstone' ]
+        };
+
+        var imagePath = './public/Pictures/placeholder.jpg';
+
+        request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+          queries.getLatestRestaurantId((value, error) => {
+
+            var restaurant_id = value[0].restaurant_id;
+
+            testRestaurant = {
+              name:'', address:'Test address', desc:'Test Restaurant', priceRadio: '$$',
+              timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+              timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+              timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+              timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
+            };
+
+            imagePath = './public/Pictures/placeholder.jpg';
+
+            request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+              queries.getRestaurantDetail(restaurant_id, (value, error) => {
+
+                chai.expect(value[0].name).to.not.equal('');
+
+                done();
+              })
+            })
+          })
+        })
+      })
+
+      it('Should reject restaurant edit if no address is provided', (done) => {
+
+        queries.getLatestRestaurantId((value, error) => {
+
+          var restaurant_id = value[0].restaurant_id;
+
+          var testRestaurant = {
+            name:'Test name', address:'', desc:'Test Restaurant', priceRadio: '$$',
+            timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+            timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+            timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+            timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
+          };
+
+          var imagePath = './public/Pictures/placeholder.jpg';
+
+          request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+            queries.getRestaurantDetail(restaurant_id, (value, error) => {
+
+              chai.expect(value[0].address).to.not.equal('');
+
+              done();
+            })
+          })
+        })
+      })
+
+      it('Should reject restaurant edit if wrong image format is provided', (done) => {
+
+        queries.getLatestRestaurantId((value, error) => {
+
+          var restaurant_id = value[0].restaurant_id;
+
+          var testRestaurant = {
+            name:'New test name', address:'Test address', desc:'Test Restaurant', priceRadio: '$$',
+            timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+            timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+            timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+            timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
+          };
+
+          var imagePath = './public/Pictures/placeholder.bmp';
+
+          request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+            queries.getRestaurantDetail(restaurant_id, (value, error) => {
+
+              chai.expect(value[0].name).to.not.equal('New test name');
+
+              done();
+            })
+          })
+        })
+      })
+    })
+
+    describe('Valid restaurant input', () => {
+
+      it('Should successfully edit restaurant with all fields filled except description', (done) => {
+
+        queries.getLatestRestaurantId((value, error) => {
+
+          var restaurant_id = value[0].restaurant_id;
+
+          var testRestaurant = {
+            name:'Test name', address:'Test address', desc:'', priceRadio: '$$',
+            timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+            timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+            timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+            timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
+          };
+
+          var imagePath = './public/Pictures/placeholder.jpg';
+
+          request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+            queries.getRestaurantDetail(restaurant_id, (value, error) => {
+
+              chai.expect(value[0].description).to.equal('');
+
+              done();
+            })
+          })
+        })
+      })
+
+      it('Should successfully edit restaurant with all fields filled except open hours', (done) => {
+
+        queries.getLatestRestaurantId((value, error) => {
+
+          var restaurant_id = value[0].restaurant_id;
+
+          var testRestaurant = {
+            name:'Test name', address:'Test address', desc:'Test description', priceRadio: '$$',
+            timeFrom0: '', timeTo0: '', timeFrom1: '', timeTo1: '',
+            timeFrom2: '', timeTo2: '', timeFrom3: '', timeTo3: '',
+            timeFrom4: '', timeTo4: '', timeFrom5: '', timeTo5: '',
+            timeFrom6: '', timeTo6: '', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
+          };
+
+          var imagePath = './public/Pictures/placeholder.jpg';
+
+          request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+            queries.getRestaurantDetail(restaurant_id, (value, error) => {
+
+              chai.expect(value[0].monday).to.equal('CLOSED');
+
+              done();
+            })
+          })
+        })
+      })
+
+      it('Should successfully edit restaurant with all fields filled except tags', (done) => {
+
+        queries.getLatestRestaurantId((value, error) => {
+
+          var restaurant_id = value[0].restaurant_id;
+
+          var testRestaurant = {
+            name:'Test name', address:'Test address', desc:'Test description', priceRadio: '$$',
+            timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+            timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+            timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+            timeFrom6: '10:00', timeTo6: '22:00', tag: []
+          };
+
+          var imagePath = './public/Pictures/placeholder.jpg';
+
+          request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+            queries.getRestaurantDetail(restaurant_id, (value, error) => {
+
+              chai.expect(value[0].tag).to.be.empty;
+
+              done();
+            })
+          })
+        })
+      })
+
+      it('Should successfully edit restaurant with all fields filled and no image provided', (done) => {
+
+        queries.getLatestRestaurantId((value, error) => {
+
+          var restaurant_id = value[0].restaurant_id;
+
+          var testRestaurant = {
+            name:'New test name', address:'Test address', desc:'Test description', priceRadio: '$$',
+            timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+            timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+            timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+            timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
+          };
+
+          request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).end((err, res) => {
+
+            queries.getRestaurantDetail(restaurant_id, (value, error) => {
+
+              chai.expect(value[0].name).to.equal('New test name');
+
+              done();
+            })
+          })
+        })
+      })
+
+      it('Should successfully edit restaurant with all fields filled', (done) => {
+
+        queries.getLatestRestaurantId((value, error) => {
+
+          var restaurant_id = value[0].restaurant_id;
+
+          var testRestaurant = {
+            name:'New test name', address:'New test address', desc:'New test description', priceRadio: '$$$',
+            timeFrom0: '11:00', timeTo0: '23:00', timeFrom1: '11:00', timeTo1: '23:00',
+            timeFrom2: '11:00', timeTo2: '23:00', timeFrom3: '11:00', timeTo3: '23:00',
+            timeFrom4: '11:00', timeTo4: '23:00', timeFrom5: '11:00', timeTo5: '23:00',
+            timeFrom6: '11:00', timeTo6: '23:00', tag: [ 'Fast Food', 'Burgers', 'Sandwiches', 'Cornerstone' ]
+          };
+
+          request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).end((err, res) => {
+
+            queries.getRestaurantDetail(restaurant_id, (value, error) => {
+
+              chai.expect(value[0].name).to.equal('New test name');
+              chai.expect(value[0].description).to.equal('New test description');
+              chai.expect(value[0].address).to.equal('New test address');
+              chai.expect(value[0].price).to.equal(3);
+              chai.expect(value[0].sunday).to.equal('11:00am-11:00pm');
+              chai.expect(value[0].monday).to.equal('11:00am-11:00pm');
+              chai.expect(value[0].tuesday).to.equal('11:00am-11:00pm');
+              chai.expect(value[0].wednesday).to.equal('11:00am-11:00pm');
+              chai.expect(value[0].thursday).to.equal('11:00am-11:00pm');
+              chai.expect(value[0].friday).to.equal('11:00am-11:00pm');
+              chai.expect(value[0].saturday).to.equal('11:00am-11:00pm');
+              chai.expect(value[0].tag).to.include('Sandwiches');
+
+              queries.getLatestRestaurantId((value, error) => {
+
+                var restaurant_id = value[0].restaurant_id;
+
+                request.delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
+
+                  done();
+                })
+              })
+            })
+          })
+        })
+      })
+    })
+  })
+
+  describe('Test Deleting Restaurants', () => {
+
+    it('Should successfully delete a restaurant', (done) => {
+
+      queries.countRestaurants((value, error) => {
+
+        var beforeCount = value[0].count;
+
+        var testRestaurant = {
+            name:'Test name', address:'Test address', desc:'Test description', priceRadio: '$$',
+            timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+            timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+            timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+            timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast food', 'Burgers', 'Cornerstone' ]
+        };
+
+        var imagePath = './public/Pictures/placeholder.jpg';
+
+        request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+          queries.getLatestRestaurantId((value, error) => {
+
+            var restaurant_id = value[0].restaurant_id;
+
+            request.delete('/admin/delete/' + restaurant_id.toString()).end((err, res) => {
+
+              queries.countRestaurants((value, error) => {
+
+                var afterCount = value[0].count;
+
+                chai.expect(afterCount - beforeCount).to.equal(0);
+
+                done();
+              })
+            })
+          })
+        })
+      })
+    })
+  })
+
+  describe('Test Filtering Restaurants', () => {
+
+    it('Should successfully filter the restaurants with one tag', (done) => {
+
+      var tags = ['Burgers'];
+
+      queries.filterRestaurants(tags, (value, error) => {
+
+        value.forEach((val) => {
+
+          chai.expect(val.tag).to.include(tags[0]);
+
+        })
+
+        done();
+      })
+    })
+
+    it('Should successfully filter the restaurants with more than one tag', (done) => {
+
+      var tags = ['Coffee', 'Cornerstone'];
+
+      queries.filterRestaurants(tags, (value, error) => {
+
+        value.forEach((val) => {
+
+          var includes = false;
+
+          for(var i = 0; i < val.tag.length; i++){
+            if(val.tag[i] == tags[0] || val.tag[i] == tags[1]){
+              includes = true;
+            }
+          }
+
+          chai.expect(includes).to.equal(true);
+
+        })
+        done();
+      })
+    })
+  })
 })

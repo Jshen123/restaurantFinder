@@ -38,8 +38,6 @@ function checkFileType(file, cb) {
 
   if (mimetype && extName) {
     return cb(null, true);
-  } else if (file.originalname == "") {
-    cb('Error: no file selected');
   } else {
     cb('Error: JPG, JPEG, or PNG only!');
   }
@@ -377,12 +375,11 @@ module.exports = function (queries, io) {
       } else {
         // Do not allow for restaurants with no image file
         if (typeof req.file === "undefined") {
-          res.send("No image submitted.");
-          return;
+          imgName = 'placeholder.jpg'
+        } else {
+          imgName = req.file.filename;
         }
 
-
-        imgName = req.file.filename;
         var restData = convertForm(req.body);
 
         const name = restData.name;

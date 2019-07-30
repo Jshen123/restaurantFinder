@@ -435,9 +435,9 @@ module.exports = function (queries, io) {
 
                 return res.redirect('/admin/add');
               })
-            }) // addImage
-          }) // getLatestRestaurantId
-        }) // addRestaurant
+            })
+          })
+        })
       }
     })
   })

@@ -176,7 +176,7 @@ describe('Populate database', () => {
 
           return agent.get('/user').set('accept', 'json').then((res) => {
 
-            console.log(res.body)
+            // console.log(res.body)
 
             chai.expect(username).to.equal(res.body.username)
 
@@ -348,6 +348,7 @@ describe('Populate database', () => {
 
     describe('As admin', () => {
 
+      // location undefined because GET /admin renders the page rather than redirect
       // it('Should be redirected to /admin on accessing /admin', (done) => {
       //
       //   var agent = chai.request.agent(server)
@@ -366,6 +367,166 @@ describe('Populate database', () => {
       //     })
       //   })
       // })
+
+      // location undefined because GET /admin/add renders the page rather than redirect
+      // it('Should be redirected to /admin/add on accessing /admin/add', (done) => {
+      //
+      //   var agent = chai.request.agent(server)
+      //
+      //   agent.post('/login').send({username:'admin', password:'test'}).then((res) => {
+      //
+      //     return agent.get('/admin/add').then((res) => {
+      //
+      //       res.should.have.status(200);
+      //
+      //       var location = res.redirects[res.redirects.length-1];
+      //       location = location.slice(location.lastIndexOf("/"), location.length);
+      //       chai.expect(location).to.equal('/admin/add');
+      //
+      //       done();
+      //     })
+      //   })
+      // })
+
+      it('Should be redirected to /admin/add on failed add restaurant', (done) => {
+
+        var testRestaurant = {
+          name:'', address:'', desc:'Test description', priceRadio: '$$',
+          timeFrom0: '', timeTo0: '', timeFrom1: '', timeTo1: '',
+          timeFrom2: '', timeTo2: '', timeFrom3: '', timeTo3: '',
+          timeFrom4: '', timeTo4: '', timeFrom5: '', timeTo5: '',
+          timeFrom6: '', timeTo6: '', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
+        };
+
+        var imagePath = './public/Pictures/placeholder.bmp';
+
+        request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+          res.should.have.status(200);
+
+          // var location = res.redirects[res.redirects.length-1];
+          // location = location.slice(location.lastIndexOf("/"), location.length);
+          // chai.expect(location).to.equal('/admin/edit');
+
+          chai.expect('Location', '/admin/add');
+
+          done();
+        })
+      })
+
+      it('Should be redirected to /admin/add on successful add restaurant', (done) => {
+
+        var testRestaurant = {
+          name:'Test name', address:'Test address', desc:'Test description', priceRadio: '$$',
+          timeFrom0: '', timeTo0: '', timeFrom1: '', timeTo1: '',
+          timeFrom2: '', timeTo2: '', timeFrom3: '', timeTo3: '',
+          timeFrom4: '', timeTo4: '', timeFrom5: '', timeTo5: '',
+          timeFrom6: '', timeTo6: '', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
+        };
+
+        var imagePath = './public/Pictures/placeholder.jpg';
+
+        request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+          res.should.have.status(302);
+
+          // var location = res.redirects[res.redirects.length-1];
+          // location = location.slice(location.lastIndexOf("/"), location.length);
+          // chai.expect(location).to.equal('/admin/edit');
+
+          chai.expect('Location', '/admin/add');
+
+          done();
+        })
+      })
+
+      it('Should be redirected to /admin/edit on failed edit restaurant', (done) => {
+
+        var testRestaurant = {
+            name:'Test name', address:'Test address', desc:'Test description', priceRadio: '$$',
+            timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+            timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+            timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+            timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast food', 'Burgers', 'Cornerstone' ]
+        };
+
+        var imagePath = './public/Pictures/placeholder.jpg';
+
+        request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+          queries.getLatestRestaurantId((value, error) => {
+
+            var restaurant_id = value[0].restaurant_id;
+
+            testRestaurant = {
+              name:'', address:'', desc:'Test Restaurant', priceRadio: '$$',
+              timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+              timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+              timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+              timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
+            };
+
+            imagePath = './public/Pictures/placeholder.jpg';
+
+            request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+              res.should.have.status(302);
+
+              // var location = res.redirects[res.redirects.length-1];
+              // location = location.slice(location.lastIndexOf("/"), location.length);
+              // chai.expect(location).to.equal('/admin/edit');
+
+              chai.expect('Location', '/admin/edit');
+
+              done();
+            })
+          })
+        })
+      })
+
+      it('Should be redirected to /admin/edit on succesful edit restaurant', (done) => {
+
+        var testRestaurant = {
+            name:'Test name', address:'Test address', desc:'Test description', priceRadio: '$$',
+            timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+            timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+            timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+            timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast food', 'Burgers', 'Cornerstone' ]
+        };
+
+        var imagePath = './public/Pictures/placeholder.bmp';
+
+        request.post('/admin/add').field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+          queries.getLatestRestaurantId((value, error) => {
+
+            var restaurant_id = value[0].restaurant_id;
+
+            testRestaurant = {
+              name:'', address:'Test address', desc:'Test Restaurant', priceRadio: '$$',
+              timeFrom0: '10:00', timeTo0: '22:00', timeFrom1: '10:00', timeTo1: '22:00',
+              timeFrom2: '10:00', timeTo2: '22:00', timeFrom3: '10:00', timeTo3: '22:00',
+              timeFrom4: '10:00', timeTo4: '22:00', timeFrom5: '10:00', timeTo5: '22:00',
+              timeFrom6: '10:00', timeTo6: '22:00', tag: [ 'Fast Food', 'Burgers', 'Cornerstone' ]
+            };
+
+            imagePath = './public/Pictures/placeholder.bmp';
+
+            request.post('/admin/edit/' + restaurant_id.toString()).field(testRestaurant).attach('restaurantPic', imagePath).end((err, res) => {
+
+              res.should.have.status(200);
+
+              // var location = res.redirects[res.redirects.length-1];
+              // location = location.slice(location.lastIndexOf("/"), location.length);
+              // chai.expect(location).to.equal('/admin/edit');
+
+              chai.expect('Location', '/admin/edit');
+
+              done();
+            })
+          })
+        })
+      })
     })
   })
 

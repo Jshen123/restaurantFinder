@@ -160,7 +160,92 @@ describe('Populate database', () => {
   describe('Test Logins', () => {
 
     describe('Invalid login', () => {
+      it('Should reject login if username is empty', (done) => {
+        var uName = '';
+        var pass = 'pw';
 
+        var agent = supertest.agent(server);
+
+        agent.post('/login').send({username:uName, password:pass}).then((res) => {
+
+          return agent.get('/user').set('accept', 'json').then((res) => {
+
+            (typeof res.body.user_id).should.equal('undefined')
+
+            done();
+          })
+        })
+      })
+
+      it('Should reject login if username is longer than 25 characters long', (done) => {
+        var uName = 'thisIsAnExtremelyLongUsernameWhichWillFail';
+        var pass = 'pw';
+
+        var agent = supertest.agent(server);
+
+        agent.post('/login').send({username:uName, password:pass}).then((res) => {
+
+          return agent.get('/user').set('accept', 'json').then((res) => {
+
+            (typeof res.body.user_id).should.equal('undefined')
+
+            done();
+          })
+        })
+      })
+
+      it('Should reject login if password is empty', (done) => {
+        var uName = 'uname';
+        var pass = '';
+
+        var agent = supertest.agent(server);
+
+        agent.post('/login').send({username:uName, password:pass}).then((res) => {
+
+          return agent.get('/user').set('accept', 'json').then((res) => {
+
+            (typeof res.body.user_id).should.equal('undefined')
+
+            done();
+          })
+        })
+      })
+
+      it('Should reject login if username and password are not registered', (done) => {
+        var uName = 'aaa';
+        var pass = 'aaa';
+
+        var agent = supertest.agent(server);
+
+        agent.post('/login').send({username:uName, password:pass}).then((res) => {
+
+          return agent.get('/user').set('accept', 'json').then((res) => {
+
+            (typeof res.body.user_id).should.equal('undefined')
+
+            done();
+          })
+        })
+      })
+    })
+
+    describe('Test logout', () => {
+        it('Should set credentials to null after logging out', (done) => {
+            var username = 'user1'
+            var password = 'test'
+
+            var agent = supertest.agent(server);
+
+            agent.post('/login').send({username:username, password:password}).then((res) => {
+
+                return agent.post('/logout').then((res) => {
+
+                    (typeof res.body.user_id).should.equal('undefined')
+        
+                    done();
+                })
+            })
+        })
     })
 
     describe('Valid login', () => {

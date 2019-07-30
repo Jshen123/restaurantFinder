@@ -8,7 +8,7 @@ exports.seed = function(knex, Promise) {
         {
           name: 'A&W Canada',
           price: 1,
-          address: 'A%26W%20Canada%20SFU',
+          address: 'A%26W%20SFU',
           tag:  ['Fast food','Burgers','Cornerstone'],
           description: 'Find out what is cooking at A&W. From tasty burgers to crispy onion rings to frosty mugs of Root Beer to the plant-based Beyond Meat Burger, we have got it all.'
         },

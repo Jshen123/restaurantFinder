@@ -12,33 +12,27 @@ const queries = require("../lib/queries.js")(db);
 
 chai.use(chaiHttp);
 
-describe('Populate database', () =>{
+describe('Populate database', () => {
 
-  before(function(done) {
-    db.migrate.rollback()
-    .then(function() {
-      db.migrate.latest()
-      .then(function() {
-        return db.seed.run()
-        .then(function() {
+  before((done) => {
+    db.migrate.rollback().then(() => {
+      db.migrate.latest().then(() => {
+        db.seed.run().then(() => {
           done();
-        });
-      });
-    });
-  });
+        })
+      })
+    })
+  })
 
-  after(function(done) {
-    db.migrate.rollback()
-    .then(function() {
-      db.migrate.latest()
-      .then(function() {
-        return db.seed.run()
-        .then(function() {
+  after((done) => {
+    db.migrate.rollback().then(() => {
+      db.migrate.latest().then(() => {
+        db.seed.run().then(() => {
           done();
-        });
-      });
-    });
-  });
+        })
+      })
+    })
+  })
 
   describe('Test Registrations', () => {
 
